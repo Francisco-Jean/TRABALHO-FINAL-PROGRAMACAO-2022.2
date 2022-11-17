@@ -28,7 +28,7 @@ void testa_cadastrarPassageiro_dados_invalidos(Passageiro *passageiro) {
 
 int main(void) {
   Passageiro *passageiro1 = criarPassageiro(1, "Jean", "Vincente Pinzon");
-  Passageiro *passageiro2 = criarPassageiro(2, "Kauan", "Parquelandia");
+  Passageiro *passageiro2 = criarPassageiro(2, "Kauan", "Aracati");
   Passageiro *passageiro3 = criarPassageiro(1, "Gustavo", "Trairi");
 
   printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 1 =-=-=-=-=-=-=-=-=-=-=");
