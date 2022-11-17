@@ -21,3 +21,11 @@ typedef struct reserva Reserva;
 typedef struct agenda Agenda;
 typedef struct viagem Viagem;
 typedef struct tabela_viagem TabelaViagem;
+
+/*  Função para acessar os dados do passageiro
+    Recebe como parâmetro um passageiro e os dados e vai modificá-los dentro da função. */
+void passageiroAcessa(Passageiro *passageiro, int *id, char *nome, char *endereco);
+
+/*  Cria um novo passageiro novo com os dados informados
+    Retorna NULL caso não seja possível criar ou o passageiro caso contrário. */
+Passageiro *criarPassageiro(int id, char *nome, char *endereco);
