@@ -65,3 +65,22 @@ struct tabela_viagem {
   int tamanho;
   Viagem *tabela_hash;
 };
+
+Passageiro *cria_passageiro(int id,char *nome, char *endereco){
+  if(teste_id(id) == 1){
+    return NULL;
+  }
+  Passageiro *passageiro = (Passageiro*) malloc(sizeof(Passageiro));
+  passageiro->id = id;
+  strcpy(passageiro->nome, nome);
+  strcpy(passageiro->endereco, endereco);
+  return passageiro;
+}
+Passageiro remover_passageiro(Passageiro **passageiro){
+  if(passageiro != NULL){
+    free(*passageiro);
+    *passageiro = NULL;
+  }
+}
+  
+  
