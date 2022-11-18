@@ -29,3 +29,6 @@ void passageiroAcessa(Passageiro *passageiro, int *id, char *nome, char *enderec
 /*  Cria um novo passageiro novo com os dados informados
     Retorna NULL caso não seja possível criar ou o passageiro caso contrário. */
 Passageiro *criarPassageiro(int id, char *nome, char *endereco);
+
+/*  Função para editar os dados do passageiro (ID, Nome ou endereço) */
+void editarDadosPassageiro(Passageiro *passageiro, int *id, char *nome, char *endereco);

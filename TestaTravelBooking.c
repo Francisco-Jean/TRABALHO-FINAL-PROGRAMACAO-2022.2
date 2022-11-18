@@ -33,6 +33,20 @@ void testa_cadastrarPassageiro_dados_nulos(Passageiro *passageiro) {
   return pontuacao;
 }
 
+void teste_editarDadosPassageiro_dados_validos(Passageiro *passageiro) {
+  if (passageiro != NULL) {
+    editarDadosPassageiro(passageiro, 5, "Jacó", "Pici");
+    alu_acessa(passageiro, &id, nome, endereco);
+    if (id == 2 && strcmp(nome, "Jacó") == 0 && strcmp(endereco, "Pici") == 0) {
+      printf("[PASSOU] teste_editarDadosPassageiro_dados_validos.");
+    } else {
+      printf("[FALHOU] teste_editarDadosPassageiro_dados_validos.");
+    }
+  } else {
+    printf("[FALHOU] teste_editarDadosPassageiro_dados_validos.");
+  }
+}
+
 int main(void) {
   Passageiro *passageiro1 = criarPassageiro(1, "Jean", "Vincente Pinzon");
   Passageiro *passageiro2 = criarPassageiro(2, "Kauan", "Aracati");
