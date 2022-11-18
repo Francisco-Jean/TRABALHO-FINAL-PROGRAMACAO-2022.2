@@ -36,7 +36,7 @@ void testa_cadastrarPassageiro_dados_nulos(Passageiro *passageiro) {
 void teste_editarDadosPassageiro_dados_validos(Passageiro *passageiro) {
   if (passageiro != NULL) {
     editarDadosPassageiro(passageiro, 5, "Jacó", "Pici");
-    alu_acessa(passageiro, &id, nome, endereco);
+    passageiroAcessa(passageiro, &id, nome, endereco);
     if (id == 2 && strcmp(nome, "Jacó") == 0 && strcmp(endereco, "Pici") == 0) {
       printf("[PASSOU] teste_editarDadosPassageiro_dados_validos.");
     } else {
@@ -44,6 +44,30 @@ void teste_editarDadosPassageiro_dados_validos(Passageiro *passageiro) {
     }
   } else {
     printf("[FALHOU] teste_editarDadosPassageiro_dados_validos.");
+  }
+}
+
+void teste_editarDadosPassageiro_dados_invalidos(Passageiro *passageiro) {
+  char nome[55] = "N";
+  char endereco[55] = "C";
+
+  for (int i = 0; i < 55; i++) {
+    strcat(nome, "N");
+  }
+  for (int i = 0; i < 55; i++) {
+    strcat(curso, "C");
+  }
+  
+  if (passageiro != NULL) {
+    editarDadosPassageiro(passageiro, 2, nome, endereco);
+    passageiroAcessa(passageiro, &id, nome, endereco);
+    if (id == 5 || strcmp(nome, "Jacó") == 0 || strcmp(endereco, "Pici") == 0) {
+      printf("[PASSOU] teste_editarDadosPassageiro_dados_invalidos.");
+    } else {
+      printf("[FALHOU] teste_editarDadosPassageiro_dados_invalidos.");
+    }
+  } else {
+      printf("[FALHOU] teste_editarDadosPassageiro_dados_invalidos.");
   }
 }
 
@@ -59,4 +83,8 @@ int main(void) {
   testa_cadastrarPassageiro_dados_invalidos(passageiro3);
   printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 3 =-=-=-=-=-=-=-=-=-=-=");
   testa_cadastrarPassageiro_dados_nulos(passageiro4);
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 4 =-=-=-=-=-=-=-=-=-=-=");
+  teste_editarDadosPassageiro_dados_validos(passageiro1);
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 5 =-=-=-=-=-=-=-=-=-=-=");
+  teste_editarDadosPassageiro_dados_invalidos(passageiro1);
 }

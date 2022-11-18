@@ -32,3 +32,6 @@ Passageiro *criarPassageiro(int id, char *nome, char *endereco);
 
 /*  Função para editar os dados do passageiro (ID, Nome ou endereço) */
 void editarDadosPassageiro(Passageiro *passageiro, int *id, char *nome, char *endereco);
+
+/* Verifica se o ID é não negativo, e se o nome e endereco tem tamanho menor ou igual      a 51 */
+int verifica_params(int id, char *nome, char *endereco);
