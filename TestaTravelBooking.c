@@ -37,7 +37,7 @@ void teste_editarDadosPassageiro_dados_validos(Passageiro *passageiro) {
   if (passageiro != NULL) {
     editarDadosPassageiro(passageiro, 5, "Jacó", "Pici");
     passageiroAcessa(passageiro, &id, nome, endereco);
-    if (id == 2 && strcmp(nome, "Jacó") == 0 && strcmp(endereco, "Pici") == 0) {
+    if (id == 5 && strcmp(nome, "Jacó") == 0 && strcmp(endereco, "Pici") == 0) {
       printf("[PASSOU] teste_editarDadosPassageiro_dados_validos.");
     } else {
       printf("[FALHOU] teste_editarDadosPassageiro_dados_validos.");

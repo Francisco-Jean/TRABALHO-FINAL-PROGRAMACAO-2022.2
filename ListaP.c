@@ -38,7 +38,7 @@ int lista_insere(Lista *lista, Passageiro *passageiro) {
   }
   int id_base;
   char nome[50];
-  char endereco[100];
+  char endereco[50];
   passageiro_acessa(passageiro, &id_base, nome, endereco);
   
   if (lista->primeiro == NULL){
@@ -96,7 +96,7 @@ Passageiro *lista_busca(Lista *lista, int id) {
   No *n_aux = lista->primeiro;
   int id_comparada;
   char nome[50];
-  char endereco[100];
+  char endereco[50];
   
   do{
     passageiro_acessa(n_aux->passageiro, &id_comparada, nome,endereco);

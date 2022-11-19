@@ -66,8 +66,18 @@ struct tabela_viagem {
   Viagem *tabela_hash;
 };
 
+int verifica_dados(int id,char *nome, char *endereco){
+  if (id < 0 || nome == NULL || endereco == NULL){
+    return -1;
+  }
+  if (strlen(nome) > 50 || strlen(endereco) > 50) {
+    return -1;
+  }
+  return 1;
+}
+
 Passageiro *cria_passageiro(int id,char *nome, char *endereco){
-  if(teste_id(id) == 1){
+  if(verifica_dados(id, nome, endereco) == -1){
     return NULL;
   }
   Passageiro *passageiro = (Passageiro*) malloc(sizeof(Passageiro));
@@ -82,5 +92,24 @@ Passageiro remover_passageiro(Passageiro **passageiro){
     *passageiro = NULL;
   }
 }
-  
-  
+
+void editar_passageiro(Passageiro *passageiro,int id, char *nome. char *endereco){
+  if(passageiro != NULL && verifica_dados(id, nome, endereco) == 1){
+    passageiro->id=id;
+    strcpy(passageiro->nome,nome);
+    strcpy(passageiro->endereco,endereco);
+  }
+}
+
+void ler_passageiro(Passageiro *passageiro, int *id, char *nome, char *endereco) {
+  if (passageiro == NULL) {
+    *id = -1;
+    strcpy(nome, "NULL");
+    strcpy(endereco, "NULL");
+  } else {
+    *id = passageiro->id;
+    strcpy(nome, passageiro->nome);
+    strcpy(endereco, passageiro->endereco);
+  }
+}
+
