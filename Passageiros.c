@@ -39,7 +39,7 @@ int lista_insere(Lista *lista, Passageiro *passageiro) {
   int id_base;
   char nome[50];
   char endereco[50];
-  passageiro_acessa(passageiro, &id_base, nome, endereco);
+  passageiroAcessa(passageiro, &id_base, nome, endereco);
   
   if (lista->primeiro == NULL){
     No *n_no = (No*) malloc(sizeof(No));
@@ -53,7 +53,7 @@ int lista_insere(Lista *lista, Passageiro *passageiro) {
   No *no_aux = lista->primeiro;
   No *no_aux_anterior = no_aux;
   while(no_aux != NULL){
-    passageiro_acessa(no_aux->passageiro, &id, nome, endereco);
+    passageiroAcessa(no_aux->passageiro, &id, nome, endereco);
     if (id_base == id){
       return 0;
     }
@@ -99,7 +99,7 @@ Passageiro *lista_busca(Lista *lista, int id) {
   char endereco[50];
   
   do{
-    passageiro_acessa(n_aux->passageiro, &id_comparada, nome,endereco);
+    passageiroAcessa(n_aux->passageiro, &id_comparada, nome,endereco);
     
     if(id_comparada == id){
       return n_aux->passageiro;

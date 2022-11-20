@@ -1,4 +1,4 @@
-#include "passageiro.h"
+#include "Passageiros.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -34,7 +34,7 @@ void testa_criarPassageiro_dados_nulos(Passageiro *passageiro) {
 
 void teste_editarPassageiro_dados_validos(Passageiro *passageiro) {
   if (passageiro != NULL) {
-    editarDadosPassageiro(passageiro, 5, "Jacó", "Pici");
+    editarPassageiro(passageiro, 5, "Jacó", "Pici");
     passageiroAcessa(passageiro, &id, nome, endereco);
     if (id == 5 && strcmp(nome, "Jacó") == 0 && strcmp(endereco, "Pici") == 0) {
       printf("[PASSOU] teste_editarDadosPassageiro_dados_validos.");
@@ -58,7 +58,7 @@ void teste_editarPassageiro_dados_invalidos(Passageiro *passageiro) {
   }
   
   if (passageiro != NULL) {
-    editarDadosPassageiro(passageiro, 2, nome, endereco);
+    editarPassageiro(passageiro, 2, nome, endereco);
     passageiroAcessa(passageiro, &id, nome, endereco);
     if (id == 5 || strcmp(nome, "Jacó") == 0 || strcmp(endereco, "Pici") == 0) {
       printf("[PASSOU] teste_editarDadosPassageiro_dados_invalidos.");
@@ -90,5 +90,6 @@ int main(void) {
   testa_criarPassageiro_dados_nulos(passageiro4);
   printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 2 =-=-=-=-=-=-=-=-=-=-=");
   teste_editarPassageiro_dados_validos(passageiro1);
+  teste_editarPassageiro_dados_invalidos(passageiro1);
   teste_editarPassageiro_dados_invalidos(passageiro1);
 }
