@@ -157,7 +157,7 @@ Passageiro *criarPassageiro(int id,char *nome, char *endereco){
   passageiro->id = id;
   strcpy(passageiro->nome, nome);
   strcpy(passageiro->endereco, endereco);
-  return passageiro;
+return passageiro;
 }
 
 void removerPassageiro(Passageiro **passageiro){
