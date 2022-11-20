@@ -1,4 +1,7 @@
 #include "Passageiros.h"
+#include "AgendaReservas.h"
+#include "Voos.h"
+#include "baseStructs.h"
 #include <stdio.h>
 #include <stdlib.h>
 

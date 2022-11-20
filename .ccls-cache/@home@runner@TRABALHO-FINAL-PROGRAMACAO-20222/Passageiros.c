@@ -1,6 +1,7 @@
 #include "Passageiros.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct passageiro {
   int id;
@@ -53,6 +54,7 @@ int lista_insere(Lista *lista, Passageiro *passageiro) {
   No *no_aux = lista->primeiro;
   No *no_aux_anterior = no_aux;
   while(no_aux != NULL){
+    int id;
     passageiroAcessa(no_aux->passageiro, &id, nome, endereco);
     if (id_base == id){
       return 0;
@@ -69,23 +71,27 @@ int lista_insere(Lista *lista, Passageiro *passageiro) {
   return 1;
 }
 
+// Função que será necessário editar para ser colocada em funcionamento
+
 Passageiro *lista_retira(Lista *lista) {
-  if(lista == NULL){
+  /*if(lista == NULL){
     return NULL;
   }
-  if(lista == lista->primeiro){
-  Passageiro * passageiro_aux = lista->primeiro->passageiro;
-  No ** aux = &(lista->primeiro);
-  *aux = lista->primeiro->proximo;
-  return passageiro_aux;
+  if(lista->primeiro->proximo == NULL){
+    Passageiro * passageiro_aux = lista->primeiro->passageiro;
+    No ** aux = &(lista->primeiro);
+    *aux = lista->primeiro->proximo;
+    return passageiro_aux;
   }
   else{
-    Passageiro *passageiro_aux = lista->passageiro;
-    No **aux = &(lista->passageiro)
+    Passageiro *passageiro_aux = lista->primeiro;
+    No **aux = &(lista->passageiro);
     No *aux = lista->passageiro->proximo;
-    return passageiro_aux
-  }
+    return passageiro_aux;
+  } */
+  return NULL;
 }
+
 
 
 Passageiro *lista_busca(Lista *lista, int id) {
@@ -127,6 +133,10 @@ int lista_quantidade(Lista *lista) {
   return total;
 }
 
+int passageiroIgual(Passageiro *passageiro1, Passageiro *passageiro2) {
+  return 0;
+}
+
 //FUNÇÕES PARA PASSAGEIRO
 
 int verifica_params(int id,char *nome, char *endereco){
@@ -140,7 +150,7 @@ int verifica_params(int id,char *nome, char *endereco){
 }
 
 Passageiro *criarPassageiro(int id,char *nome, char *endereco){
-  if(verifica_dados(id, nome, endereco) == -1){
+  if(verifica_params(id, nome, endereco) == -1){
     return NULL;
   }
   Passageiro *passageiro = (Passageiro*) malloc(sizeof(Passageiro));
@@ -149,16 +159,17 @@ Passageiro *criarPassageiro(int id,char *nome, char *endereco){
   strcpy(passageiro->endereco, endereco);
   return passageiro;
 }
-Passageiro removerRassageiro(Passageiro **passageiro){
+
+void removerPassageiro(Passageiro **passageiro){
   if(passageiro != NULL){
     free(*passageiro);
     *passageiro = NULL;
   }
 }
 
-void editarPassageiro(Passageiro *passageiro,int id, char *nome. char *endereco){
-  if(passageiro != NULL && verifica_dados(id, nome, endereco) == 1){
-    passageiro->id=id;
+void editarPassageiro(Passageiro *passageiro,int id, char *nome, char *endereco){
+  if(passageiro != NULL && verifica_params(id, nome, endereco) == 1){
+    passageiro->id = id;
     strcpy(passageiro->nome,nome);
     strcpy(passageiro->endereco,endereco);
   }

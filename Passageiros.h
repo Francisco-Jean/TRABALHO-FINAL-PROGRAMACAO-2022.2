@@ -12,10 +12,12 @@ void passageiroAcessa(Passageiro *passageiro, int *id, char *nome, char *enderec
 Passageiro *criarPassageiro(int id, char *nome, char *endereco);
 
 /*  Função para editar os dados do passageiro (ID, Nome ou endereço) */
-void editarPassageiro(Passageiro *passageiro, int *id, char *nome, char *endereco);
+void editarPassageiro(Passageiro *passageiro, int id, char *nome, char *endereco);
 
 /* Verifica se o ID é não negativo, e se o nome e endereco tem tamanho menor ou igual      a 51 */
 int verifica_params(int id, char *nome, char *endereco);
+
+void removerPassageiro(Passageiro **passageiro);
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> TAD LISTA <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -55,3 +57,8 @@ int lista_vazia(Lista *lista);
  * ou -1, caso a lista for NULL.
  */
 int lista_quantidade(Lista *lista);
+
+/*  Verifica se dois passageiros são iguais, recebe 2 passageiros e     
+    verifica se são iguais, retornando 1 caso sejam iguais, 0 se não forem     e NULL se não houver passageiro
+*/
+int passageiroIgual(Passageiro *passageiro1, Passageiro *passageiro2);
