@@ -5,8 +5,8 @@
 
 struct passageiro {
   int id;
-  char *nome;
-  char *endereco;
+  char nome[30];
+  char endereco[30];
 };
 
 struct no_passageiro {
@@ -143,7 +143,7 @@ int verifica_params(int id,char *nome, char *endereco){
   if (id < 0 || nome == NULL || endereco == NULL){
     return -1;
   }
-  if (strlen(nome) > 50 || strlen(endereco) > 50) {
+  if (strlen(nome) > 30 || strlen(endereco) > 30) {
     return -1;
   }
   return 1;
@@ -157,7 +157,7 @@ Passageiro *criarPassageiro(int id,char *nome, char *endereco){
   passageiro->id = id;
   strcpy(passageiro->nome, nome);
   strcpy(passageiro->endereco, endereco);
-  return passageiro;
+return passageiro;
 }
 
 void removerPassageiro(Passageiro **passageiro){
