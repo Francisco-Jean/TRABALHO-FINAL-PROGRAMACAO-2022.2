@@ -63,8 +63,3 @@ pattern = "**/*.{c,h}"
 
 [languages.c.languageServer]
 start = "ccls"
-
-[nix]
-
-[nix.channel]
-channel = "stable-22_05"
