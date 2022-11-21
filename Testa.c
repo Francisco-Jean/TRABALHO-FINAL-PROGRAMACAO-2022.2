@@ -17,10 +17,21 @@ void testa_criarPassageiro_dados_validos(Passageiro *passageiro) {
 }
 
 void testa_criarPassageiro_dados_invalidos(Passageiro *passageiro) {
-  if (passageiro != NULL) {
-    printf("[FALHOU] testa_criar_passageiro_dados_invalidos.\n");
-  } else {
+  /*char nome[55] = "N";
+  char endereco[35] = "C";
+
+  for (int i = 0; i < 53; i++) {
+    strcat(nome, "N");
+  }
+
+  for (int i = 0; i < 33; i++) {
+    strcat(endereco, "C");
+  }*/
+
+  if (passageiro == NULL) {
     printf("[PASSOU] testa_criar_passageiro_dados_invalidos.\n");
+  } else {
+    printf("[FALHOU] testa_criar_passageiro_dados_invalidos.\n");
   }
 }
 
@@ -140,7 +151,7 @@ int main(void) {
 
   printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 1 =-=-=-=-=-=-=-=-=-=-=\n");
   testa_criarPassageiro_dados_validos(passageiro1);
-  testa_criarPassageiro_dados_invalidos(passageiro3);
+  testa_criarPassageiro_dados_invalidos(passageiro4);
   testa_criarPassageiro_dados_nulos(passageiro4);
   printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 2 =-=-=-=-=-=-=-=-=-=-=\n");
   teste_editarPassageiro_dados_validos(passageiro1);
