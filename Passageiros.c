@@ -133,7 +133,7 @@ int lista_quantidade(Lista *lista) {
   return total;
 }
 
-int passageiroIgual(Passageiro *passageiro1, Passageiro *passageiro2) {
+int lista_vazia(Lista *lista) {
   return 0;
 }
 
@@ -185,4 +185,8 @@ void passageiroAcessa(Passageiro *passageiro, int *id, char *nome, char *enderec
     strcpy(nome, passageiro->nome);
     strcpy(endereco, passageiro->endereco);
   }
+}
+
+int passageiroIgual(Passageiro *passageiro1, Passageiro *passageiro2) {
+  return 0;
 }
