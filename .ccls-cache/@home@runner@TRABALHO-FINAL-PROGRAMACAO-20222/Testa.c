@@ -104,7 +104,7 @@ void teste_editarPassageiro_dados_nulos(Passageiro *passageiro) {
   }
 }
 
-void teste_removePassageiro_dados_validos() {
+void teste_remove_passageiro_dados_validos() {
   Lista *lista = lista_cria();
   if (lista != NULL) {
     Passageiro *abraao = criarPassageiro(1, "Abraão", "Computação");
@@ -120,26 +120,26 @@ void teste_removePassageiro_dados_validos() {
       if (passageiroIgual(passageiro, jaco) == 1) {
         passageiro = lista_retira(lista);
         if (passageiroIgual(passageiro, jose) == 1) {
-          printf("[PASSOU] teste_removePassageiro_dados_validos.\n");
+          printf("[PASSOU] teste_remover_passageiro_dados_validos.\n");
         } else {
-          printf("[FALHOU] teste_removePassageiro_dados_validos.\n");
+          printf("[FALHOU] teste_remover_passageiro_dados_validos.\n");
         }
       } else {
-        printf("[FALHOU] teste_removePassageiro_dados_validos.\n");
+        printf("[FALHOU] teste_remover_passageiro_dados_validos.\n");
       }
     } else {
-      printf("[FALHOU] teste_removePassageiro_dados_validos.\n");
+      printf("[FALHOU] teste_remover_passageiro_dados_validos.\n");
     }
   } else {
-    printf("[FALHOU] teste_removePassageiro_dados_validos.\n");
+    printf("[FALHOU] teste_remover_passageiro_dados_validos.\n");
   }
 }
 
 void teste_remove_passageiro_dados_invalidos(Passageiro *passageiro) {
   if (lista_retira(NULL) == NULL) {
-    printf("[PASSOU] teste_removePassageiro_dados_validos.\n");
+    printf("[PASSOU] teste_remover_passageiro_dados_invalidos.\n");
   } else {
-    printf("[FALHOU] teste_removePassageiro_dados_validos.\n");
+    printf("[FALHOU] teste_remover_passageiro_dados_invalidos.\n");
   }
 }
 
@@ -157,4 +157,7 @@ int main(void) {
   teste_editarPassageiro_dados_validos(passageiro1);
   teste_editarPassageiro_dados_invalidos(passageiro2);
   teste_editarPassageiro_dados_nulos(passageiro1);
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 2 =-=-=-=-=-=-=-=-=-=-=\n");
+  teste_remove_passageiro_dados_validos(); // falta implementação de funções necessárias
+  teste_remove_passageiro_dados_invalidos(passageiro4);
 }
