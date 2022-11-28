@@ -46,6 +46,7 @@ void testa_criarPassageiro_dados_nulos(Passageiro *passageiro) {
   }
 }
 
+
 void teste_editarPassageiro_dados_validos(Passageiro *passageiro) {
   int id, aux = 5;
   char nome[30], endereco[30];
@@ -106,6 +107,7 @@ void teste_editarPassageiro_dados_nulos(Passageiro *passageiro) {
     printf("[FALHOU] teste_editarDadosPassageiro_dados_nulos.\n");
   }
 }
+
 
 void teste_retira_passageiro_dados_validos() {
   Lista *lista = lista_cria();
@@ -282,43 +284,6 @@ void teste_lista_retira_dados_nulos() {
   }
 }
 
-void teste_lista_primeiro_dados_validos() {
-  Lista *lista = lista_cria();
-  if (lista != NULL) {
-    Passageiro *abraao = criarPassageiro(1, "Victor", "Pici");
-    lista_insere(lista, abraao);
-    Passageiro *jaco = criarPassageiro(2, "Lucas", "Bom Jardim");
-    lista_insere(lista, jaco);
-    Passageiro *jose = criarPassageiro(3, "Joel", "Vincente Pinzon");
-    lista_insere(lista, jose);
-    Passageiro *passageiro = lista_primeiro(lista);
-
-    if (passageiroIgual(passageiro, abraao) == 1) {
-      printf("[PASSOU] teste_lista_primeiro_dados_validos\n");
-
-    } else {
-      printf("[FALHOU] teste_lista_primeiro_dados_validos\n");
-    }
-  } else {
-    printf("[FALHOU] teste_lista_primeiro_dados_validos\n");
-  }
-}
-
-void teste_lista_primeiro_dados_nulos() {
-  Lista *lista = lista_cria();
-
-  if (lista_primeiro(lista) == NULL) {
-    lista = NULL;
-    if (lista_primeiro(lista) == NULL) {
-      printf("[PASSOU] teste_lista_primeiro_dados_nulos\n");
-    } else {
-      printf("[FALHOU] teste_lista_primeiro_dados_nulos\n");
-    }
-  } else {
-    printf("[FALHOU] teste_lista_primeiro_dados_nulos\n");
-  }
-}
-
 void teste_lista_busca_dados_validos() {
   int matricula;
   char nome[50];
@@ -394,4 +359,22 @@ int main(void) {
   printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 3 =-=-=-=-=-=-=-=-=-=-=\n");
   teste_retira_passageiro_dados_validos(); // falta implementação de funções necessárias
   teste_retira_passageiro_dados_invalidos(passageiro4);
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 4 =-=-=-=-=-=-=-=-=-=-=\n");
+  teste_lista_cria_dados_validos();
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 5 =-=-=-=-=-=-=-=-=-=-=\n");
+  teste_lista_libera_dados_validos();
+  teste_lista_libera_dados_nulos();
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 6 =-=-=-=-=-=-=-=-=-=-=\n");
+  teste_lista_vazia_dados_validos();
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 7 =-=-=-=-=-=-=-=-=-=-=\n");
+  teste_lista_insere_dados_validos();
+  teste_lista_insere_dados_invalidos();
+  teste_lista_insere_dados_nulos();
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 8 =-=-=-=-=-=-=-=-=-=-=\n");
+  teste_lista_retira_dados_validos();
+  teste_lista_retira_dados_nulos();
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 9 =-=-=-=-=-=-=-=-=-=-=\n");
+  teste_lista_busca_dados_validos();
+  teste_lista_busca_dados_invalidos();
+  teste_lista_busca_dados_nulos();  
 }
