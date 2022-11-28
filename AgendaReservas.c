@@ -31,6 +31,11 @@ char *nome;
 char *endereco;
 };
 
+struct no_passageiro {
+  Passageiro *passageiro;
+  struct no_passageiro *proximo;
+};
+
 /* Aloca e retorna uma Agenda com os dados passados por parâmetro. Retorna no nó
  * criado ou NULL caso não seja posivel criar o nó. */
 Agenda *abb_cria_agenda(Reserva *reserva) {
