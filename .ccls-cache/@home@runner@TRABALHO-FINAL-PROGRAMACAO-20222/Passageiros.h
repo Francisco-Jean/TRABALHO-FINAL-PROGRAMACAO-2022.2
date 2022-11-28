@@ -46,7 +46,7 @@ Passageiro *lista_primeiro(Lista *lista);
 /* Busca passageiro pelo número de matricula. Retorna o passageiro se este estiver na
  * lista e NULL caso contrário, isto é, (i) lista vazia; (ii) não exista passageiro
  * com a matricula fornecida; ou (iii) a lista seja NULL */
-Passageiro *lista_busca(Lista *lista, int matricula);
+Passageiro *lista_busca(Lista *lista, int id);
 
 /* Verifica se a lista está vazia. Retorna 1 se a lista estiver vazia, 0 caso não
  * esteja vazia e -1 se a lista for NULL

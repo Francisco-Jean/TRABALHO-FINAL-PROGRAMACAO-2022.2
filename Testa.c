@@ -285,9 +285,9 @@ void teste_lista_retira_dados_nulos() {
 }
 
 void teste_lista_busca_dados_validos() {
-  int matricula;
-  char nome[50];
-  char curso[30];
+  int id;
+  char nome[30];
+  char endereco[30];
 
   Lista *lista = lista_cria();
   if (lista != NULL) {
@@ -299,8 +299,8 @@ void teste_lista_busca_dados_validos() {
     lista_insere(lista, Joel);
     Passageiro *aux = lista_busca(lista, 2);
     if (aux != NULL) {
-      passageiroAcessa(aux, &matricula, nome, curso);
-      if (matricula == 2 && strcmp(nome, "Lucas") == 0 && strcmp(curso, "Bom Jardim") == 0) {
+      passageiroAcessa(aux, &id, nome, endereco);
+      if (id == 2 && strcmp(nome, "Lucas") == 0 && strcmp(endereco, "Bom Jardim") == 0) {
         printf("[PASSOU] teste_lista_busca_dados_validos\n");
       } else {
         printf("[FALHOU] teste_lista_busca_dados_validos\n");
@@ -334,7 +334,7 @@ void teste_lista_busca_dados_invalidos() {
 }
 
 void teste_lista_busca_dados_nulos() {
-  Passageiro *aux = fila_busca(NULL, 1);
+  Passageiro *aux = fila_busca(NULL, -1);
   if (aux == NULL) {
     printf("[PASSOU] teste_lista_busca_dados_nulos");
   } else {
