@@ -371,7 +371,7 @@ void teste_lista_busca_dados_invalidos() {
     if (aux == NULL) {
       printf("[PASSOU 0.67] - Teste da função fila_busca() com dados "
              "inválidos!\n");
-      pontuacao = 0.67;
+      float pontuacao = 0.67;
     } else {
       printf("[FALHOU] - Teste da função fila_busca() com dados "
              "inválidos!\n");

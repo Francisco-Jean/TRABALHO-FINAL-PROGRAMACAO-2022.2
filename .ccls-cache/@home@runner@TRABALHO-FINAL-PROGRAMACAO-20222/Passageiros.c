@@ -38,8 +38,8 @@ int lista_insere(Lista *lista, Passageiro *passageiro) {
     return -1;
   }
   int id_base;
-  char nome[50];
-  char endereco[50];
+  char nome[30];
+  char endereco[30];
   passageiroAcessa(passageiro, &id_base, nome, endereco);
   
   if (lista->primeiro == NULL){
@@ -73,22 +73,25 @@ int lista_insere(Lista *lista, Passageiro *passageiro) {
 
 // Função que será necessário editar para ser colocada em funcionamento
 
-Passageiro *lista_retira(Lista *lista) {
-  /*if(lista == NULL){
+Passageiro *lista_retira(Lista *lista, int id) {
+  if(lista == NULL || id < 0 || lista->primeiro->passageiro == NULL){ 
     return NULL;
   }
-  if(lista->primeiro->proximo == NULL){
-    Passageiro * passageiro_aux = lista->primeiro->passageiro;
-    No ** aux = &(lista->primeiro);
-    *aux = lista->primeiro->proximo;
-    return passageiro_aux;
+  if(lista->primeiro->passageiro->id == id){
+    Passageiro *passageiro_retirado = lista->primeiro->passageiro;
+    lista->primeiro = lista->primeiro->proximo;
+    return passageiro_retirado;
   }
-  else{
-    Passageiro *passageiro_aux = lista->primeiro;
-    No **aux = &(lista->passageiro);
-    No *aux = lista->passageiro->proximo;
-    return passageiro_aux;
-  } */
+  No *passageiro_aux =lista->primeiro->proximo;
+  No *passageiro_aux2 =lista->primeiro;
+  while(passageiro_aux != NULL){
+    if(passageiro_aux->passageiro->id == id){
+      passageiro_aux2->proximo = passageiro_aux->proximo;
+      return passageiro_aux->passageiro;
+    }
+    passageiro_aux2 = passageiro_aux;
+    passageiro_aux = passageiro_aux->proximo;
+  }
   return NULL;
 }
 
@@ -134,6 +137,9 @@ int lista_quantidade(Lista *lista) {
 }
 
 int lista_vazia(Lista *lista) {
+  if(lista->primeiro == NULL){
+    return 1;
+  }
   return 0;
 }
 
@@ -157,7 +163,7 @@ Passageiro *criarPassageiro(int id,char *nome, char *endereco){
   passageiro->id = id;
   strcpy(passageiro->nome, nome);
   strcpy(passageiro->endereco, endereco);
-return passageiro;
+  return passageiro;
 }
 
 void removerPassageiro(Passageiro **passageiro){
@@ -188,5 +194,15 @@ void passageiroAcessa(Passageiro *passageiro, int *id, char *nome, char *enderec
 }
 
 int passageiroIgual(Passageiro *passageiro1, Passageiro *passageiro2) {
-  return 0;
+  if(passageiro1 == NULL && passageiro2!= NULL){
+    return 0;
+  } else if(passageiro1 != NULL && passageiro2 == NULL){
+    return 0;
+  }  else if(passageiro1 == NULL && passageiro2== NULL){
+    return -1;
+  }
+  if(passageiro1->id != passageiro2->id){
+    return 0;
+  }
+  return 1;
 }

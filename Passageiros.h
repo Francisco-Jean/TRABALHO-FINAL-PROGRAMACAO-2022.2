@@ -37,7 +37,7 @@ int lista_insere(Lista *lista, Passageiro *passageiro);
 
 /* Remove um passageiro na lista. Retorna o passageiro ou NULL caso a lista esteja vazia ou
  * seja NULL */
-Passageiro *lista_retira(Lista *lista);
+Passageiro *lista_retira(Lista *lista, int id);
 
 /* Recupera o primeiro passageiro da lista. Retorna o passageiro ou NULL caso a lista esteja
  * vazia ou seja NULL */

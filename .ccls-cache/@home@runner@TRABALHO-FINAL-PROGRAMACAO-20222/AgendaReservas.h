@@ -18,4 +18,10 @@ typedef enum cod_assento Assento;
 typedef struct data Data;
 typedef struct reserva Reserva;
 typedef struct agenda Agenda;
+typedef struct passageiro Passageiro;
 
+/* Aloca e retorna um No com os dados passados por parâmetro. Retorna no nó
+ * criado ou NULL caso não seja posivel criar o nó. */
+No *abb_cria_no(Reserva *reserva);
+
+Agenda *abb_insere_agenda(Agenda *raiz, Agenda *agenda);
