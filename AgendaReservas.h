@@ -19,9 +19,16 @@ typedef struct data Data;
 typedef struct reserva Reserva;
 typedef struct agenda Agenda;
 typedef struct passageiro Passageiro;
+typedef struct tabela_viagem TabelaViagem;
 
 /* Aloca e retorna um No com os dados passados por parâmetro. Retorna no nó
  * criado ou NULL caso não seja posivel criar o nó. */
 No *abb_cria_no(Reserva *reserva);
 
 Agenda *abb_insere_agenda(Agenda *raiz, Agenda *agenda);
+
+int fun_hash(int id, int codigo);
+
+Agenda *abb_busca_agenda(Agenda *raiz,int id, int codigo, Data *data_viagem);
+
+Reserva *em_ordem(Agenda *agenda, int id, int codigo);
