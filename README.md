@@ -7,9 +7,7 @@ u
 
 |MEMBROS DA EQUIPE|PERFIL DO GITHUB|
 |:----------------------------------------:|:---------------------------------------------------:|
-
 |<img src="https://avatars.githubusercontent.com/u/66488491?v=4" height="25%" width="25%" style="border-radius: 65px;"/> <p>KAUAN GUILHERME DE BRITO SOARES</p>|[KauanSoaress](https://github.com/KauanSoaress</a>)|
-
 |<img src="https://avatars.githubusercontent.com/u/66488491?v=4)" height="25%" width="25%">|[KauanSoaress](https://github.com/KauanSoaress</a>)|
 |<img src="https://avatars.githubusercontent.com/u/66488491?v=4)" height="25%" width="25%">|[KauanSoaress](https://github.com/KauanSoaress</a>)|
 |<img src="https://avatars.githubusercontent.com/u/66488491?v=4)" height="25%" width="25%">|[KauanSoaress](https://github.com/KauanSoaress</a>)|
