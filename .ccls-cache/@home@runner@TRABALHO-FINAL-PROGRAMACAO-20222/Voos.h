@@ -16,3 +16,7 @@ int listaVoo_insere(ListaVoo *listaVoo, Voo *voo);
 Voo *listaVoo_retira(ListaVoo *listaVoo, int codigo);
 
 int vooIgual(Voo *voo1, Voo *voo2);
+
+int listaVoo_libera(ListaVoo **listaVoo);
+
+Voo *listaVoo_busca(ListaVoo *listaVoo, int codigo);

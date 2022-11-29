@@ -44,3 +44,11 @@ Voo *listaVoo_retira(ListaVoo *listaVoo, int codigo) {
 int vooIgual(Voo *voo1, Voo *voo2) {
   return 0;
 }
+
+int listaVoo_libera(ListaVoo **listaVoo) {
+  return 0;
+}
+
+Voo *listaVoo_busca(ListaVoo *listaVoo, int codigo) {
+  return NULL;
+}
