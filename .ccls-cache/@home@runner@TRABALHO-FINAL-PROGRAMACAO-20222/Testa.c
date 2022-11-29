@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+// ================== TESTES FUNÇÕES DE PASSAGEIRO ==================
+
+
 void testa_criarPassageiro_dados_validos(Passageiro *passageiro) {  
   int id;
   char nome[30], endereco[30];
@@ -42,6 +45,7 @@ void testa_criarPassageiro_dados_nulos(Passageiro *passageiro) {
     printf("[FALHOU] testa_criar_passageiro_dados_nulos.\n");
   }
 }
+
 
 void teste_editarPassageiro_dados_validos(Passageiro *passageiro) {
   int id, aux = 5;
@@ -104,6 +108,7 @@ void teste_editarPassageiro_dados_nulos(Passageiro *passageiro) {
   }
 }
 
+
 void teste_retira_passageiro_dados_validos() {
   Lista *lista = lista_cria();
   if (lista != NULL) {
@@ -143,7 +148,7 @@ void teste_retira_passageiro_dados_invalidos(Passageiro *passageiro) {
   }
 }
 
-// ================== TESTES FUNÇÕES DE LISTA ==================
+// ================== TESTES FUNÇÕES DE LISTA DE PASSAGEIROS ==================
 
 void teste_lista_cria_dados_validos() {
   Lista *lista = lista_cria();
@@ -279,48 +284,6 @@ void teste_lista_retira_dados_nulos() {
   }
 }
 
-void teste_lista_primeiro_dados_validos() {
-  Lista *lista = lista_cria();
-  if (lista != NULL) {
-    Passageiro *abraao = criarPassageiro(1, "Victor", "Pici");
-    lista_insere(lista, abraao);
-    Passageiro *jaco = criarPassageiro(2, "Lucas", "Bom Jardim");
-    lista_insere(lista, jaco);
-    Passageiro *jose = criarPassageiro(3, "Joel", "Vincente Pinzon");
-    lista_insere(lista, jose);
-    Passageiro *passageiro = lista_primeiro(lista);
-
-    if (passageiroIgual(passageiro, abraao) == 1) {
-      printf("[PASSOU] teste_lista_primeiro_dados_validos\n");
-
-    } else {
-      printf("[FALHOU] teste_lista_primeiro_dados_validos\n");
-    }
-  } else {
-    printf("[FALHOU] teste_lista_primeiro_dados_validos\n");
-  }
-}
-
-void teste_lista_primeiro_dados_nulos() {
-  Lista *lista = lista_cria();
-
-  if (lista_primeiro(lista) == NULL) {
-    lista = NULL;
-    if (lista_primeiro(lista) == NULL) {
-      printf("[PASSOU] teste_lista_primeiro_dados_nulos\n");
-    } else {
-      printf("[FALHOU] teste_lista_primeiro_dados_nulos\n");
-    }
-  } else {
-    printf("[FALHOU] teste_lista_primeiro_dados_nulos\n");
-  }
-}
-
-// CONTINUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR
-// CONTINUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR
-// CONTINUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR
-// CONTINUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR
-// CONTINUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR
 void teste_lista_busca_dados_validos() {
   int matricula;
   char nome[50];
@@ -328,70 +291,54 @@ void teste_lista_busca_dados_validos() {
 
   Lista *lista = lista_cria();
   if (lista != NULL) {
-    Passageiro *abraao = criarPassageiro(1, "Victor", "Pici");
-    lista_insere(lista, abraao);
-    Passageiro *jaco = criarPassageiro(2, "Lucas", "Bom Jardim");
-    lista_insere(lista, jaco);
-    Passageiro *jose = criarPassageiro(3, "Joel", "Vincente Pinzon");
-    lista_insere(lista, jose);
+    Passageiro *Victor = criarPassageiro(1, "Victor", "Pici");
+    lista_insere(lista, Victor);
+    Passageiro *Lucas = criarPassageiro(2, "Lucas", "Bom Jardim");
+    lista_insere(lista, Lucas);
+    Passageiro *Joel = criarPassageiro(3, "Joel", "Vincente Pinzon");
+    lista_insere(lista, Joel);
     Passageiro *aux = lista_busca(lista, 2);
     if (aux != NULL) {
       passageiroAcessa(aux, &matricula, nome, curso);
-      if (matricula == 2 && strcmp(nome, "Jaco") == 0 &&
-          strcmp(curso, "Computação") == 0) {
-        printf("[PASSOU 1.00] - Teste da função fila_busca() com dados "
-               "válidos!\n");
+      if (matricula == 2 && strcmp(nome, "Lucas") == 0 && strcmp(curso, "Bom Jardim") == 0) {
+        printf("[PASSOU] teste_lista_busca_dados_validos\n");
       } else {
-        printf("[FALHOU] - Teste da função fila_busca() com dados "
-               "válidos!\n");
+        printf("[FALHOU] teste_lista_busca_dados_validos\n");
       }
     } else {
-      printf("[FALHOU] - Teste da função fila_busca() com dados "
-             "válidos!\n");
+      printf("[FALHOU] teste_lista_busca_dados_validos\n");
     }
   } else {
-    printf("[FALHOU] - Teste da função fila_busca() com dados válidos!\n");
+    printf("[FALHOU] teste_lista_busca_dados_validos\n");
   }
 }
 
 void teste_lista_busca_dados_invalidos() {
-  int matricula;
-  char nome[50];
-  char curso[30];
-
   Lista *lista = lista_cria();
   if (lista != NULL) {
-    Passageiro *abraao = criarPassageiro(1, "Abraão", "Computação");
-    fila_insere(lista, abraao);
-    Passageiro *jaco = criarPassageiro(2, "Jaco", "Computação");
-    fila_insere(lista, jaco);
-    Passageiro *jose = criarPassageiro(3, "Jose", "Computação");
-    fila_insere(lista, jose);
-    Passageiro *aux = fila_busca(lista, 5);
+    Passageiro *Victor = criarPassageiro(1, "Victor", "Pici");
+    lista_insere(lista, Victor);
+    Passageiro *Lucas = criarPassageiro(2, "Lucas", "Bom Jardim");
+    lista_insere(lista, Lucas);
+    Passageiro *Joel = criarPassageiro(3, "Joel", "Vincente Pinzon");
+    lista_insere(lista, Joel);
+    Passageiro *aux = lista_busca(lista, 5);
     if (aux == NULL) {
-      printf("[PASSOU 0.67] - Teste da função fila_busca() com dados "
-             "inválidos!\n");
-      float pontuacao = 0.67;
+      printf("[PASSOU] teste_lista_busca_dados_invalidos\n");
     } else {
-      printf("[FALHOU] - Teste da função fila_busca() com dados "
-             "inválidos!\n");
+      printf("[FALHOU] teste_lista_busca_dados_invalidos\n");
     }
   } else {
-    printf("[FALHOU] - Teste da função fila_busca() com dados "
-           "inválidos!\n");
+    printf("[FALHOU] teste_lista_busca_dados_invalidos\n");
   }
 }
 
 void teste_lista_busca_dados_nulos() {
-  int matricula;
-  char nome[50];
-  char curso[30];
-
   Passageiro *aux = fila_busca(NULL, 1);
   if (aux == NULL) {
-    printf("[PASSOU 0.50] - Teste da função fila_busca() com dados nulos!\n");
+    printf("[PASSOU] teste_lista_busca_dados_nulos");
   } else {
-    printf("[FALHOU] - Teste da função fila_busca() com dados nulos!\n");
+    printf("[FALHOU] teste_lista_busca_dados_nulos");
   }
 }
 
@@ -412,4 +359,22 @@ int main(void) {
   printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 3 =-=-=-=-=-=-=-=-=-=-=\n");
   teste_retira_passageiro_dados_validos(); // falta implementação de funções necessárias
   teste_retira_passageiro_dados_invalidos(passageiro4);
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 4 =-=-=-=-=-=-=-=-=-=-=\n");
+  teste_lista_cria_dados_validos();
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 5 =-=-=-=-=-=-=-=-=-=-=\n");
+  teste_lista_libera_dados_validos();
+  teste_lista_libera_dados_nulos();
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 6 =-=-=-=-=-=-=-=-=-=-=\n");
+  teste_lista_vazia_dados_validos();
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 7 =-=-=-=-=-=-=-=-=-=-=\n");
+  teste_lista_insere_dados_validos();
+  teste_lista_insere_dados_invalidos();
+  teste_lista_insere_dados_nulos();
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 8 =-=-=-=-=-=-=-=-=-=-=\n");
+  teste_lista_retira_dados_validos();
+  teste_lista_retira_dados_nulos();
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES 9 =-=-=-=-=-=-=-=-=-=-=\n");
+  teste_lista_busca_dados_validos();
+  teste_lista_busca_dados_invalidos();
+  teste_lista_busca_dados_nulos();  
 }
