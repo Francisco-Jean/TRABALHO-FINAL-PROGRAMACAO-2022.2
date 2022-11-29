@@ -20,17 +20,6 @@ void testa_criarPassageiro_dados_validos(Passageiro *passageiro) {
 }
 
 void testa_criarPassageiro_dados_invalidos(Passageiro *passageiro) {
-  /*char nome[55] = "N";
-  char endereco[35] = "C";
-
-  for (int i = 0; i < 53; i++) {
-    strcat(nome, "N");
-  }
-
-  for (int i = 0; i < 33; i++) {
-    strcat(endereco, "C");
-  }*/
-
   if (passageiro == NULL) {
     printf("[PASSOU] testa_criar_passageiro_dados_invalidos.\n");
   } else {
