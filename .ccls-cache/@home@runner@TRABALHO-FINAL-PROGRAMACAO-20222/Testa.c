@@ -321,11 +321,11 @@ void teste_lista_passageiro_busca_dados_invalidos() {
 }
 
 void teste_lista_passageiro_busca_dados_nulos() {
-  Passageiro *aux = fila_busca(NULL, -1);
+  Passageiro *aux = lista_busca(NULL, -1);
   if (aux == NULL) {
-    printf("[PASSOU] teste_lista_passageiro_busca_dados_nulos");
+    printf("[PASSOU] teste_lista_passageiro_busca_dados_nulos\n");
   } else {
-    printf("[FALHOU] teste_lista_passageiro_busca_dados_nulos");
+    printf("[FALHOU] teste_lista_passageiro_busca_dados_nulos\n");
   }
 }
 
@@ -649,7 +649,7 @@ void teste_lista_voo_busca_dados_nulos() {
 int main(void) {
   Passageiro *passageiro1 = criarPassageiro(1, "Jean", "Vincente Pinzon");
   Passageiro *passageiro2 = criarPassageiro(2, "Kauan", "Aracati");
-  Passageiro *passageiro3 = criarPassageiro(1, "Gustavo", "Trairi");
+  Passageiro *passageiro3 = criarPassageiro(-1, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
   Passageiro *passageiro4 = criarPassageiro(-1, NULL, NULL);
   
   printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES CRIAR PASSAGEIRO =-=-=-=-=-=-=-=-=-=-=\n");
@@ -691,28 +691,26 @@ int main(void) {
   testa_criar_voo_dados_validos(voo1);
   testa_criar_voo_dados_invalidos(voo3);
   testa_criar_voo_dados_nulos(voo4);
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES EDITAR PASSAGEIRO =-=-=-=-=-=-=-=-=-=-=\n");
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES EDITAR VOO =-=-=-=-=-=-=-=-=-=-=\n");
   teste_editar_voo_dados_validos(voo1);
   teste_editar_voo_dados_invalidos(voo2);
   teste_editar_voo_dados_nulos(voo1);
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES RETIRAR PASSAGEIRO =-=-=-=-=-=-=-=-=-=-=\n");
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES RETIRAR VOO =-=-=-=-=-=-=-=-=-=-=\n");
   teste_retira_voo_dados_validos();
   teste_retira_voo_dados_nulos();
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA PASSAGEIROS CRIA =-=-=-=-=-=-=-=-=-=-=\n");
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA VOO CRIA =-=-=-=-=-=-=-=-=-=-=\n");
   teste_lista_voo_cria_dados_validos();
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA PASSAGEIROS LIBERA =-=-=-=-=-=-=-=-=-=-=\n");
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA VOO LIBERA =-=-=-=-=-=-=-=-=-=-=\n");
   teste_lista_voo_libera_dados_validos();
   teste_lista_voo_libera_dados_nulos();
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA PASSAGEIROS VAZIA =-=-=-=-=-=-=-=-=-=-=\n");
-  teste_lista_voo_vazia_dados_validos();
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA PASSAGEIROS INSERE =-=-=-=-=-=-=-=-=-=-=\n");
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA VOO INSERE =-=-=-=-=-=-=-=-=-=-=\n");
   teste_lista_voo_insere_dados_validos();
   teste_lista_voo_insere_dados_invalidos();
   teste_lista_voo_insere_dados_nulos();
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA PASSAGEIROS RETIRA =-=-=-=-=-=-=-=-=-=-=\n");
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA VOO RETIRA =-=-=-=-=-=-=-=-=-=-=\n");
   teste_lista_voo_retira_dados_validos();
   teste_lista_voo_retira_dados_nulos();
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA PASSAGEIROS BUSCA =-=-=-=-=-=-=-=-=-=-=\n");
+  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA VOO BUSCA =-=-=-=-=-=-=-=-=-=-=\n");
   teste_lista_voo_busca_dados_validos();
   teste_lista_voo_busca_dados_invalidos();
   teste_lista_voo_busca_dados_nulos();  

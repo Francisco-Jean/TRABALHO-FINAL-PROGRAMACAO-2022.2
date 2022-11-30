@@ -18,7 +18,6 @@ struct lista_voo {
 };
 
 void vooAcessa(Voo *voo, int *codigo, char *origem, char *destino) {
-  printf("Ola");
 }
 
 Voo *criarVoo(int codigo, char *origem, char *destino) {
