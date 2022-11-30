@@ -121,9 +121,14 @@ Reserva *abb_busca_reserva(Agenda *raiz,int id, int codigo, Data *data_viagem) {
 }
 
 Reserva *em_ordem(Agenda *agenda, int id, int codigo){
-  em_ordem(agenda->esq,id,codigo);
+  if(agenda->esq != NULL){
+    em_ordem(agenda->esq,id,codigo);
+  }
   if (agenda->reserva->codigo == codigo && agenda->reserva->passageiro->id == id){
     return agenda->reserva;
   }
-  em_ordem(agenda->dir,id,codigo);
+  if(agenda->dir != NULL){
+    em_ordem(agenda->dir,id,codigo);
+  }
+  return NULL;
 }
