@@ -25,3 +25,5 @@ typedef struct passageiro Passageiro;
 No *abb_cria_no(Reserva *reserva);
 
 Agenda *abb_insere_agenda(Agenda *raiz, Agenda *agenda);
+
+Reserva *em_ordem(Agenda *agenda, int id, int codigo);

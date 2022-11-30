@@ -95,57 +95,35 @@ Agenda *abb_insere_agenda(Agenda *raiz, Agenda *agenda) {
   return raiz;
 }
 
-/* Procura o agenda pela reserva. Retorna a agenda caso a busca obtenha sucesso ou NULL
+/* Procura o reserva pelo id e codigo. Retorna a reserva caso a busca obtenha sucesso ou NULL
  * em caso contrário. */
-Agenda *abb_busca_agenda(Agenda *raiz,int id, int codigo, Data *data_viagem) {
-  if(id<=0 || codigo<=0 || data_viagem == NULL){
+Reserva *abb_busca_reserva(Agenda *raiz,int id, int codigo, Data *data_viagem) {
+  if(id<0 || codigo<0 || data_viagem == NULL){
     return NULL;
   }
-  if(codigo!= 0 && data_viagem == NULL){
+  if(id != 0 && codigo != 0 && data_viagem == NULL){
+    Reserva *reserva = em_ordem(raiz,id,codigo);
+    return reserva;
+  }
+  else if(id != 0 && codigo == 0 && data_viagem != NULL){
     Agenda *agenda_aux = raiz;
-  while(agenda_aux->reserva->codigo != codigo && agenda_aux->reserva->passageiro->id != id){
-    
-    if (chave <= no_aux->chave){
-      no_aux = no_aux->esq;
+    while(agenda_aux->reserva->data_viagem != data_viagem && agenda_aux->reserva->passageiro->id != id){
+      if (agenda_aux->reserva->data_viagem <= data_viagem){
+        agenda_aux = agenda_aux->esq;
+      }
+      else{
+        agenda_aux = agenda_aux->dir;
+      }
     }
-    else{
-      no_aux = no_aux->dir;
-    }
+    return agenda_aux->reserva;
   }
-  }
-  Agenda *agenda_aux = raiz;
-  while(agenda_aux->reserva != reserva && no_aux != NULL){
-    
-    if (chave <= no_aux->chave){
-      no_aux = no_aux->esq;
-    }
-    else{
-      no_aux = no_aux->dir;
-    }
-  }
-  return no_aux;
+  return NULL;
 }
 
-  /* Remove o nó com a reserva fornecida. Retorna a raiz da arvore atualizada ou
- * NULL em caso a raiz fornecida seja NULL. */
-Agenda *abb_remove_agenda(Agenda *raiz, Reserva *reserva) {
-  if(raiz == NULL){
-    return NULL;
+Reserva *em_ordem(Agenda *agenda, int id, int codigo){
+  em_ordem(agenda->esq,id,codigo);
+  if (agenda->reserva->codigo == codigo && agenda->reserva->passageiro->id == id){
+    return agenda->reserva;
   }
-  Agenda *z = abb_busca_agenda(raiz,chave);
-  if(z->esq == NULL){
-    transplantar(raiz,z,z->dir);
-    }
-  else{
-    No *x = sucessor(z);
-    transplantar(raiz,z,z->dir);
-    x->esq = z->esq;
-    z->esq->pai = x;
-    x->dir = z->dir;
-    if(z->dir == NULL){
-      z->dir->pai = x;
-    }
-    transplantar(raiz,z,x);
-  }
-  return raiz;
+  em_ordem(agenda->dir,id,codigo);
 }
