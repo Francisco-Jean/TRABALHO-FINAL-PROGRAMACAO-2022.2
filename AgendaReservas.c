@@ -36,6 +36,16 @@ struct no_passageiro {
   struct no_passageiro *proximo;
 };
 
+Reserva *cria_reserva(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
+  Reserva *reserva = (Reserva*) malloc(sizeof(Reserva));
+  reserva->codigo = codigo;
+  reserva->data_viagem = data_viagem;
+  reserva->passageiro = passageiro;
+  reserva->voo = voo;
+  reserva->assento = assento;
+  return reserva;
+}
+
 /* Aloca e retorna uma Agenda com os dados passados por parâmetro. Retorna no nó
  * criado ou NULL caso não seja posivel criar o nó. */
 Agenda *abb_cria_agenda(Reserva *reserva) {
@@ -121,34 +131,24 @@ Reserva *abb_busca_reserva(Agenda *raiz,int id, int codigo, Data *data_viagem) {
   return NULL;
 }
 
-  /* Remove o nó com a reserva fornecida. Retorna a raiz da arvore atualizada ou
- * NULL em caso a raiz fornecida seja NULL. */
-Agenda *abb_remove_agenda(Agenda *raiz, Reserva *reserva) {
-  if(raiz == NULL){
-    return NULL;
-  }
-  Agenda *z = abb_busca_agenda(raiz,chave);
-  if(z->esq == NULL){
-    transplantar(raiz,z,z->dir);
-    }
-  else{
-    No *x = sucessor(z);
-    transplantar(raiz,z,z->dir);
-    x->esq = z->esq;
-    z->esq->pai = x;
-    x->dir = z->dir;
-    if(z->dir == NULL){
-      z->dir->pai = x;
-    }
-    transplantar(raiz,z,x);
-  }
-  return raiz;
-}
 
 Reserva *em_ordem(Agenda *agenda, int id, int codigo){
-  em_ordem(agenda->esq,id,codigo);
+  if(agenda->esq != NULL){
+    em_ordem(agenda->esq,id,codigo);
+  }
   if (agenda->reserva->codigo == codigo && agenda->reserva->passageiro->id == id){
     return agenda->reserva;
   }
-  em_ordem(agenda->dir,id,codigo);
+  if(agenda->dir != NULL){
+    em_ordem(agenda->dir,id,codigo);
+  }
+  return NULL;
+}
+
+int verifica_dados(Agenda *raiz,int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
+  Reserva *z = abb_busca_reserva(raiz, passageiro->id, codigo, data_viagem);
+  
+  if(z!= NULL ){
+    
+  }
 }
