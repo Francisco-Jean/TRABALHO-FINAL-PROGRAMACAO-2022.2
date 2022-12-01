@@ -4,6 +4,33 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MAXCARACTERES 60
+
+// FUNÇÃO DE IMPRIMIR A TABELA DE CORREÇÃO
+void imprimir(char *texto){
+  if(!strcmp(texto, "")){
+    printf("------------------------------------------------------------\n");
+  }
+  else{
+    int tamanho = strlen(texto);
+    int sp = ((MAXCARACTERES - tamanho - 1) / 2);
+    char *espaco = (char *) malloc(sizeof(char) * 60);
+    for(int x = 0; x < sp; x++){
+      strcat(espaco, " ");
+    }
+    if(tamanho % 2 == 0){
+      printf("|%s%s%s|\n",espaco, texto, espaco);
+    }
+    else{
+      char *espaco2 = (char *) malloc(sizeof(char) * 60);
+      for(int x = 0; x < sp-1; x++){
+      strcat(espaco2, " ");
+      }
+      printf("|%s%s%s|\n",espaco2, texto, espaco);
+    }
+  }
+}
+
 // ================== TESTES FUNÇÕES DE PASSAGEIRO ==================
 
 void testa_criar_passageiro_dados_validos(Passageiro *passageiro) {  
@@ -13,25 +40,25 @@ void testa_criar_passageiro_dados_validos(Passageiro *passageiro) {
   passageiroAcessa(passageiro, &id, nome, endereco);
 
   if ((id == 1) && (strcmp(nome, "Jean") == 0) && (strcmp(endereco, "Vincente Pinzon") == 0)) {
-    printf("[PASSOU] testa_criar_passageiro_dados_validos.\n");
+    imprimir("[PASSOU] testa_criar_passageiro_dados_validos");
   } else {
-    printf("[FALHOU] testa_criar_passageiro_dados_validos.\n");
+    imprimir("[FALHOU] testa_criar_passageiro_dados_validos");
   } 
 }
 
 void testa_criar_passageiro_dados_invalidos(Passageiro *passageiro) {
   if (passageiro == NULL) {
-    printf("[PASSOU] testa_criar_passageiro_dados_invalidos.\n");
+    imprimir("[PASSOU] testa_criar_passageiro_dados_invalidos");
   } else {
-    printf("[FALHOU] testa_criar_passageiro_dados_invalidos.\n");
+    imprimir("[FALHOU] testa_criar_passageiro_dados_invalidos");
   }
 }
 
 void testa_criar_passageiro_dados_nulos(Passageiro *passageiro) {
   if (passageiro == NULL) {
-    printf("[PASSOU] testa_criar_passageiro_dados_nulos.\n");
+    imprimir("[PASSOU] testa_criar_passageiro_dados_nulos");
   } else {
-    printf("[FALHOU] testa_criar_passageiro_dados_nulos.\n");
+    imprimir("[FALHOU] testa_criar_passageiro_dados_nulos");
   }
 }
 
@@ -43,12 +70,12 @@ void teste_editar_passageiro_dados_validos(Passageiro *passageiro) {
     editarPassageiro(passageiro, aux, "Victor", "Pici");
     passageiroAcessa(passageiro, &id, nome, endereco);
     if (id == aux && strcmp(nome, "Victor") == 0 && strcmp(endereco, "Pici") == 0) {
-      printf("[PASSOU] teste_editarPassageiro_dados_validos.\n");
+      imprimir("[PASSOU] teste_editarPassageiro_dados_validos");
     } else {
-      printf("[FALHOU] teste_editarPassageiro_dados_validos.\n");
+      imprimir("[FALHOU] teste_editarPassageiro_dados_validos");
     }
   } else {
-    printf("[FALHOU] teste_editarPassageiro_dados_validos.\n");
+    imprimir("[FALHOU] teste_editarPassageiro_dados_validos");
   }
 }
 
@@ -69,12 +96,12 @@ void teste_editar_passageiro_dados_invalidos(Passageiro *passageiro) {
     editarPassageiro(passageiro, idAux, nomeAux, enderecoAux);
     passageiroAcessa(passageiro, &id, nomeAux, enderecoAux);
     if (id == idAux || strcmp(nomeAux, "Luiz") == 0 || strcmp(enderecoAux, "Pici") == 0) {
-      printf("[PASSOU] teste_editarPassageiro_dados_invalidos.\n");
+      imprimir("[PASSOU] teste_editarPassageiro_dados_invalidos");
     } else {
-      printf("[FALHOU] teste_editarPassageiro_dados_invalidos.\n");
+      imprimir("[FALHOU] teste_editarPassageiro_dados_invalidos");
     }
   } else {
-      printf("[FALHOU] teste_editarPassageiro_dados_invalidos.\n");
+    imprimir("[FALHOU] teste_editarPassageiro_dados_invalidos");
   }
 }
 
@@ -87,12 +114,12 @@ void teste_editar_passageiro_dados_nulos(Passageiro *passageiro) {
     editarPassageiro(NULL, auxERRADA, NULL, NULL);
     passageiroAcessa(passageiro, &id, nome, endereco);
     if (id == aux || strcmp(nome, "Luiz") == 0 || strcmp(endereco, "Pici") == 0) {
-      printf("[PASSOU] teste_editarPassageiro_dados_nulos.\n");
+      imprimir("[PASSOU] teste_editarPassageiro_dados_nulos");
     } else {
-      printf("[PASSOU] teste_editarPassageiro_dados_nulos.\n");
+      imprimir("[PASSOU] teste_editarPassageiro_dados_nulos");
     }
   } else {
-    printf("[FALHOU] teste_editarPassageiro_dados_nulos.\n");
+    imprimir("[FALHOU] teste_editarPassageiro_dados_nulos");
   }
 }
 
@@ -112,26 +139,26 @@ void teste_retira_passageiro_dados_validos() {
       if (passageiroIgual(passageiro, Rosa) == 1) {
         passageiro = lista_retira(lista, 1);
         if (passageiroIgual(passageiro, Victor) == 1) {
-          printf("[PASSOU] teste_retira_passageiro_dados_validos.\n");
+          imprimir("[PASSOU] teste_retira_passageiro_dados_validos");
         } else {
-          printf("[FALHOU] teste_retira_passageiro_dados_validos.\n");
+          imprimir("[FALHOU] teste_retira_passageiro_dados_validos");
         }
       } else {
-        printf("[FALHOU] teste_retira_passageiro_dados_validos.\n");
+        imprimir("[FALHOU] teste_retira_passageiro_dados_validos");
       }
     } else {
-      printf("[FALHOU] teste_retira_passageiro_dados_validos.\n");
+      imprimir("[FALHOU] teste_retira_passageiro_dados_validos");
     }
   } else {
-    printf("[FALHOU] teste_retira_passageiro_dados_validos.\n");
+    imprimir("[FALHOU] teste_retira_passageiro_dados_validos");
   }
 }
 
 void teste_retira_passageiro_dados_nulos() {
   if (lista_retira(NULL, -1) == NULL) {
-    printf("[PASSOU] teste_retira_passageiro_dados_nulos.\n");
+    imprimir("[PASSOU] teste_retira_passageiro_dados_nulos");
   } else {
-    printf("[FALHOU] teste_retira_passageiro_dados_nulos.\n");
+    imprimir("[FALHOU] teste_retira_passageiro_dados_nulos");
   }
 }
 
@@ -140,9 +167,9 @@ void teste_retira_passageiro_dados_nulos() {
 void teste_lista_passageiro_cria_dados_validos() {
   Lista *lista = lista_cria();
   if (lista != NULL) {
-    printf("[PASSOU] teste_lista_passageiro_cria_dados_validos.\n");
+    imprimir("[PASSOU] teste_lista_passageiro_cria_dados_validos");
   } else {
-    printf("[FALHOU] teste_lista_passageiro_cria_dados_validos.\n");
+    imprimir("[FALHOU] teste_lista_passageiro_cria_dados_validos");
   }
 }
 
@@ -150,26 +177,26 @@ void teste_lista_passageiro_libera_dados_validos() {
   Lista *lista = lista_cria();
   lista_libera(&lista);
   if (lista != NULL) {
-    printf("[FALHOU] teste_lista_passageiro_libera_dados_validos.\n");
+    imprimir("[FALHOU] teste_lista_passageiro_libera_dados_validos.");
   } else {
-    printf("[PASSOU] teste_lista_passageiro_libera_dados_validos.\n");
+    imprimir("[PASSOU] teste_lista_passageiro_libera_dados_validos.");
   }
 }
 
 void teste_lista_passageiro_libera_dados_nulos() {
   if (lista_libera(NULL) == 0) {
-    printf("[PASSOU] teste_lista_passageiro_libera_dados_nulos.\n");
+    imprimir("[PASSOU] teste_lista_passageiro_libera_dados_nulos.");
   } else {
-    printf("[FALHOU] teste_lista_passageiro_libera_dados_nulos.\n");
+    imprimir("[FALHOU] teste_lista_passageiro_libera_dados_nulos.");
   }
 }
 
 void teste_lista_passageiro_vazia_dados_validos() {
   Lista *lista = lista_cria();
   if (lista != NULL && lista_vazia(lista)) {
-    printf("[PASSOU] teste_lista_passageiro_vazia_dados_validos.\n");
+    imprimir("[PASSOU] teste_lista_passageiro_vazia_dados_validos.");
   } else {
-    printf("[FALHOU] teste_lista_passageiro_vazia_dados_validos.\n");
+    imprimir("[FALHOU] teste_lista_passageiro_vazia_dados_validos.");
   }
 }
 
@@ -182,18 +209,18 @@ void teste_lista_passageiro_insere_dados_validos() {
       if (lista_insere(lista, Lincoln) == 1) {
         Passageiro *Neto = criarPassageiro(3, "Neto", "Bom Jardim");
         if (lista_insere(lista, Neto) == 1) {
-          printf("[PASSOU] teste_lista_passageiro_insere_dados_validos.\n");
+          imprimir("[PASSOU] teste_lista_passageiro_insere_dados_validos");
         } else {
-          printf("[FALHOU] teste_lista_passageiro_insere_dados_validos.\n");
+          imprimir("[FALHOU] teste_lista_passageiro_insere_dados_validos");
         }
       } else {
-        printf("[FALHOU] teste_lista_passageiro_insere_dados_validos.\n");
+        imprimir("[FALHOU] teste_lista_passageiro_insere_dados_validos");
       }
     } else {
-      printf("[FALHOU] teste_lista_passageiro_insere_dados_validos.\n");
+      imprimir("[FALHOU] teste_lista_passageiro_insere_dados_validos");
     }
   } else {
-    printf("[FALHOU] teste_lista_passageiro_insere_dados_validos.\n");
+    imprimir("[FALHOU] teste_lista_passageiro_insere_dados_validos");
   }
 }
 
@@ -205,12 +232,12 @@ void teste_lista_passageiro_insere_dados_invalidos() {
     lista_insere(lista, Victor);
     Passageiro *Lucas = criarPassageiro(1, "Lucas", "Computação");
     if (lista_insere(lista, Lucas) == 0) {
-      printf("[PASSOU] teste_lista_passageiro_insere_dados_invalidos\n");
+      imprimir("[PASSOU] teste_lista_passageiro_insere_dados_invalidos");
     } else {
-      printf("[FALHOU] teste_lista_passageiro_insere_dados_invalidos\n");
+      imprimir("[FALHOU] teste_lista_passageiro_insere_dados_invalidos");
     }
   } else {
-    printf("[FALHOU] teste_lista_passageiro_insere_dados_invalidos\n");
+    imprimir("[FALHOU] teste_lista_passageiro_insere_dados_invalidos");
   }
 }
 
@@ -220,15 +247,15 @@ void teste_lista_passageiro_insere_dados_nulos() {
     Passageiro *Victor = criarPassageiro(1, "Victor", "Pici");
     if (lista_insere(NULL, Victor) == -1) {
       if (lista_insere(NULL, NULL) == -1) {
-        printf("[PASSOU] teste_lista_passageiro_insere_dados_nulos\n");
+        imprimir("[PASSOU] teste_lista_passageiro_insere_dados_nulos");
       } else {
-        printf("[FALHOU] teste_lista_passageiro_insere_dados_nulos\n");
+        imprimir("[FALHOU] teste_lista_passageiro_insere_dados_nulos");
       }
     } else {
-      printf("[FALHOU] teste_lista_passageiro_insere_dados_nulos\n");
+      imprimir("[FALHOU] teste_lista_passageiro_insere_dados_nulos");
     }
   } else {
-    printf("[FALHOU] teste_lista_passageiro_insere_dados_nulos\n");
+    imprimir("[FALHOU] teste_lista_passageiro_insere_dados_nulos");
   }
 }
 
@@ -248,26 +275,26 @@ void teste_lista_passageiro_retira_dados_validos() {
       if (passageiroIgual(passageiro, Joel) == 1) {
         passageiro = lista_retira(lista, 1);
         if (passageiroIgual(passageiro, Victor) == 1) {
-          printf("[PASSOU] teste_lista_passageiro_retira_dados_validos\n");
+          imprimir("[PASSOU] teste_lista_passageiro_retira_dados_validos");
         } else {
-          printf("[FALHOU] teste_lista_passageiro_retira_dados_validos\n");
+          imprimir("[FALHOU] teste_lista_passageiro_retira_dados_validos");
         }
       } else {
-        printf("[FALHOU] teste_lista_passageiro_retira_dados_validos\n");
+        imprimir("[FALHOU] teste_lista_passageiro_retira_dados_validos");
       }
     } else {
-      printf("[FALHOU] teste_lista_passageiro_retira_dados_validos\n");
+      imprimir("[FALHOU] teste_lista_passageiro_retira_dados_validos");
     }
   } else {
-    printf("[FALHOU] teste_lista_passageiro_retira_dados_validos\n");
+    imprimir("[FALHOU] teste_lista_passageiro_retira_dados_validos");
   }
 }
 
 void teste_lista_passageiro_retira_dados_nulos() {
   if (lista_retira(NULL, -1) == NULL) {
-    printf("[PASSOU] teste_lista_passageiro_retira_dados_nulos\n");
+    imprimir("[PASSOU] teste_lista_passageiro_retira_dados_nulos");
   } else {
-    printf("[FALHOU] teste_lista_passageiro_retira_dados_nulos\n");
+    imprimir("[FALHOU] teste_lista_passageiro_retira_dados_nulos");
   }
 }
 
@@ -288,15 +315,15 @@ void teste_lista_passageiro_busca_dados_validos() {
     if (aux != NULL) {
       passageiroAcessa(aux, &id, nome, endereco);
       if (id == 2 && strcmp(nome, "Lucas") == 0 && strcmp(endereco, "Bom Jardim") == 0) {
-        printf("[PASSOU] teste_lista_passageiro_busca_dados_validos\n");
+        imprimir("[PASSOU] teste_lista_passageiro_busca_dados_validos");
       } else {
-        printf("[FALHOU] teste_lista_passageiro_busca_dados_validos\n");
+        imprimir("[FALHOU] teste_lista_passageiro_busca_dados_validos");
       }
     } else {
-      printf("[FALHOU] teste_lista_passageiro_busca_dados_validos\n");
+      imprimir("[FALHOU] teste_lista_passageiro_busca_dados_validos");
     }
   } else {
-    printf("[FALHOU] teste_lista_passageiro_busca_dados_validos\n");
+    imprimir("[FALHOU] teste_lista_passageiro_busca_dados_validos");
   }
 }
 
@@ -311,21 +338,21 @@ void teste_lista_passageiro_busca_dados_invalidos() {
     lista_insere(lista, Joel);
     Passageiro *aux = lista_busca(lista, 5);
     if (aux == NULL) {
-      printf("[PASSOU] teste_lista_passageiro_busca_dados_invalidos\n");
+      imprimir("[PASSOU] teste_lista_passageiro_busca_dados_invalidos");
     } else {
-      printf("[FALHOU] teste_lista_passageiro_busca_dados_invalidos\n");
+      imprimir("[FALHOU] teste_lista_passageiro_busca_dados_invalidos");
     }
   } else {
-    printf("[FALHOU] teste_lista_passageiro_busca_dados_invalidos\n");
+    imprimir("[FALHOU] teste_lista_passageiro_busca_dados_invalidos");
   }
 }
 
 void teste_lista_passageiro_busca_dados_nulos() {
   Passageiro *aux = lista_busca(NULL, -1);
   if (aux == NULL) {
-    printf("[PASSOU] teste_lista_passageiro_busca_dados_nulos\n");
+    imprimir("[PASSOU] teste_lista_passageiro_busca_dados_nulos");
   } else {
-    printf("[FALHOU] teste_lista_passageiro_busca_dados_nulos\n");
+    imprimir("[FALHOU] teste_lista_passageiro_busca_dados_nulos");
   }
 }
 
@@ -338,25 +365,25 @@ void testa_criar_voo_dados_validos(Voo *voo) {
   vooAcessa(voo, &codigo, origem, destino);
 
   if ((codigo == 1) && (strcmp(origem, "Fortaleza") == 0) && (strcmp(destino, "Bahia") == 0)) {
-    printf("[PASSOU] testa_criarVoo_dados_validos.\n");
+    imprimir("[PASSOU] testa_criarVoo_dados_validos");
   } else {
-    printf("[FALHOU] testa_criarVoo_dados_validos.\n");
+    imprimir("[FALHOU] testa_criarVoo_dados_validos");
   } 
 }
 
 void testa_criar_voo_dados_invalidos(Voo *voo) {
   if (voo == NULL) {
-    printf("[PASSOU] testa_criarVoo_dados_invalidos.\n");
+    imprimir("[PASSOU] testa_criarVoo_dados_invalidos");
   } else {
-    printf("[FALHOU] testa_criarVoo_dados_invalidos.\n");
+    imprimir("[FALHOU] testa_criarVoo_dados_invalidos");
   }
 }
 
 void testa_criar_voo_dados_nulos(Voo *voo) {
   if (voo == NULL) {
-    printf("[PASSOU] testa_criarVoo_dados_nulos.\n");
+    imprimir("[PASSOU] testa_criarVoo_dados_nulos");
   } else {
-    printf("[FALHOU] testa_criarVoo_dados_nulos.\n");
+    imprimir("[FALHOU] testa_criarVoo_dados_nulos");
   }
 }
 
@@ -368,12 +395,12 @@ void teste_editar_voo_dados_validos(Voo *voo) {
     editarVoo(voo, aux, "São Paulo", "Rio de Janeiro");
     vooAcessa(voo, &codigo, origem, destino);
     if (codigo == aux && strcmp(origem, "São Paulo") == 0 && strcmp(destino, "Rio de Janeiro") == 0) {
-      printf("[PASSOU] teste_editarVoo_dados_validos.\n");
+      imprimir("[PASSOU] teste_editarVoo_dados_validos");
     } else {
-      printf("[FALHOU] teste_editarVoo_dados_validos.\n");
+      imprimir("[FALHOU] teste_editarVoo_dados_validos");
     }
   } else {
-    printf("[FALHOU] teste_editarVoo_dados_validos.\n");
+    imprimir("[FALHOU] teste_editarVoo_dados_validos");
   }
 }
 
@@ -394,12 +421,12 @@ void teste_editar_voo_dados_invalidos(Voo *voo) {
     editarVoo(voo, codigoAux, origemAux, destinoAux);
     vooAcessa(voo, &codigo, origemAux, destinoAux);
     if (codigo == codigoAux || strcmp(origemAux, "Morada Nova") == 0 || strcmp(destinoAux, "Trairi") == 0) {
-      printf("[PASSOU] teste_editarVoo_dados_invalidos.\n");
+      imprimir("[PASSOU] teste_editarVoo_dados_invalidos");
     } else {
-      printf("[FALHOU] teste_editarVoo_dados_invalidos.\n");
+      imprimir("[FALHOU] teste_editarVoo_dados_invalidos");
     }
   } else {
-      printf("[FALHOU] teste_editarVoo_dados_invalidos.\n");
+      imprimir("[FALHOU] teste_editarVoo_dados_invalidos");
   }
 }
 
@@ -412,12 +439,12 @@ void teste_editar_voo_dados_nulos(Voo *voo) {
     editarVoo(NULL, auxERRADA, NULL, NULL);
     vooAcessa(voo, &codigo, origem, destino);
     if (codigo == aux || strcmp(origem, "São Paulo") == 0 || strcmp(destino, "Rio de Janeiro") == 0) {
-      printf("[PASSOU] teste_editarVoo_dados_nulos.\n");
+      imprimir("[PASSOU] teste_editarVoo_dados_nulos");
     } else {
-      printf("[PASSOU] teste_editarVoo_dados_nulos.\n");
+      imprimir("[PASSOU] teste_editarVoo_dados_nulos");
     }
   } else {
-    printf("[FALHOU] teste_editarVoo_dados_nulos.\n");
+    imprimir("[FALHOU] teste_editarVoo_dados_nulos");
   }
 }
 
@@ -437,26 +464,26 @@ void teste_retira_voo_dados_validos() {
       if (vooIgual(voo, voo3) == 1) {
         voo = listaVoo_retira(listaVoo, 1);
         if (vooIgual(voo, voo1) == 1) {
-          printf("[PASSOU] teste_retira_voo_dados_validos.\n");
+          imprimir("[PASSOU] teste_retira_voo_dados_validos");
         } else {
-          printf("[FALHOU] teste_retira_voo_dados_validos.\n");
+          imprimir("[FALHOU] teste_retira_voo_dados_validos");
         }
       } else {
-        printf("[FALHOU] teste_retira_voo_dados_validos.\n");
+        imprimir("[FALHOU] teste_retira_voo_dados_validos");
       }
     } else {
-      printf("[FALHOU] teste_retira_voo_dados_validos.\n");
+      imprimir("[FALHOU] teste_retira_voo_dados_validos");
     }
   } else {
-    printf("[FALHOU] teste_retira_voo_dados_validos.\n");
+    imprimir("[FALHOU] teste_retira_voo_dados_validos");
   }
 }
 
 void teste_retira_voo_dados_nulos() {
   if (listaVoo_retira(NULL, -1) == NULL) {
-    printf("[PASSOU] teste_retira_voo_dados_nulos.\n");
+    imprimir("[PASSOU] teste_retira_voo_dados_nulos");
   } else {
-    printf("[FALHOU] teste_retira_voo_dados_nulos.\n");
+    imprimir("[FALHOU] teste_retira_voo_dados_nulos");
   }
 }
 
@@ -465,9 +492,9 @@ void teste_retira_voo_dados_nulos() {
 void teste_lista_voo_cria_dados_validos() {
   Lista *lista = lista_cria();
   if (lista != NULL) {
-    printf("[PASSOU] teste_lista_voo_cria_dados_validos.\n");
+    imprimir("[PASSOU] teste_lista_voo_cria_dados_validos");
   } else {
-    printf("[FALHOU] teste_lista_voo_cria_dados_validos.\n");
+    imprimir("[FALHOU] teste_lista_voo_cria_dados_validos");
   }
 }
 
@@ -475,17 +502,17 @@ void teste_lista_voo_libera_dados_validos() {
   ListaVoo *listaVoo = listaVoo_cria();
   listaVoo_libera(&listaVoo);
   if (listaVoo != NULL) {
-    printf("[PASSOU] teste_lista_voo_libera_dados_validos.\n");
+    imprimir("[PASSOU] teste_lista_voo_libera_dados_validos");
   } else {
-    printf("[FALHOU] teste_lista_voo_libera_dados_validos.\n");
+    imprimir("[FALHOU] teste_lista_voo_libera_dados_validos");
   }
 }
 
 void teste_lista_voo_libera_dados_nulos() {
   if (listaVoo_libera(NULL) == 0) {
-    printf("[PASSOU] teste_lista_voo_libera_dados_nulos.\n");
+    imprimir("[PASSOU] teste_lista_voo_libera_dados_nulos");
   } else {
-    printf("[FALHOU] teste_lista_voo_libera_dados_nulos.\n");
+    imprimir("[FALHOU] teste_lista_voo_libera_dados_nulos");
   }
 }
 
@@ -498,18 +525,18 @@ void teste_lista_voo_insere_dados_validos() {
       if (listaVoo_insere(listaVoo, voo2) == 1) {
         Voo *voo3 = criarVoo(3, "Aracati", "Bom Jardim");
         if (listaVoo_insere(listaVoo, voo3) == 1) {
-          printf("[PASSOU] teste_lista_voo_insere_dados_validos.\n");
+          imprimir("[PASSOU] teste_lista_voo_insere_dados_validos");
         } else {
-          printf("[FALHOU] teste_lista_voo_insere_dados_validos.\n");
+          imprimir("[FALHOU] teste_lista_voo_insere_dados_validos");
         }
       } else {
-        printf("[FALHOU] teste_lista_voo_insere_dados_validos.\n");
+        imprimir("[FALHOU] teste_lista_voo_insere_dados_validos");
       }
     } else {
-      printf("[FALHOU] teste_lista_voo_insere_dados_validos.\n");
+      imprimir("[FALHOU] teste_lista_voo_insere_dados_validos");
     }
   } else {
-    printf("[FALHOU] teste_lista_voo_insere_dados_validos.\n");
+    imprimir("[FALHOU] teste_lista_voo_insere_dados_validos");
   }
 }
 
@@ -521,12 +548,12 @@ void teste_lista_voo_insere_dados_invalidos() {
     listaVoo_insere(listaVoo, voo1);
     Voo *voo2 = criarVoo(1, "São Paulo", "Rio de Janeiro");
     if (listaVoo_insere(listaVoo, voo2) == 0) {
-      printf("[PASSOU] teste_lista_voo_insere_dados_invalidos\n");
+      imprimir("[PASSOU] teste_lista_voo_insere_dados_invalidos");
     } else {
-      printf("[FALHOU] teste_lista_voo_insere_dados_invalidos\n");
+      imprimir("[FALHOU] teste_lista_voo_insere_dados_invalidos");
     }
   } else {
-    printf("[FALHOU] teste_lista_voo_insere_dados_invalidos\n");
+    imprimir("[FALHOU] teste_lista_voo_insere_dados_invalidos");
   }
 }
 
@@ -536,15 +563,15 @@ void teste_lista_voo_insere_dados_nulos() {
     Voo *voo1 = criarVoo(1, "Fortaleza", "Bahia");
     if (listaVoo_insere(NULL, voo1) == -1) {
       if (listaVoo_insere(NULL, NULL) == -1) {
-        printf("[PASSOU] teste_lista_voo_insere_dados_nulos\n");
+        imprimir("[PASSOU] teste_lista_voo_insere_dados_nulos");
       } else {
-        printf("[FALHOU] teste_lista_voo_insere_dados_nulos\n");
+        imprimir("[FALHOU] teste_lista_voo_insere_dados_nulos");
       }
     } else {
-      printf("[FALHOU] teste_lista_voo_insere_dados_nulos\n");
+      imprimir("[FALHOU] teste_lista_voo_insere_dados_nulos");
     }
   } else {
-    printf("[FALHOU] teste_lista_voo_insere_dados_nulos\n");
+    imprimir("[FALHOU] teste_lista_voo_insere_dados_nulos");
   }
 }
 
@@ -564,26 +591,26 @@ void teste_lista_voo_retira_dados_validos() {
       if (vooIgual(voo, voo3) == 1) {
         voo = listaVoo_retira(listaVoo, 1);
         if (vooIgual(voo, voo1) == 1) {
-          printf("[PASSOU] teste_lista_voo_retira_dados_validos\n");
+          imprimir("[PASSOU] teste_lista_voo_retira_dados_validos");
         } else {
-          printf("[FALHOU] teste_lista_voo_retira_dados_validos\n");
+          imprimir("[FALHOU] teste_lista_voo_retira_dados_validos");
         }
       } else {
-        printf("[FALHOU] teste_lista_voo_retira_dados_validos\n");
+        imprimir("[FALHOU] teste_lista_voo_retira_dados_validos");
       }
     } else {
-      printf("[FALHOU] teste_lista_voo_retira_dados_validos\n");
+      imprimir("[FALHOU] teste_lista_voo_retira_dados_validos");
     }
   } else {
-    printf("[FALHOU] teste_lista_voo_retira_dados_validos\n");
+    imprimir("[FALHOU] teste_lista_voo_retira_dados_validos");
   }
 }
 
 void teste_lista_voo_retira_dados_nulos() {
   if (listaVoo_retira(NULL, -1) == NULL) {
-    printf("[PASSOU] teste_lista_voo_retira_dados_nulos\n");
+    imprimir("[PASSOU] teste_lista_voo_retira_dados_nulos");
   } else {
-    printf("[FALHOU] teste_lista_voo_retira_dados_nulos\n");
+    imprimir("[FALHOU] teste_lista_voo_retira_dados_nulos");
   }
 }
 
@@ -604,15 +631,15 @@ void teste_lista_voo_busca_dados_validos() {
     if (voo != NULL) {
       vooAcessa(voo, &codigo, origem, destino);
       if (codigo == 2 && strcmp(origem, "Fortaleza") == 0 && strcmp(destino, "Bahia") == 0) {
-        printf("[PASSOU] teste_lista_voo_busca_dados_validos\n");
+        imprimir("[PASSOU] teste_lista_voo_busca_dados_validos");
       } else {
-        printf("[FALHOU] teste_lista_voo_busca_dados_validos\n");
+        imprimir("[FALHOU] teste_lista_voo_busca_dados_validos");
       }
     } else {
-      printf("[FALHOU] teste_lista_voo_busca_dados_validos\n");
+      imprimir("[FALHOU] teste_lista_voo_busca_dados_validos");
     }
   } else {
-    printf("[FALHOU] teste_lista_voo_busca_dados_validos\n");
+    imprimir("[FALHOU] teste_lista_voo_busca_dados_validos");
   }
 }
 
@@ -627,21 +654,21 @@ void teste_lista_voo_busca_dados_invalidos() {
     listaVoo_insere(listaVoo, voo3);
     Voo *voo = listaVoo_busca(listaVoo, 5);
     if (voo == NULL) {
-      printf("[PASSOU] teste_lista_voo_busca_dados_invalidos\n");
+      imprimir("[PASSOU] teste_lista_voo_busca_dados_invalidos");
     } else {
-      printf("[FALHOU] teste_lista_voo_busca_dados_invalidos\n");
+      imprimir("[FALHOU] teste_lista_voo_busca_dados_invalidos");
     }
   } else {
-    printf("[FALHOU] teste_lista_voo_busca_dados_invalidos\n");
+    imprimir("[FALHOU] teste_lista_voo_busca_dados_invalidos");
   }
 }
 
 void teste_lista_voo_busca_dados_nulos() {
   Voo *aux = listaVoo_busca(NULL, -1);
   if (aux == NULL) {
-    printf("[PASSOU] teste_lista_voo_busca_dados_nulos");
+    imprimir("[PASSOU] teste_lista_voo_busca_dados_nulos");
   } else {
-    printf("[FALHOU] teste_lista_voo_busca_dados_nulos");
+    imprimir("[FALHOU] teste_lista_voo_busca_dados_nulos");
   }
 }
 
@@ -652,32 +679,66 @@ int main(void) {
   Passageiro *passageiro3 = criarPassageiro(-1, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
   Passageiro *passageiro4 = criarPassageiro(-1, NULL, NULL);
   
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES CRIAR PASSAGEIRO =-=-=-=-=-=-=-=-=-=-=\n");
+  imprimir("");
+  imprimir("# - TESTES PASSAGEIRO CRIA - #");
+  imprimir("");
   testa_criar_passageiro_dados_validos(passageiro1);
   testa_criar_passageiro_dados_invalidos(passageiro3);
   testa_criar_passageiro_dados_nulos(passageiro4);
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES EDITAR PASSAGEIRO =-=-=-=-=-=-=-=-=-=-=\n");
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES PASSAGEIRO EDITAR- #");
+  imprimir("");
   teste_editar_passageiro_dados_validos(passageiro1);
   teste_editar_passageiro_dados_invalidos(passageiro2);
   teste_editar_passageiro_dados_nulos(passageiro1);
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES RETIRA PASSAGEIRO =-=-=-=-=-=-=-=-=-=-=\n");
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES PASSAGEIRO RETIRA- #");
+  imprimir("");
   teste_retira_passageiro_dados_validos(); // falta implementação de funções necessárias
   teste_retira_passageiro_dados_nulos();
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA PASSAGEIROS CRIA =-=-=-=-=-=-=-=-=-=-=\n");
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES LISTA PASSAGEIRO CRIA- #");
+  imprimir("");
   teste_lista_passageiro_cria_dados_validos();
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA PASSAGEIROS LIBERA =-=-=-=-=-=-=-=-=-=-=\n");
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES LISTA PASSAGEIRO LIBERA- #");
+  imprimir("");
   teste_lista_passageiro_libera_dados_validos();
   teste_lista_passageiro_libera_dados_nulos();
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA PASSAGEIROS VAZIA =-=-=-=-=-=-=-=-=-=-=\n");
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTE LISTA PASSAGEIRO VAZIA - #");
+  imprimir("");
   teste_lista_passageiro_vazia_dados_validos();
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA PASSAGEIROS INSERE =-=-=-=-=-=-=-=-=-=-=\n");
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES LISTA PASSAGEIRO INSERE - #");
+  imprimir("");
   teste_lista_passageiro_insere_dados_validos();
   teste_lista_passageiro_insere_dados_invalidos();
   teste_lista_passageiro_insere_dados_nulos();
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA PASSAGEIROS RETIRA =-=-=-=-=-=-=-=-=-=-=\n");
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES LISTA PASSAGEIRO INSERE - #");
+  imprimir("");
   teste_lista_passageiro_retira_dados_validos();
   teste_lista_passageiro_retira_dados_nulos();
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA PASSAGEIROS BUSCA =-=-=-=-=-=-=-=-=-=-=\n");
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES LISTA PASSAGEIRO BUSCA - #");
+  imprimir("");
   teste_lista_passageiro_busca_dados_validos();
   teste_lista_passageiro_busca_dados_invalidos();
   teste_lista_passageiro_busca_dados_nulos();  
@@ -686,32 +747,64 @@ int main(void) {
   Voo *voo2 = criarVoo(2, "Quixeramobim", "Sobrail");
   Voo *voo3 = criarVoo(-1, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
   Voo *voo4 = criarVoo(-1, NULL, NULL);
-  
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES CRIAR VOO =-=-=-=-=-=-=-=-=-=-=\n");
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES CRIAR VOOS  - #");
+  imprimir("");
   testa_criar_voo_dados_validos(voo1);
   testa_criar_voo_dados_invalidos(voo3);
   testa_criar_voo_dados_nulos(voo4);
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES EDITAR VOO =-=-=-=-=-=-=-=-=-=-=\n");
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES VOOS EDITA - #");
+  imprimir("");
   teste_editar_voo_dados_validos(voo1);
   teste_editar_voo_dados_invalidos(voo2);
   teste_editar_voo_dados_nulos(voo1);
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES RETIRAR VOO =-=-=-=-=-=-=-=-=-=-=\n");
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES VOOS RETIRA - #");
+  imprimir("");
   teste_retira_voo_dados_validos();
   teste_retira_voo_dados_nulos();
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA VOO CRIA =-=-=-=-=-=-=-=-=-=-=\n");
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES LISTA VOOS CRIA - #");
+  imprimir("");
   teste_lista_voo_cria_dados_validos();
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA VOO LIBERA =-=-=-=-=-=-=-=-=-=-=\n");
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES LISTA VOOS LIBERA - #");
+  imprimir("");
   teste_lista_voo_libera_dados_validos();
   teste_lista_voo_libera_dados_nulos();
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA VOO INSERE =-=-=-=-=-=-=-=-=-=-=\n");
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES LISTA VOOS INSERE - #");
+  imprimir("");
   teste_lista_voo_insere_dados_validos();
   teste_lista_voo_insere_dados_invalidos();
   teste_lista_voo_insere_dados_nulos();
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA VOO RETIRA =-=-=-=-=-=-=-=-=-=-=\n");
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES LISTA VOOS RETIRA - #");
+  imprimir("");
   teste_lista_voo_retira_dados_validos();
   teste_lista_voo_retira_dados_nulos();
-  printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES LISTA VOO BUSCA =-=-=-=-=-=-=-=-=-=-=\n");
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES LISTA VOOS BUSCA - #");
+  imprimir("");
   teste_lista_voo_busca_dados_validos();
   teste_lista_voo_busca_dados_invalidos();
   teste_lista_voo_busca_dados_nulos();  
+  imprimir("");
 }
