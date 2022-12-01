@@ -37,6 +37,9 @@ struct no_passageiro {
 };
 
 Reserva *cria_reserva(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
+  if(verifica_dados(codigo,data_viagem,passageiro,voo,assento) == 1){
+    
+  }
   Reserva *reserva = (Reserva*) malloc(sizeof(Reserva));
   reserva->codigo = codigo;
   reserva->data_viagem = data_viagem;
@@ -145,10 +148,15 @@ Reserva *em_ordem(Agenda *agenda, int id, int codigo){
   return NULL;
 }
 
-int verifica_dados(Agenda *raiz,int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
-  Reserva *z = abb_busca_reserva(raiz, passageiro->id, codigo, data_viagem);
-  
-  if(z!= NULL ){
-    
+//Faz a verificação se exite o codigo passado, o passageiro, o voo, a data e o assento
+int verifica_dados(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
+  if(codigo == 0 || data_viagem == NULL || passageiro == NULL || voo == NULL || assento<0 ){
+    return 0;
   }
+  return 1;
+}
+
+int verifica_reserva(Agenda *raiz,Data *data_viagem,int codigo,Voo *voo,Assento assento,Passageiro *passageiro){
+  if(busca_codigo(codigo) != 0 && abb_busca_reserva(raiz, passageiro->id, codigo,data_viagem) != NULL &&)
+  
 }
