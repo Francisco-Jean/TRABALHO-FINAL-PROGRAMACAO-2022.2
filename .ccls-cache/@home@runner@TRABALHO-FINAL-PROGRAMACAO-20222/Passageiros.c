@@ -25,12 +25,12 @@ Lista *lista_cria() {
 }
 
 int lista_libera(Lista **lista) {
-  //if (lista == NULL) {
-  //  return 0;
-  //}
-  //free(*lista);
-  //*lista = NULL;
-  //return 1;
+  if (lista == NULL) {
+    return 0;
+  }
+  free(*lista);
+  *lista = NULL;
+  return 1;
 }
 
 int lista_insere(Lista *lista, Passageiro *passageiro) {

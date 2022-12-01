@@ -99,19 +99,19 @@ void teste_editar_passageiro_dados_nulos(Passageiro *passageiro) {
 void teste_retira_passageiro_dados_validos() {
   Lista *lista = lista_cria();
   if (lista != NULL) {
-    Passageiro *abraao = criarPassageiro(1, "Abraão", "Computação");
-    lista_insere(lista, abraao);
-    Passageiro *jaco = criarPassageiro(2, "Jaco", "Computação");
-    lista_insere(lista, jaco);
-    Passageiro *jose = criarPassageiro(3, "Jose", "Computação");
-    lista_insere(lista, jose);
+    Passageiro *Victor = criarPassageiro(1, "Victor", "Aldeota");
+    lista_insere(lista, Victor);
+    Passageiro *Lucas = criarPassageiro(2, "Lucas", "Palhano");
+    lista_insere(lista, Lucas);
+    Passageiro *Rosa = criarPassageiro(3, "Rosa", "Trairi");
+    lista_insere(lista, Rosa);
     Passageiro *passageiro = lista_retira(lista, 2);
 
-    if (passageiroIgual(passageiro, jaco) == 1) {
+    if (passageiroIgual(passageiro, Lucas) == 1) {
       passageiro = lista_retira(lista, 3);
-      if (passageiroIgual(passageiro, jose) == 1) {
+      if (passageiroIgual(passageiro, Rosa) == 1) {
         passageiro = lista_retira(lista, 1);
-        if (passageiroIgual(passageiro, abraao) == 1) {
+        if (passageiroIgual(passageiro, Victor) == 1) {
           printf("[PASSOU] teste_retira_passageiro_dados_validos.\n");
         } else {
           printf("[FALHOU] teste_retira_passageiro_dados_validos.\n");
@@ -649,7 +649,7 @@ void teste_lista_voo_busca_dados_nulos() {
 int main(void) {
   Passageiro *passageiro1 = criarPassageiro(1, "Jean", "Vincente Pinzon");
   Passageiro *passageiro2 = criarPassageiro(2, "Kauan", "Aracati");
-  Passageiro *passageiro3 = criarPassageiro(-1, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+  Passageiro *passageiro3 = criarPassageiro(-1, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
   Passageiro *passageiro4 = criarPassageiro(-1, NULL, NULL);
   
   printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES CRIAR PASSAGEIRO =-=-=-=-=-=-=-=-=-=-=\n");
@@ -684,7 +684,7 @@ int main(void) {
   
   Voo *voo1 = criarVoo(1, "Fortaleza", "Bahia");
   Voo *voo2 = criarVoo(2, "Quixeramobim", "Sobrail");
-  Voo *voo3 = criarVoo(1, "Morada Nova", "Trairi");
+  Voo *voo3 = criarVoo(-1, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
   Voo *voo4 = criarVoo(-1, NULL, NULL);
   
   printf("=-=-=-=-=-=-=-=-=-=-= BATERIA DE TESTES CRIAR VOO =-=-=-=-=-=-=-=-=-=-=\n");
