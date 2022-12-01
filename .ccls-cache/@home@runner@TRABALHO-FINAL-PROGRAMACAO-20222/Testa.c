@@ -150,9 +150,9 @@ void teste_lista_passageiro_libera_dados_validos() {
   Lista *lista = lista_cria();
   lista_libera(&lista);
   if (lista != NULL) {
-    printf("[PASSOU] teste_lista_passageiro_libera_dados_validos.\n");
-  } else {
     printf("[FALHOU] teste_lista_passageiro_libera_dados_validos.\n");
+  } else {
+    printf("[PASSOU] teste_lista_passageiro_libera_dados_validos.\n");
   }
 }
 
@@ -235,19 +235,19 @@ void teste_lista_passageiro_insere_dados_nulos() {
 void teste_lista_passageiro_retira_dados_validos() {
   Lista *lista = lista_cria();
   if (lista != NULL) {
-    Passageiro *abraao = criarPassageiro(1, "Victor", "Pici");
-    lista_insere(lista, abraao);
-    Passageiro *jaco = criarPassageiro(2, "Lucas", "Bom Jardim");
-    lista_insere(lista, jaco);
-    Passageiro *jose = criarPassageiro(3, "Joel", "Vincente Pinzon");
-    lista_insere(lista, jose);
+    Passageiro *Victor = criarPassageiro(1, "Victor", "Pici");
+    lista_insere(lista, Victor);
+    Passageiro *Lucas = criarPassageiro(2, "Lucas", "Bom Jardim");
+    lista_insere(lista, Lucas);
+    Passageiro *Joel = criarPassageiro(3, "Joel", "Vincente Pinzon");
+    lista_insere(lista, Joel);
     Passageiro *passageiro = lista_retira(lista, 2);
 
-    if (passageiroIgual(passageiro, abraao) == 1) {
+    if (passageiroIgual(passageiro, Lucas) == 1) {
       passageiro = lista_retira(lista, 3);
-      if (passageiroIgual(passageiro, jaco) == 1) {
+      if (passageiroIgual(passageiro, Joel) == 1) {
         passageiro = lista_retira(lista, 1);
-        if (passageiroIgual(passageiro, jose) == 1) {
+        if (passageiroIgual(passageiro, Victor) == 1) {
           printf("[PASSOU] teste_lista_passageiro_retira_dados_validos\n");
         } else {
           printf("[FALHOU] teste_lista_passageiro_retira_dados_validos\n");
