@@ -1,6 +1,7 @@
 #include "AgendaReservas.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 //arvore binaria de busca
 struct data {
@@ -25,28 +26,26 @@ struct agenda {
   Agenda *raiz;
 };
 
-struct passageiro {
-int id;
-char *nome;
-char *endereco;
-};
 
-struct no_passageiro {
-  Passageiro *passageiro;
-  struct no_passageiro *proximo;
-};
 
-Reserva *cria_reserva(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
-  if(verifica_dados(codigo,data_viagem,passageiro,voo,assento) == 1){
-    
+Reserva *cria_reserva(Agenda *raiz,int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
+  if(verifica_dados(codigo,data_viagem,passageiro,voo,assento) == 1 && verifica_reserva(raiz,codigo,data_viagem,passageiro,voo,assento == 1)){
+    int id; char nome[30];char endereco[30];
+    int codigo; char origem[30];char destino[30];
+    passageiroAcessa(passageiro, &id, nome, endereco);
+    vooAcessa(voo, &codigo, origem, destino);
+    if(strcmp(endereco,origem) == 0){
+      editarPassageiro(passageiro,id, nome,destino);
+      Reserva *reserva = (Reserva*) malloc(sizeof(Reserva));
+      reserva->codigo = codigo;
+      reserva->data_viagem = data_viagem;
+      reserva->passageiro = passageiro;
+      reserva->voo = voo;
+      reserva->assento = assento;
+      return reserva;
+    }
   }
-  Reserva *reserva = (Reserva*) malloc(sizeof(Reserva));
-  reserva->codigo = codigo;
-  reserva->data_viagem = data_viagem;
-  reserva->passageiro = passageiro;
-  reserva->voo = voo;
-  reserva->assento = assento;
-  return reserva;
+  return NULL;
 }
 
 /* Aloca e retorna uma Agenda com os dados passados por parâmetro. Retorna no nó
@@ -150,13 +149,15 @@ Reserva *em_ordem(Agenda *agenda, int id, int codigo){
 
 //Faz a verificação se exite o codigo passado, o passageiro, o voo, a data e o assento
 int verifica_dados(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
-  if(codigo == 0 || data_viagem == NULL || passageiro == NULL || voo == NULL || assento<0 ){
+  if(codigo <= 0 || data_viagem == NULL || passageiro == NULL || voo == NULL || assento<0 ){
     return 0;
   }
   return 1;
 }
 
-int verifica_reserva(Agenda *raiz,Data *data_viagem,int codigo,Voo *voo,Assento assento,Passageiro *passageiro){
-  if(busca_codigo(codigo) != 0 && abb_busca_reserva(raiz, passageiro->id, codigo,data_viagem) != NULL &&)
-  
+int verifica_reserva(Agenda *raiz,int codigo,Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
+  if(busca_codigo(codigo) != 0 && abb_busca_reserva(raiz, passageiro->id, 0,data_viagem) != NULL){
+    return 1;
+  }
+  return 0;
 }

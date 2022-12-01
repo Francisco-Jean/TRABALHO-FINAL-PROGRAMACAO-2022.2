@@ -1,6 +1,7 @@
 #include "Passageiros.h"
 #include "Voos.h"
 
+
 enum cod_assento {
     A0, B0, C0,
     A1, B1, C1, 
@@ -35,4 +36,6 @@ Reserva *em_ordem(Agenda *agenda, int id, int codigo);
 
 int verifica_dados(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento);
 
-Reserva *cria_reserva(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento);
+Reserva *cria_reserva(Agenda *raiz,int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento);
+
+int verifica_reserva(Agenda *raiz,int codigo,Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento);
