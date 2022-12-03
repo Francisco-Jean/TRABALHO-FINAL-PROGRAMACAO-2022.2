@@ -673,7 +673,7 @@ void teste_lista_voo_busca_dados_nulos() {
 }
 
 
-int main(void) {
+int main_(void) {
   Passageiro *passageiro1 = criarPassageiro(1, "Jean", "Vincente Pinzon");
   Passageiro *passageiro2 = criarPassageiro(2, "Kauan", "Aracati");
   Passageiro *passageiro3 = criarPassageiro(-1, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");

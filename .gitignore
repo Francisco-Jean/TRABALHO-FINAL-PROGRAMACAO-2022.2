@@ -1,0 +1,4 @@
+*.blob
+.ccls-cache/*
+main
+main-debug

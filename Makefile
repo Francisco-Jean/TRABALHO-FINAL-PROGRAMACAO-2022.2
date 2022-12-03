@@ -1,6 +1,6 @@
 all: main
 
-CC = clang
+CC = gcc
 override CFLAGS += -g -Wno-everything -pthread -lm
 
 SRCS = $(shell find . -name '.ccls-cache' -type d -prune -o -type f -name '*.c' -print)

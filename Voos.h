@@ -3,6 +3,8 @@ typedef struct voo Voo;
 
 typedef struct lista_voo ListaVoo;
 
+void printVoo(Voo *voo);
+
 void vooAcessa(Voo *voo, int *codigo, char *origem, char *destino);
 
 Voo *criarVoo(int codigo, char *origem, char *destino);
