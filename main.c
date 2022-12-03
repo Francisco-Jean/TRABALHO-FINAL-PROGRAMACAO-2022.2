@@ -58,6 +58,10 @@ int main(void) {
     printf("voos dif\n");
   }
 
+  printf("teste free\n");
+  int resultadoFree = listaVoo_libera(&listaVoo);
+  printf("free lista voo=%d\n", resultadoFree);
+
   printf("Hello World\n");
   return 0;
 }

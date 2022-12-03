@@ -93,6 +93,7 @@ int listaVoo_insere(ListaVoo *listaVoo, Voo *voo) {
 
 Voo *listaVoo_retira(ListaVoo *listaVoo, int codigo) { return 0; }
 
+
 int vooIgual(Voo *voo1, Voo *voo2) {
   //return voo1->codigo==voo2->codigo && strcomp(voo1->origem,voo2->origem) && strcomp(voo1->destino,voo2->destino); 
   int compara_org=strcmp(voo1->origem,voo2->origem);
@@ -103,7 +104,25 @@ int vooIgual(Voo *voo1, Voo *voo2) {
   return 0;
 }
 
-int listaVoo_libera(ListaVoo **listaVoo) { return 0; }
+int listaVoo_libera(ListaVoo **listaVoo) { 
+  if(listaVoo != NULL) {
+    if(*listaVoo != NULL) {
+      struct no_voo *noAtual=(*listaVoo)->primeiro;
+      struct no_voo *noProx=NULL;
+      while(noAtual != NULL) {
+        noProx = noAtual->proximo;
+        free(noAtual->voo->origem);
+        free(noAtual->voo->destino);
+        free(noAtual->voo);
+        free(noAtual);
+        noAtual= noProx;
+      }
+      free(*listaVoo);
+      return 0;
+    }
+  }
+  return 1;
+}
 
 Voo *listaVoo_busca(ListaVoo *listaVoo, int codigo) {
   struct no_voo *noAux=listaVoo->primeiro;
