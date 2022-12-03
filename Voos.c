@@ -26,6 +26,8 @@ void printVoo(Voo *voo) {
     printf("\t.codigo=%d\n", voo->codigo);
     printf("\t.origem=%s\n", voo->origem);
     printf("\t.destino=%s\n", voo->destino);
+  } else {
+    printf("voo nulo\n");
   }
 }
 
@@ -95,5 +97,14 @@ int vooIgual(Voo *voo1, Voo *voo2) { return 0; }
 
 int listaVoo_libera(ListaVoo **listaVoo) { return 0; }
 
-Voo *listaVoo_busca(ListaVoo *listaVoo, int codigo) { return NULL; }
+Voo *listaVoo_busca(ListaVoo *listaVoo, int codigo) {
+  struct no_voo *noAux=listaVoo->primeiro;
+  while (noAux != NULL) {
+    if(noAux->voo->codigo == codigo) {
+      return noAux->voo;
+    }   
+    noAux = noAux->proximo;
+  }
+  return NULL;
+}
 
