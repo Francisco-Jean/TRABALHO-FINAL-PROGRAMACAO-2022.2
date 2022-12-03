@@ -23,9 +23,14 @@ int main(void) {
   printf("\tdestino=%s\n", destino);
 
   printf("teste listaVoo_cria\n");
-  ListaVoo *listavoo=listaVoo_cria();
-  printf("end lista=%p \n", listavoo);
+  ListaVoo *listaVoo=listaVoo_cria();
+  printf("end lista=%p \n", listaVoo);
 
+  listaVoo_insere(listaVoo,voo);
+  printf("end lista=%p \n", listaVoo);
+  printf("tamanho da lista:%d\n",tamanho_lista(listaVoo));
+
+  
   
   printf("Hello World\n");
   return 0;

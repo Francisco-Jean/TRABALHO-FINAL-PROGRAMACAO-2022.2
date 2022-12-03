@@ -67,7 +67,27 @@ ListaVoo *listaVoo_cria() {
   return lista;
 }
 
-int listaVoo_insere(ListaVoo *listaVoo, Voo *voo) { return 0; }
+int tamanho_lista(ListaVoo *lista){
+  int cont = 0;
+  struct no_voo *noAux=lista->primeiro;
+  while(noAux != NULL) {
+    cont++;
+    noAux = noAux->proximo;
+  }
+  return cont;
+}
+
+
+int listaVoo_insere(ListaVoo *listaVoo, Voo *voo) { 
+  struct no_voo *novoNo= (struct no_voo * )malloc(sizeof(struct no_voo));
+  if (novoNo==NULL){
+    return 1;
+  }
+  novoNo->voo= voo;
+  novoNo->proximo= listaVoo->primeiro;
+  listaVoo->primeiro=novoNo;
+  return 0;
+}
 
 Voo *listaVoo_retira(ListaVoo *listaVoo, int codigo) { return 0; }
 
@@ -76,3 +96,4 @@ int vooIgual(Voo *voo1, Voo *voo2) { return 0; }
 int listaVoo_libera(ListaVoo **listaVoo) { return 0; }
 
 Voo *listaVoo_busca(ListaVoo *listaVoo, int codigo) { return NULL; }
+

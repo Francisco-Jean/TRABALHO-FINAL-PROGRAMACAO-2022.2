@@ -11,6 +11,8 @@ Voo *criarVoo(int codigo, char *origem, char *destino);
 
 Voo *editarVoo(Voo *voo, int codigo, char *origem, char *destino);
 
+int tamanho_lista(ListaVoo *lista);
+
 ListaVoo *listaVoo_cria();
 
 int listaVoo_insere(ListaVoo *listaVoo, Voo *voo);
