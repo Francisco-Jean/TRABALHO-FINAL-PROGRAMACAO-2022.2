@@ -49,13 +49,23 @@ Voo *criarVoo(int codigo, char *origem, char *destino) {
   return novo_voo;
 }
 
+
 Voo *editarVoo(Voo *voo, int codigo, char *origem, char *destino) {
-  return NULL;
+  if (voo != NULL) {
+    voo->codigo=codigo;
+    strcpy(voo->origem,origem);
+    strcpy(voo->destino,destino);
+  }
+  return voo;
 }
 
 //▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬❴FUNÇÕES DA LISTA DE VÔOS ❵▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬//
 
-ListaVoo *listaVoo_cria() { return NULL; }
+ListaVoo *listaVoo_cria() {
+  ListaVoo *lista=(ListaVoo *)malloc(sizeof(ListaVoo));
+  lista->primeiro=NULL;
+  return lista;
+}
 
 int listaVoo_insere(ListaVoo *listaVoo, Voo *voo) { return 0; }
 
