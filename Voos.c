@@ -29,13 +29,16 @@ void printVoo(Voo *voo) {
   }
 }
 
+// Copia os campos do vôo já existente passado por referência para as seguintes variáveis//
 void vooAcessa(Voo *voo, int *codigo, char *origem, char *destino) {
   if (voo != NULL) {
     *codigo = voo->codigo;
-    // TODO
+    strcpy(origem,voo->origem);
+    strcpy(destino,voo->destino);
   }
 }
 
+// Aloca espaço em memória para um vôo, para os campos desse vôo, e depois atribui os valores passados por referência para esse vôo //
 Voo *criarVoo(int codigo, char *origem, char *destino) {
   Voo *novo_voo = (Voo *) malloc(sizeof(Voo));
   novo_voo->codigo = codigo;
