@@ -91,8 +91,26 @@ int listaVoo_insere(ListaVoo *listaVoo, Voo *voo) {
   return 0;
 }
 
-Voo *listaVoo_retira(ListaVoo *listaVoo, int codigo) { return 0; }
-
+Voo *listaVoo_retira(ListaVoo *listaVoo, int codigo) {
+  struct no_voo *noAtual = listaVoo->primeiro;
+  struct no_voo *noAnt = NULL;
+  while (noAtual != NULL) {
+    if(noAtual->voo->codigo == codigo) {
+      if(noAnt == NULL) {
+        listaVoo->primeiro = noAtual->proximo;
+      } else {
+        noAnt->proximo=noAtual->proximo;
+      }
+      
+      Voo *voo_removido=noAtual->voo;
+      free(noAtual);
+      return voo_removido;
+    }
+    noAnt=noAtual;
+    noAtual= noAtual->proximo;
+  }
+  return NULL;
+}
 
 int vooIgual(Voo *voo1, Voo *voo2) {
   //return voo1->codigo==voo2->codigo && strcomp(voo1->origem,voo2->origem) && strcomp(voo1->destino,voo2->destino); 

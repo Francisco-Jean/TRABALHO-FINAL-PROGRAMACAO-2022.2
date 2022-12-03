@@ -57,11 +57,19 @@ int main(void) {
   else{
     printf("voos dif\n");
   }
-
+  
+  printf("teste remoção\n");
+  printf("tamanho da lista antes=%d\n",tamanho_lista(listaVoo));
+  Voo *voo_removido = listaVoo_retira(listaVoo,5);
+  printf("tamanho da lista depois=%d\n",tamanho_lista(listaVoo));
+  printVoo(voo_removido); 
+  
   printf("teste free\n");
   int resultadoFree = listaVoo_libera(&listaVoo);
   printf("free lista voo=%d\n", resultadoFree);
 
+
+ 
   printf("Hello World\n");
   return 0;
 }
