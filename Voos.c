@@ -93,7 +93,15 @@ int listaVoo_insere(ListaVoo *listaVoo, Voo *voo) {
 
 Voo *listaVoo_retira(ListaVoo *listaVoo, int codigo) { return 0; }
 
-int vooIgual(Voo *voo1, Voo *voo2) { return 0; }
+int vooIgual(Voo *voo1, Voo *voo2) {
+  //return voo1->codigo==voo2->codigo && strcomp(voo1->origem,voo2->origem) && strcomp(voo1->destino,voo2->destino); 
+  int compara_org=strcmp(voo1->origem,voo2->origem);
+  int compara_dest=strcmp(voo1->destino,voo2->destino);
+  if ((voo1->codigo==voo2->codigo) && (compara_org==0) && (compara_dest==0)){
+    return 1;
+  }
+  return 0;
+}
 
 int listaVoo_libera(ListaVoo **listaVoo) { return 0; }
 

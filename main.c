@@ -31,6 +31,8 @@ int main(void) {
   printf("end lista=%p \n", listaVoo);
   printf("tamanho da lista:%d\n",tamanho_lista(listaVoo));
 
+
+  
   printf("teste busca sucesso\n");
   Voo *resultado=listaVoo_busca(listaVoo,5);
   printVoo(resultado);
@@ -38,7 +40,24 @@ int main(void) {
   printf("teste busca falha\n");
   resultado=listaVoo_busca(listaVoo,6);
   printVoo(resultado);
-  
+
+  Voo *voo3=criarVoo(5,"MIA","GRU");
+  printf("teste voos iguais\n");
+  if (vooIgual(voo3,voo2)==1){
+    printf("voos iguais\n");
+  }
+  else{
+    printf("voos dif\n");
+  }
+
+  printf("teste voos diferentes\n");
+  if (vooIgual(voo1,voo2)==1){
+    printf("voos iguais\n");
+  }
+  else{
+    printf("voos dif\n");
+  }
+
   printf("Hello World\n");
   return 0;
 }
