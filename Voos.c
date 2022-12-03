@@ -52,6 +52,12 @@ Voo *criarVoo(int codigo, char *origem, char *destino) {
 }
 
 
+void liberarVoo(Voo * voo){
+  free(voo->origem);
+  free(voo->destino);
+  free(voo);
+}
+
 Voo *editarVoo(Voo *voo, int codigo, char *origem, char *destino) {
   if (voo != NULL) {
     voo->codigo=codigo;
@@ -129,9 +135,7 @@ int listaVoo_libera(ListaVoo **listaVoo) {
       struct no_voo *noProx=NULL;
       while(noAtual != NULL) {
         noProx = noAtual->proximo;
-        free(noAtual->voo->origem);
-        free(noAtual->voo->destino);
-        free(noAtual->voo);
+        liberarVoo(noAtual->voo);
         free(noAtual);
         noAtual= noProx;
       }

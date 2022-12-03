@@ -68,8 +68,10 @@ int main(void) {
   int resultadoFree = listaVoo_libera(&listaVoo);
   printf("free lista voo=%d\n", resultadoFree);
 
-
- 
+  free(origem);
+  free(destino);
+  liberarVoo(voo2);
+  liberarVoo(voo3);
   printf("Hello World\n");
   return 0;
 }
