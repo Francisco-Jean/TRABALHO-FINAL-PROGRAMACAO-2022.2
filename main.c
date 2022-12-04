@@ -2,7 +2,7 @@
 #include "Voos.h"
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "AgendaReservas.h"
 int main(void) {
   printf("Teste criarVoo\n");
   Voo *voo1 = criarVoo(1, "FOR", "SAO");
@@ -72,6 +72,27 @@ int main(void) {
   free(destino);
   liberarVoo(voo2);
   liberarVoo(voo3);
+
+  printf("teste de datas\n");
+  Data *data1= data_cria(2,4,2000);
+  printf("data1\n");
+  print_data(data1);
+  Data *data2= data_cria(3,4,2000);
+  printf("data2\n");
+  print_data(data2);
+  Data *data3= data_cria(2,4,2000);
+  printf("data3\n");
+  print_data(data3);
+
+  printf("teste data1 < data2 (deve retornar -1)\n");
+  printf("retorno: %d\n",data_compara(data1,data2));
+
+  printf("teste data1 > data2 (deve retornar 1)\n");
+  printf("retorno: %d\n",data_compara(data2,data1));
+
+  printf("teste data1 == data2 (deve retornar 0)\n");
+  printf("retorno: %d\n",data_compara(data1,data3));
+  
   printf("Hello World\n");
   return 0;
 }

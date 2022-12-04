@@ -132,3 +132,61 @@ Reserva *em_ordem(Agenda *agenda, int id, int codigo){
   }
   return NULL;
 }
+
+Agenda *abb_no_remove(Agenda *raiz,Data *data){
+  if (raiz==NULL){
+    printf("Valor não encontrado");
+    return NULL;
+  }
+  //if ()
+  //}
+}
+
+Data * data_cria(int dia, int mes, int ano){
+  Data *novaData=(Data *)malloc(sizeof(Data));
+  novaData->dia=dia;
+  novaData->mes=mes;
+  novaData->ano=ano;
+  return novaData;
+}
+
+void print_data(Data *data) {
+  if(data != NULL) {
+    printf("Data: %p\n", data);
+    printf("\t.Dia=%d\n", data->dia);
+    printf("\t.Mes=%d\n", data->mes);
+    printf("\t.Ano=%d\n", data->ano);
+  }
+}
+    
+/*
+ * Retorna:
+ *    1, se data1 > data2;
+ *   -1, se data1 < data2;
+ *    0, caso contrario (data1 == data2)
+ */
+int data_compara(Data *data1, Data *data2){
+  if (data1->ano > data2->ano) {
+    return 1;
+  }
+  if(data1->ano < data2->ano) {
+    return -1;
+  }
+  if(data1->mes > data1->mes) {
+    return 1;
+  }
+  if(data1->mes < data2->mes) {
+    return -1;
+  }
+  if(data1->dia > data2->dia) {
+    return 1;
+  }
+  if(data1->dia < data2->dia) {
+    return -1;
+  }
+  return 0;
+}
+
+
+
+//

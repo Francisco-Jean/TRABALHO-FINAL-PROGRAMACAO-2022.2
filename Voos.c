@@ -22,7 +22,7 @@ struct lista_voo {
 
 void printVoo(Voo *voo) {
   if (voo != NULL) {
-    printf("Voo=%p\n", &voo);
+    printf("Voo=%p\n", voo);
     printf("\t.codigo=%d\n", voo->codigo);
     printf("\t.origem=%s\n", voo->origem);
     printf("\t.destino=%s\n", voo->destino);

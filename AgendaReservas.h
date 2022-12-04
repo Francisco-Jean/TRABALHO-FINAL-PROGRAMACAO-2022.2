@@ -27,3 +27,9 @@ No *abb_cria_no(Reserva *reserva);
 Agenda *abb_insere_agenda(Agenda *raiz, Agenda *agenda);
 
 Reserva *em_ordem(Agenda *agenda, int id, int codigo);
+
+void print_data(Data *data);
+
+int data_compara(Data *data1, Data *data2);
+
+Data * data_cria(int dia, int mes, int ano);
