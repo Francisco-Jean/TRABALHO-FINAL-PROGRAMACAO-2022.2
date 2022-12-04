@@ -1,6 +1,9 @@
 #include "AgendaReservas.h"
 #include <stdio.h>
 #include <stdlib.h>
+// TEMPORARIAMENTE, ENQUANTO TESTA A EXCLUSAO
+#include "Voos.h"
+#include "Passageiros.h"
 
 //arvore binaria de busca
 struct data {
@@ -22,6 +25,7 @@ struct agenda {
   Agenda *esq;
   Agenda *dir;
   Agenda *pai;
+  // Dúvida: o que é a raiz, neste caso?
   Agenda *raiz;
 };
 
@@ -76,6 +80,7 @@ Agenda *abb_insere_agenda(Agenda *raiz, Agenda *agenda) {
     else if (agenda->reserva->data_viagem > aux1->reserva->data_viagem) {
       aux1 = aux1->dir;
     }
+    // Dúvida: pq eu náo posso ter duas reservas de passageiros diferentes com a mesma data 
     else if (agenda->reserva->data_viagem == aux2->reserva->data_viagem){
       return NULL;
     }
@@ -97,6 +102,8 @@ Agenda *abb_insere_agenda(Agenda *raiz, Agenda *agenda) {
 
 /* Procura o reserva pelo id e codigo. Retorna a reserva caso a busca obtenha sucesso ou NULL
  * em caso contrário. */
+
+//duvida= a fun;ao retorna somente 1 r
 Reserva *abb_busca_reserva(Agenda *raiz,int id, int codigo, Data *data_viagem) {
   if(id<0 || codigo<0 || data_viagem == NULL){
     return NULL;
@@ -133,15 +140,95 @@ Reserva *em_ordem(Agenda *agenda, int id, int codigo){
   return NULL;
 }
 
-Agenda *abb_no_remove(Agenda *raiz,Data *data){
-  if (raiz==NULL){
-    printf("Valor não encontrado");
+Agenda *busca_codigo_pre_ordem(Agenda *noRaiz, int codigo_reserva) {
+  if(noRaiz == NULL) {
     return NULL;
   }
-  //if ()
-  //}
+
+  if(noRaiz->reserva->codigo == codigo_reserva) {
+    return noRaiz;
+  }
+
+  Agenda *resultado_esquerda = busca_codigo_pre_ordem(noRaiz->esq, codigo_reserva);
+  if(resultado_esquerda != NULL) {
+    return resultado_esquerda;
+  }
+
+  Agenda *resultado_direita = busca_codigo_pre_ordem(noRaiz->dir, codigo_reserva);
+  if(resultado_direita != NULL) {
+    return resultado_direita;
+  }
+
+  return NULL;
 }
 
+Agenda *busca_minimo(Agenda *noRaiz) {
+  if (noRaiz==NULL){
+    return NULL;
+  }
+  while(noRaiz->esq != NULL){
+    noRaiz=noRaiz->esq;
+  }
+  return noRaiz;
+}
+
+Agenda *busca_sucessor(Agenda *no) {
+  if (no->dir != NULL){
+    return busca_minimo(no->dir);
+  }
+  Agenda * noPai=no->pai;
+  while(noPai!=NULL && no==noPai->dir){
+    no=noPai;
+    noPai=no->pai;
+  }
+  return noPai;
+}
+
+// v: noOrigem
+// u: noDestino
+void transplantar(Agenda **noRaiz, Agenda *noDestino, Agenda *noOrigem){
+  if (noDestino->pai == NULL){
+    *noRaiz=noOrigem;
+  }
+  else{
+    if(noDestino==noDestino->pai->esq){
+      noDestino->pai->esq=noOrigem;
+    }
+    else{
+      noDestino->pai->dir=noOrigem;
+    }
+    if (noOrigem!=NULL){
+      noOrigem->pai=noDestino->pai;
+    }
+  }
+}
+
+Reserva *abb_no_remove(Agenda *raiz, Agenda* noRemover) {
+  if (noRemover->esq==NULL){
+    transplantar(&raiz,noRemover,noRemover->dir);
+  }
+  else{
+    if(noRemover->dir==NULL){
+      transplantar(&raiz,noRemover,noRemover->esq);
+    }
+    else{
+      Agenda *y=busca_minimo(noRemover->dir);
+      if(y->pai != noRemover){
+        transplantar(&raiz,y,y->dir);
+        y->dir=noRemover->dir;
+        y->dir->pai=y;
+      }
+      transplantar(&raiz,noRemover,y);
+      y->esq=noRemover->esq;
+      y->esq->pai=y;
+      
+    }
+  }
+  return noRemover->reserva;
+}
+
+
+  
 Data * data_cria(int dia, int mes, int ano){
   Data *novaData=(Data *)malloc(sizeof(Data));
   novaData->dia=dia;
@@ -172,7 +259,7 @@ int data_compara(Data *data1, Data *data2){
   if(data1->ano < data2->ano) {
     return -1;
   }
-  if(data1->mes > data1->mes) {
+  if(data1->mes > data2->mes) {
     return 1;
   }
   if(data1->mes < data2->mes) {
@@ -187,6 +274,18 @@ int data_compara(Data *data1, Data *data2){
   return 0;
 }
 
+void testeExclusao() {
+  printf("Teste exclusao da arvore binaria de busca\n");
 
+  Passageiro *p1 = criarPassageiro(1, "Jose da Silva", "Rua um, 123");
+  Passageiro *p2 = criarPassageiro(2, "Maria Ferreira", "Rua dois, 45");
+  Passageiro *p3 = criarPassageiro(3, "Raimundo Souza", "Rua tres, 67");
 
-//
+  Voo *v1 = criarVoo(11, "FOR", "GRU");
+  Voo *v2 = criarVoo(12, "RJO", "SAO");
+  Voo *v3 = criarVoo(13, "NAT", "POA");
+  Voo *v4 = criarVoo(14, "REC", "SDR");
+  Voo *v5 = criarVoo(15, "SAO", "BSA");
+
+  // Reserva *r1 = 
+}

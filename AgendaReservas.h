@@ -22,14 +22,34 @@ typedef struct passageiro Passageiro;
 
 /* Aloca e retorna um No com os dados passados por parâmetro. Retorna no nó
  * criado ou NULL caso não seja posivel criar o nó. */
-No *abb_cria_no(Reserva *reserva);
+Agenda *abb_cria_agenda(Reserva *reserva);
+
+int abb_codigo_reserva(Reserva *reserva);
 
 Agenda *abb_insere_agenda(Agenda *raiz, Agenda *agenda);
 
+Reserva *abb_busca_reserva(Agenda *raiz,int id, int codigo, Data *data_viagem);
+
 Reserva *em_ordem(Agenda *agenda, int id, int codigo);
+
+Agenda *busca_codigo_pre_ordem(Agenda *noRaiz, int codigo_reserva);
+
+Agenda *busca_minimo(Agenda *noRaiz);
+
+Agenda *busca_sucessor(Agenda *no);
+
+void transplantar(Agenda **noRaiz, Agenda *noDestino, Agenda *noOrigem);
+
+Reserva *abb_no_remove(Agenda *raiz, Agenda* noRemover);
+
+Data * data_cria(int dia, int mes, int ano);
 
 void print_data(Data *data);
 
 int data_compara(Data *data1, Data *data2);
 
-Data * data_cria(int dia, int mes, int ano);
+//FUNÇÃO NAO CRIADA
+No *abb_cria_no(Reserva *reserva);
+
+// TEMPORARIO
+void testeExclusao();
