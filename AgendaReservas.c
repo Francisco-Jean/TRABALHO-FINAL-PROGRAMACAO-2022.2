@@ -74,14 +74,16 @@ Agenda *abb_insere_agenda(Agenda *raiz, Agenda *agenda) {
 
   while (aux1 != NULL) {
     aux2 = aux1;
-    if (agenda->reserva->data_viagem < aux1->reserva->data_viagem) {
+    //if (agenda->reserva->data_viagem < aux1->reserva->data_viagem) {
+    if (agenda->reserva->data_viagem <= aux1->reserva->data_viagem) {
       aux1 = aux1->esq;
     }
     else if (agenda->reserva->data_viagem > aux1->reserva->data_viagem) {
       aux1 = aux1->dir;
     }
     // Dúvida: pq eu náo posso ter duas reservas de passageiros diferentes com a mesma data 
-    else if (agenda->reserva->data_viagem == aux2->reserva->data_viagem){
+    //else if (agenda->reserva->data_viagem == aux2->reserva->data_viagem){
+    else if (0){
       return NULL;
     }
   }
@@ -274,6 +276,35 @@ int data_compara(Data *data1, Data *data2){
   return 0;
 }
 
+Reserva * criarReserva(int codigo, Data *data, Passageiro *passageiro, Voo *voo, Assento assento) {
+  Reserva *reserva = (Reserva *) malloc(sizeof(Reserva));
+
+  reserva->codigo = codigo;
+  reserva->data_viagem = data;
+  reserva->passageiro = passageiro;
+  reserva->voo = voo;
+  reserva->assento = assento;
+
+  return reserva;
+}
+
+void print_agenda(Agenda *agenda) {
+  printf("-----------------------------------\n");
+  printf("Agenda: %p, Reserva: %d\n", agenda, agenda->reserva->codigo);
+  print_data(agenda->reserva->data_viagem);
+  printf("-----------------------------------\n");
+}
+
+void print_arvore_pre_ordem(Agenda *raiz) {
+  if(raiz == NULL) {
+    return;
+  }
+
+  print_agenda(raiz);
+  print_arvore_pre_ordem(raiz->esq);
+  print_arvore_pre_ordem(raiz->dir);
+}
+
 void testeExclusao() {
   printf("Teste exclusao da arvore binaria de busca\n");
 
@@ -287,5 +318,49 @@ void testeExclusao() {
   Voo *v4 = criarVoo(14, "REC", "SDR");
   Voo *v5 = criarVoo(15, "SAO", "BSA");
 
-  // Reserva *r1 = 
+  Data *d1 = data_cria(22, 1, 2023);
+  Data *d2 = data_cria(23, 1, 2023);
+  Data *d3 = data_cria(24, 1, 2023);
+  Data *d4 = data_cria(1, 2, 2023);
+  Data *d5 = data_cria(2, 2, 2024);
+
+  Reserva *r1 = criarReserva(101, d1, p1, v1, A0);
+  Reserva *r2 = criarReserva(102, d2, p2, v2, A0);
+  Reserva *r3 = criarReserva(103, d3, p3, v3, A0);
+  Reserva *r4 = criarReserva(104, d4, p1, v4, A0);
+  Reserva *r5 = criarReserva(105, d5, p2, v5, A0);
+  Reserva *r6 = criarReserva(106, d1, p3, v1, A0);
+  Reserva *r7 = criarReserva(107, d2, p1, v2, A0);
+  Reserva *r8 = criarReserva(108, d3, p2, v3, A0);
+  Reserva *r9 = criarReserva(109, d4, p3, v4, A0);
+
+  Agenda *a1 = abb_cria_agenda(r1);
+  Agenda *a2 = abb_cria_agenda(r2);
+  Agenda *a3 = abb_cria_agenda(r3);
+  Agenda *a4 = abb_cria_agenda(r4);
+  Agenda *a5 = abb_cria_agenda(r5);
+  Agenda *a6 = abb_cria_agenda(r6);
+  Agenda *a7 = abb_cria_agenda(r7);
+  Agenda *a8 = abb_cria_agenda(r8);
+  Agenda *a9 = abb_cria_agenda(r9);
+
+  abb_insere_agenda(a7, a6);
+  abb_insere_agenda(a7, a9);
+  abb_insere_agenda(a7, a1);
+  abb_insere_agenda(a7, a2);
+  abb_insere_agenda(a7, a8);
+  abb_insere_agenda(a7, a5);
+  abb_insere_agenda(a7, a3);
+  abb_insere_agenda(a7, a4);
+
+  print_arvore_pre_ordem(a7);
+
+  printf("#########################################\n");
+  printf("Testando a exclusao\n");
+
+  Agenda * noRemover = busca_codigo_pre_ordem(a7, 108);
+  Reserva *reservaRemovida = abb_no_remove(a7, noRemover);
+
+  print_arvore_pre_ordem(a7);
+  printf("Reserva removida: %d\n", reservaRemovida->codigo);
 }
