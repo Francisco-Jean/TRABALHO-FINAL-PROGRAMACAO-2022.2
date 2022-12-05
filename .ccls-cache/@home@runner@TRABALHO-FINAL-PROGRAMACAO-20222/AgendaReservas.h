@@ -26,7 +26,7 @@ typedef struct tabela_viagem TabelaViagem;
  * criado ou NULL caso não seja posivel criar o nó. */
 No *abb_cria_no(Reserva *reserva);
 
-Agenda *abb_insere_agenda(Agenda *raiz, Agenda *agenda,Reserva *reserva);
+Agenda *abb_insere_agenda(Agenda *agenda, Agenda *raiz);
 
 int fun_hash(int id, int codigo);
 
@@ -39,3 +39,9 @@ int verifica_dados(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo
 Reserva *cria_reserva(Agenda *raiz,int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento);
 
 int verifica_reserva(Agenda *raiz,int codigo,Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento);
+
+int data(Data *data_viagem);
+
+Reserva *em_ordem2(Agenda *agenda,int codigo);
+
+int busca_codigo(Agenda *raiz,int codigo_reserva);

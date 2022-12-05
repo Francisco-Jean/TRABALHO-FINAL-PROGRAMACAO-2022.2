@@ -22,7 +22,6 @@ struct agenda {
   Reserva *reserva;
   Agenda *esq;
   Agenda *dir;
-  Agenda *pai;
   Agenda *raiz;
 };
 
@@ -88,6 +87,13 @@ void reserva_acessa(Reserva *reserva, int codigo, Data *data_viagem,Passageiro *
   }
 }
 
+/* Retorna o codigo da reserva ou '#' caso o nó seja NULL. */
+int abb_codigo_reserva(Reserva *reserva) {
+  if(reserva == NULL){
+    return '#';
+  }
+  return reserva->codigo;
+}
 
 //FUNÇOES DE AGENDA
 
@@ -102,53 +108,44 @@ Agenda *abb_cria_agenda(Reserva *reserva) {
   agenda->reserva = reserva;
   agenda->esq = NULL;
   agenda->dir = NULL;
-  agenda->pai = NULL;
   return agenda;
 }
 
-/* Retorna o codigo da reserva ou '#' caso o nó seja NULL. */
-int abb_codigo_reserva(Reserva *reserva) {
-  if(reserva == NULL){
-    return '#';
-  }
-  return reserva->codigo;
-}
+
 
 /* Adiciona um nó à esquerda ou à direita do no raiz. Retorna a raiz da árvore
  * resultante ou NULL caso (i) a raiz e o nó sejam NULL e (ii) caso o nó possua
  * mesma chave que outro nó previamente inserido na árvore. */
 
 // ADD função de contagem da data
-Agenda *abb_insere_agenda(Agenda *agenda, Agenda *raiz,Reserva *reserva) {
-  if (raiz == NULL && agenda == NULL) {
+Agenda *abb_insere_agenda(Agenda *agenda, Agenda *raiz) {
+  if (agenda->reserva == NULL) {
     return NULL;
   }
-  Agenda *aux2 = NULL;
   Agenda *aux1 = raiz;
-
+  Agenda *aux2 = NULL;
+  int data1 = data(agenda->reserva->data_viagem);
+    int data2 = data(aux1->reserva->data_viagem);
+    int data3 = data(aux2->reserva->data_viagem);
+  
   while (aux1 != NULL) {
     aux2 = aux1;
-    if (agenda->reserva->data_viagem < aux1->reserva->data_viagem) {
+    if (data1 < data2) {
       aux1 = aux1->esq;
     }
-    else if (agenda->reserva->data_viagem > aux1->reserva->data_viagem) {
+    else if (data1 > data2) {
       aux1 = aux1->dir;
     }
-    else if (agenda->reserva->data_viagem == aux2->reserva->data_viagem){
+    else if (data1 == data3){
       return NULL;
     }
   }
-  if (raiz != NULL) {
-    if (agenda->reserva->data_viagem < aux2->reserva->data_viagem) {
-      aux2->esq = agenda;
-    }
-    else {
-      aux2->dir = agenda;
-    }
-    agenda->pai = aux2;
+  
+  if (data1 < data3) {
+    aux2->esq = agenda;
   }
   else {
-    raiz = agenda;
+    aux2->dir = agenda;
   }
   return raiz;
 }
@@ -183,7 +180,9 @@ Reserva *em_ordem(Agenda *agenda, int id, int codigo){
   if(agenda->esq != NULL){
     em_ordem(agenda->esq,id,codigo);
   }
-  if (agenda->reserva->codigo == codigo && agenda->reserva->passageiro->id == id){
+  int id_aux; char nome[30];char endereco[30];
+  passageiroAcessa(agenda->reserva->passageiro, &id, nome, endereco);
+  if (agenda->reserva->codigo == codigo && id_aux == id){
     return agenda->reserva;
   }
   if(agenda->dir != NULL){
@@ -201,7 +200,9 @@ int verifica_dados(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo
 }
 
 int verifica_reserva(Agenda *raiz,int codigo,Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
-  if(busca_codigo(codigo) != 0 && abb_busca_reserva(raiz, passageiro->id, 0,data_viagem) != NULL){
+  int id; char nome[30];char endereco[30];
+  passageiroAcessa(passageiro, &id, nome, endereco);
+  if(busca_codigo(raiz,codigo) == 0 && abb_busca_reserva(raiz, id, 0,data_viagem) != NULL){
     return 1;
   }
   return 0;
@@ -213,4 +214,27 @@ int data(Data *data_viagem){
   int ano = data_viagem->ano * 365;
   int soma = dia+mes+ano;
   return soma;
+}
+
+int busca_codigo(Agenda *raiz,int codigo_reserva){
+  if(codigo_reserva != 0){
+    Reserva *codigo = em_ordem2(raiz,codigo_reserva);
+    if(codigo != NULL){
+      return 1;
+    }
+  }
+  return 0;
+}
+
+Reserva *em_ordem2(Agenda *agenda,int codigo){
+  if(agenda->esq != NULL){
+    em_ordem2(agenda->esq,codigo);
+  }
+  if (agenda->reserva->codigo == codigo){
+    return agenda->reserva;
+  }
+  if(agenda->dir != NULL){
+    em_ordem2(agenda->dir,codigo);
+  }
+  return NULL;
 }
