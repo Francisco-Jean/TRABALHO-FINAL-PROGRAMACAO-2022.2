@@ -1,6 +1,7 @@
 #include "AgendaReservas.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 //arvore binaria de busca
 struct data {
@@ -25,16 +26,27 @@ struct agenda {
   Agenda *raiz;
 };
 
-struct passageiro {
-int id;
-char *nome;
-char *endereco;
-};
 
-struct no_passageiro {
-  Passageiro *passageiro;
-  struct no_passageiro *proximo;
-};
+
+Reserva *cria_reserva(Agenda *raiz,int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
+  if(verifica_dados(codigo,data_viagem,passageiro,voo,assento) == 1 && verifica_reserva(raiz,codigo,data_viagem,passageiro,voo,assento == 1)){
+    int id; char nome[30];char endereco[30];
+    int codigo; char origem[30];char destino[30];
+    passageiroAcessa(passageiro, &id, nome, endereco);
+    vooAcessa(voo, &codigo, origem, destino);
+    if(strcmp(endereco,origem) == 0){
+      editarPassageiro(passageiro,id, nome,destino);
+      Reserva *reserva = (Reserva*) malloc(sizeof(Reserva));
+      reserva->codigo = codigo;
+      reserva->data_viagem = data_viagem;
+      reserva->passageiro = passageiro;
+      reserva->voo = voo;
+      reserva->assento = assento;
+      return reserva;
+    }
+  }
+  return NULL;
+}
 
 /* Aloca e retorna uma Agenda com os dados passados por parâmetro. Retorna no nó
  * criado ou NULL caso não seja posivel criar o nó. */
@@ -42,6 +54,7 @@ Agenda *abb_cria_agenda(Reserva *reserva) {
   if(reserva->codigo<0){
     return NULL;
   }
+  
   Agenda *agenda = (Agenda*) malloc(sizeof(Agenda));
   agenda->reserva = reserva;
   agenda->esq = NULL;
@@ -120,6 +133,7 @@ Reserva *abb_busca_reserva(Agenda *raiz,int id, int codigo, Data *data_viagem) {
   return NULL;
 }
 
+
 Reserva *em_ordem(Agenda *agenda, int id, int codigo){
   if(agenda->esq != NULL){
     em_ordem(agenda->esq,id,codigo);
@@ -131,4 +145,19 @@ Reserva *em_ordem(Agenda *agenda, int id, int codigo){
     em_ordem(agenda->dir,id,codigo);
   }
   return NULL;
+}
+
+//Faz a verificação se exite o codigo passado, o passageiro, o voo, a data e o assento
+int verifica_dados(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
+  if(codigo <= 0 || data_viagem == NULL || passageiro == NULL || voo == NULL || assento<0 ){
+    return 0;
+  }
+  return 1;
+}
+
+int verifica_reserva(Agenda *raiz,int codigo,Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
+  if(busca_codigo(codigo) != 0 && abb_busca_reserva(raiz, passageiro->id, 0,data_viagem) != NULL){
+    return 1;
+  }
+  return 0;
 }
