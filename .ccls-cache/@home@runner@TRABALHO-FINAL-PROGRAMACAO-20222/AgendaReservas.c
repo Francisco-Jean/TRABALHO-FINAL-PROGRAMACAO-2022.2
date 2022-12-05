@@ -247,3 +247,14 @@ Reserva *em_ordem2(Agenda *agenda,int codigo){
   }
   return NULL;
 }
+
+Data *criaData(int dia, int mes, int ano){
+  if(dia <= 0 || mes<= 0 || ano<= 0){
+    return NULL;
+  }
+  Data *data = (Data*) malloc(sizeof(Data));
+  data->dia = dia;
+  data->mes = mes;
+  data->ano =ano;
+  return data;
+}
