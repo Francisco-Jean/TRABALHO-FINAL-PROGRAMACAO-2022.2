@@ -26,7 +26,7 @@ typedef struct tabela_viagem TabelaViagem;
  * criado ou NULL caso não seja posivel criar o nó. */
 No *abb_cria_no(Reserva *reserva);
 
-Agenda *abb_insere_agenda(Agenda *raiz, Agenda *agenda);
+Agenda *abb_insere_agenda(Agenda *raiz, Agenda *agenda,Reserva *reserva);
 
 int fun_hash(int id, int codigo);
 

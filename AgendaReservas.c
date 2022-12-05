@@ -26,7 +26,7 @@ struct agenda {
   Agenda *raiz;
 };
 
-
+//FUNÇOES DE RESERVA
 
 Reserva *cria_reserva(Agenda *raiz,int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
   if(verifica_dados(codigo,data_viagem,passageiro,voo,assento) == 1 && verifica_reserva(raiz,codigo,data_viagem,passageiro,voo,assento == 1)){
@@ -47,6 +47,49 @@ Reserva *cria_reserva(Agenda *raiz,int codigo, Data *data_viagem,Passageiro *pas
   }
   return NULL;
 }
+
+void edita_reserva(Agenda *raiz,Reserva *reserva,int codigo,Data *data_viagem, Passageiro *passageiro, Voo *voo,Assento assento){
+  if(reserva!= NULL && verifica_reserva(raiz,codigo,data_viagem,passageiro,voo,assento == 1)){
+    int id; char nome[30];char endereco[30];
+    int codigo; char origem[30];char destino[30];
+    passageiroAcessa(passageiro, &id, nome, endereco);
+    vooAcessa(voo, &codigo, origem, destino);
+    if(strcmp(endereco,origem) == 0){
+      reserva->codigo = codigo;
+      reserva->data_viagem = data_viagem;
+      reserva->passageiro = passageiro;
+      reserva->voo = voo;
+      reserva->assento = assento;
+    }
+  }
+}
+
+void remove_reserva(Reserva **reserva){
+  if(reserva!=NULL){
+    free(reserva);
+    *reserva = NULL;
+  }
+}
+
+void reserva_acessa(Reserva *reserva, int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo, Assento assento){
+  if(reserva == NULL){
+    codigo = -1;
+    data_viagem = NULL;
+    passageiro = NULL;
+    voo= NULL;
+    assento = -1;
+  }
+  else{
+    codigo = reserva->codigo;
+    data_viagem = reserva->data_viagem;
+    passageiro = reserva->passageiro;
+    voo= reserva->voo;
+    assento = reserva->assento;
+  }
+}
+
+
+//FUNÇOES DE AGENDA
 
 /* Aloca e retorna uma Agenda com os dados passados por parâmetro. Retorna no nó
  * criado ou NULL caso não seja posivel criar o nó. */
@@ -74,7 +117,9 @@ int abb_codigo_reserva(Reserva *reserva) {
 /* Adiciona um nó à esquerda ou à direita do no raiz. Retorna a raiz da árvore
  * resultante ou NULL caso (i) a raiz e o nó sejam NULL e (ii) caso o nó possua
  * mesma chave que outro nó previamente inserido na árvore. */
-Agenda *abb_insere_agenda(Agenda *raiz, Agenda *agenda) {
+
+// ADD função de contagem da data
+Agenda *abb_insere_agenda(Agenda *agenda, Agenda *raiz,Reserva *reserva) {
   if (raiz == NULL && agenda == NULL) {
     return NULL;
   }
@@ -160,4 +205,12 @@ int verifica_reserva(Agenda *raiz,int codigo,Data *data_viagem,Passageiro *passa
     return 1;
   }
   return 0;
+}
+
+int data(Data *data_viagem){
+  int dia = data_viagem->dia;
+  int mes = data_viagem->mes * 30;
+  int ano = data_viagem->ano * 365;
+  int soma = dia+mes+ano;
+  return soma;
 }
