@@ -28,7 +28,7 @@ struct agenda {
 //FUNÇOES DE RESERVA
 
 Reserva *cria_reserva(Agenda *raiz,int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
-  if(verifica_dados(codigo,data_viagem,passageiro,voo,assento) == 1 && verifica_reserva(raiz,codigo,data_viagem,passageiro,voo,assento == 1)){
+  if(verifica_dados(codigo,data_viagem,passageiro,voo,assento) == 0 && verifica_reserva(raiz,codigo,data_viagem,passageiro,voo,assento) == 0){
     int id; char nome[30];char endereco[30];
     int codigo; char origem[30];char destino[30];
     passageiroAcessa(passageiro, &id, nome, endereco);
@@ -152,17 +152,29 @@ Agenda *abb_insere_agenda(Agenda *agenda, Agenda *raiz) {
 
 /* Procura o reserva pelo id e codigo. Retorna a reserva caso a busca obtenha sucesso ou NULL
  * em caso contrário. */
-Reserva *abb_busca_reserva(Agenda *raiz,int id, int codigo, Data *data_viagem) {
+Reserva *abb_busca_reserva_codigo(Agenda *raiz,int id, int codigo) {
+  if(id<0 || codigo <= 0){
+    return NULL;
+  }
+  int id_aux; char nome[30];char endereco[30];
+  passageiroAcessa(raiz->reserva->passageiro, &id, nome, endereco);
+  Reserva *reserva = em_ordem(raiz,id_aux);
+  return reserva;
+}
+
+
+Reserva *abb_busca_reserva_data(Agenda *raiz,int id, Data *data_viagem) {
   if(id<0 || codigo<0 || data_viagem == NULL){
     return NULL;
   }
-  if(id != 0 && codigo != 0 && data_viagem == NULL){
-    Reserva *reserva = em_ordem(raiz,id,codigo);
-    return reserva;
-  }
-  else if(id != 0 && codigo == 0 && data_viagem != NULL){
+  if(id != 0 && codigo == 0 && data_viagem != NULL){
     Agenda *agenda_aux = raiz;
-    while(agenda_aux->reserva->data_viagem != data_viagem && agenda_aux->reserva->passageiro->id != id){
+    int data1 = data(agenda_aux->reserva->data_viagem);
+    int data2 = data(data_viagem);
+    int id_aux; char nome[30];char endereco[30];
+    int codigo; char origem[30];char destino[30];
+    passageiroAcessa(agenda_aux->reserva->passageiro, &id, nome, endereco);
+    while(data1 != data2 && id_aux != id){
       if (agenda_aux->reserva->data_viagem <= data_viagem){
         agenda_aux = agenda_aux->esq;
       }
@@ -176,21 +188,6 @@ Reserva *abb_busca_reserva(Agenda *raiz,int id, int codigo, Data *data_viagem) {
 }
 
 
-Reserva *em_ordem(Agenda *agenda, int id, int codigo){
-  if(agenda->esq != NULL){
-    em_ordem(agenda->esq,id,codigo);
-  }
-  int id_aux; char nome[30];char endereco[30];
-  passageiroAcessa(agenda->reserva->passageiro, &id, nome, endereco);
-  if (agenda->reserva->codigo == codigo && id_aux == id){
-    return agenda->reserva;
-  }
-  if(agenda->dir != NULL){
-    em_ordem(agenda->dir,id,codigo);
-  }
-  return NULL;
-}
-
 //Faz a verificação se exite o codigo passado, o passageiro, o voo, a data e o assento
 int verifica_dados(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
   if(codigo <= 0 || data_viagem == NULL || passageiro == NULL || voo == NULL || assento<0 ){
@@ -202,10 +199,10 @@ int verifica_dados(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo
 int verifica_reserva(Agenda *raiz,int codigo,Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
   int id; char nome[30];char endereco[30];
   passageiroAcessa(passageiro, &id, nome, endereco);
-  if(busca_codigo(raiz,codigo) == 0 && abb_busca_reserva(raiz, id, 0,data_viagem) != NULL){
-    return 1;
+  if(busca_codigo(raiz,codigo) == 0 && abb_busca_reserva_data(raiz, id,data_viagem) == NULL){
+    return 0;
   }
-  return 0;
+  return 1;
 }
 
 int data(Data *data_viagem){
@@ -224,6 +221,21 @@ int busca_codigo(Agenda *raiz,int codigo_reserva){
     }
   }
   return 0;
+}
+
+Reserva *em_ordem(Agenda *agenda, int id,int codigo){
+  if(agenda->esq != NULL){
+    em_ordem(agenda->esq,id);
+  }
+  int id_aux; char nome[30];char endereco[30];
+  passageiroAcessa(agenda->reserva->passageiro, &id, nome, endereco);
+  if (id_aux == id && ){
+    return agenda->reserva;
+  }
+  if(agenda->dir != NULL){
+    em_ordem(agenda->dir,id);
+  }
+  return NULL;
 }
 
 Reserva *em_ordem2(Agenda *agenda,int codigo){

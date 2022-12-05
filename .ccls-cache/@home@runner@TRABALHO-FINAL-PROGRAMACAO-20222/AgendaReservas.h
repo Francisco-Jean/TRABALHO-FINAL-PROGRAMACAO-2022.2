@@ -32,7 +32,7 @@ int fun_hash(int id, int codigo);
 
 Agenda *abb_busca_agenda(Agenda *raiz,int id, int codigo, Data *data_viagem);
 
-Reserva *em_ordem(Agenda *agenda, int id, int codigo);
+Reserva *em_ordem(Agenda *agenda, int id);
 
 int verifica_dados(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento);
 
