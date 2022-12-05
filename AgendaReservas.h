@@ -1,6 +1,7 @@
 #include "Passageiros.h"
 #include "Voos.h"
 
+
 enum cod_assento {
     A0, B0, C0,
     A1, B1, C1, 
@@ -19,11 +20,28 @@ typedef struct data Data;
 typedef struct reserva Reserva;
 typedef struct agenda Agenda;
 typedef struct passageiro Passageiro;
+typedef struct tabela_viagem TabelaViagem;
 
 /* Aloca e retorna um No com os dados passados por parâmetro. Retorna no nó
  * criado ou NULL caso não seja posivel criar o nó. */
 No *abb_cria_no(Reserva *reserva);
 
-Agenda *abb_insere_agenda(Agenda *raiz, Agenda *agenda);
+Agenda *abb_insere_agenda(Agenda *agenda, Agenda *raiz);
 
-Reserva *em_ordem(Agenda *agenda, int id, int codigo);
+int fun_hash(int id, int codigo);
+
+Agenda *abb_busca_agenda(Agenda *raiz,int id, int codigo, Data *data_viagem);
+
+Reserva *em_ordem(Agenda *agenda, int id,int codigo);
+
+int verifica_dados(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento);
+
+Reserva *cria_reserva(Agenda *raiz,int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento);
+
+int verifica_reserva(Agenda *raiz,int codigo,Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento);
+
+int data(Data *data_viagem);
+
+Reserva *em_ordem2(Agenda *agenda,int codigo);
+
+int busca_codigo(Agenda *raiz,int codigo_reserva);
