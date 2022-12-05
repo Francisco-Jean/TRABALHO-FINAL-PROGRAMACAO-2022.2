@@ -158,16 +158,13 @@ Reserva *abb_busca_reserva_codigo(Agenda *raiz,int id, int codigo) {
   }
   int id_aux; char nome[30];char endereco[30];
   passageiroAcessa(raiz->reserva->passageiro, &id, nome, endereco);
-  Reserva *reserva = em_ordem(raiz,id_aux);
+  Reserva *reserva = em_ordem(raiz,id_aux,codigo);
   return reserva;
 }
 
 
 Reserva *abb_busca_reserva_data(Agenda *raiz,int id, Data *data_viagem) {
-  if(id<0 || codigo<0 || data_viagem == NULL){
-    return NULL;
-  }
-  if(id != 0 && codigo == 0 && data_viagem != NULL){
+  if(id != 0 && data_viagem != NULL){
     Agenda *agenda_aux = raiz;
     int data1 = data(agenda_aux->reserva->data_viagem);
     int data2 = data(data_viagem);
@@ -199,7 +196,7 @@ int verifica_dados(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo
 int verifica_reserva(Agenda *raiz,int codigo,Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
   int id; char nome[30];char endereco[30];
   passageiroAcessa(passageiro, &id, nome, endereco);
-  if(busca_codigo(raiz,codigo) == 0 && abb_busca_reserva_data(raiz, id,data_viagem) == NULL){
+  if(busca_codigo(raiz,codigo) == 0 && abb_busca_reserva_data(raiz, id,data_viagem) == NULL && abb_busca_reserva_codigo(raiz, id,codigo)){
     return 0;
   }
   return 1;
@@ -225,15 +222,15 @@ int busca_codigo(Agenda *raiz,int codigo_reserva){
 
 Reserva *em_ordem(Agenda *agenda, int id,int codigo){
   if(agenda->esq != NULL){
-    em_ordem(agenda->esq,id);
+    em_ordem(agenda->esq,id,codigo);
   }
   int id_aux; char nome[30];char endereco[30];
   passageiroAcessa(agenda->reserva->passageiro, &id, nome, endereco);
-  if (id_aux == id && ){
+  if (id_aux == id && agenda->reserva->codigo == codigo){
     return agenda->reserva;
   }
   if(agenda->dir != NULL){
-    em_ordem(agenda->dir,id);
+    em_ordem(agenda->dir,id,codigo);
   }
   return NULL;
 }
