@@ -21,6 +21,7 @@
 //typedef struct agenda Agenda;
 typedef struct viagem Viagem;
 typedef struct tabela_viagem TabelaViagem;
+typedef struct trecho Trecho;
 
 
 TabelaViagem *cria_tabela(int tamanho);
