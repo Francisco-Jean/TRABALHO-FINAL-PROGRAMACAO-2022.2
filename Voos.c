@@ -64,7 +64,7 @@ Voo *editarVoo(Voo *voo, int codigo, char *origem, char *destino) {
   return voo;
 }
 
-//▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬❴FUNÇÕES DA LISTA DE VÔOS ❵▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬//
+//▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬❴ FUNÇÕES DA LISTA DE VÔOS ❵▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬//
 
 // ↓↓ Cria e aloca espaço na memória para iniciar uma lista de vôos ↓↓ //
 
@@ -78,7 +78,7 @@ ListaVoo *listaVoo_cria() {
 
 int tamanho_lista(ListaVoo *lista){
   int cont = 0;
-  struct no_voo *noAux=lista->primeiro;
+  NoVoo *noAux=lista->primeiro;
   while(noAux != NULL) {
     cont++;
     noAux = noAux->proximo;
@@ -89,7 +89,7 @@ int tamanho_lista(ListaVoo *lista){
 // ↓↓ Aloca espaço na memória pra um nó e insere ele na lista ↓↓ //
 
 int listaVoo_insere(ListaVoo *listaVoo, Voo *voo) { 
-  struct no_voo *novoNo= (struct no_voo * )malloc(sizeof(struct no_voo));
+  NoVoo *novoNo= (NoVoo * )malloc(sizeof(NoVoo));
   if (novoNo==NULL){
     return 1;
   }
@@ -102,8 +102,8 @@ int listaVoo_insere(ListaVoo *listaVoo, Voo *voo) {
 // ↓↓ Retira e libera memória de um nó alocado na lista ↓↓ //
 
 Voo *listaVoo_retira(ListaVoo *listaVoo, int codigo) {
-  struct no_voo *noAtual = listaVoo->primeiro;
-  struct no_voo *noAnt = NULL;
+  NoVoo *noAtual = listaVoo->primeiro;
+  NoVoo *noAnt = NULL;
   while (noAtual != NULL) {
     if(noAtual->voo->codigo == codigo) {
       if(noAnt == NULL) {
