@@ -139,8 +139,8 @@ int vooIgual(Voo *voo1, Voo *voo2) {
 int listaVoo_libera(ListaVoo **listaVoo) { 
   if(listaVoo != NULL) {
     if(*listaVoo != NULL) {
-      struct no_voo *noAtual=(*listaVoo)->primeiro;
-      struct no_voo *noProx=NULL;
+      NoVoo *noAtual=(*listaVoo)->primeiro;
+      NoVoo*noProx=NULL;
       while(noAtual != NULL) {
         noProx = noAtual->proximo;
         liberarVoo(noAtual->voo);
@@ -157,7 +157,7 @@ int listaVoo_libera(ListaVoo **listaVoo) {
 // ↓↓ Realiza a busca por código em uma lista de vôos ↓↓ //
 
 Voo *listaVoo_busca(ListaVoo *listaVoo, int codigo) {
-  struct no_voo *noAux=listaVoo->primeiro;
+  NoVoo *noAux=listaVoo->primeiro;
   while (noAux != NULL) {
     if(noAux->voo->codigo == codigo) {
       return noAux->voo;
