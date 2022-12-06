@@ -247,3 +247,39 @@ Reserva *em_ordem2(Agenda *agenda,int codigo){
   }
   return NULL;
 }
+
+//Cria uma nova data//
+Data * data_cria(int dia, int mes, int ano){
+  Data *novaData=(Data *)malloc(sizeof(Data));
+  novaData->dia=dia;
+  novaData->mes=mes;
+  novaData->ano=ano;
+  return novaData;
+}
+
+ //Retorna:
+ //   1, se data1 > data2;
+ //  -1, se data1 < data2;
+ //   0, caso contrario (data1 == data2)
+ 
+int data_compara(Data *data1, Data *data2){
+  if (data1->ano > data2->ano) {
+    return 1;
+  }
+  if(data1->ano < data2->ano) {
+    return -1;
+  }
+  if(data1->mes > data2->mes) {
+    return 1;
+  }
+  if(data1->mes < data2->mes) {
+    return -1;
+  }
+  if(data1->dia > data2->dia) {
+    return 1;
+  }
+  if(data1->dia < data2->dia) {
+    return -1;
+  }
+  return 0;
+}
