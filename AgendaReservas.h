@@ -36,7 +36,7 @@ Reserva *em_ordem(Agenda *agenda, int id,int codigo);
 
 int verifica_dados(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento);
 
-Reserva *cria_reserva(Agenda *raiz,int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento);
+
 
 int verifica_reserva(Agenda *raiz,int codigo,Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento);
 
@@ -47,3 +47,10 @@ Reserva *em_ordem2(Agenda *agenda,int codigo);
 int busca_codigo(Agenda *raiz,int codigo_reserva);
 
 Data *criaData(int dia, int mes, int ano);
+
+// Funções de Reserva
+Reserva *cria_reserva(Agenda *raiz,int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento);
+void edita_reserva(Agenda *raiz,Reserva *reserva,int codigo,Data *data_viagem, Passageiro *passageiro, Voo *voo,Assento assento);
+void remove_reserva(Reserva **reserva);
+void reserva_acessa(Reserva *reserva, int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo, Assento assento);
+int reserva_igual(Reserva *reserva1, Reserva *reserva2);
