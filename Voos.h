@@ -3,11 +3,17 @@ typedef struct voo Voo;
 
 typedef struct lista_voo ListaVoo;
 
+typedef struct no_voo NoVoo;
+
 void vooAcessa(Voo *voo, int *codigo, char *origem, char *destino);
 
 Voo *criarVoo(int codigo, char *origem, char *destino);
 
 Voo *editarVoo(Voo *voo, int codigo, char *origem, char *destino);
+
+void liberarVoo(Voo * voo);
+
+int tamanho_lista(ListaVoo *lista);
 
 ListaVoo *listaVoo_cria();
 
