@@ -1,6 +1,6 @@
-#include "AgendaReservas.h"
 #include "Passageiros.h"
 #include "Voos.h"
+#include "AgendaReservas.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -412,8 +412,7 @@ void teste_editar_voo_dados_validos(Voo *voo) {
 
 void teste_editar_voo_dados_invalidos(Voo *voo) {
   int codigo, codigoAux = 2;
-
-  char origemAux[40], destinoAux[40];
+  char origemAux[60], destinoAux[60];
 
   for (int i = 0; i < 35; i++) {
     strcat(origemAux, "N");
@@ -509,7 +508,7 @@ void teste_lista_voo_cria_dados_validos() {
 void teste_lista_voo_libera_dados_validos() {
   ListaVoo *listaVoo = listaVoo_cria();
   listaVoo_libera(&listaVoo);
-  if (listaVoo != NULL) {
+  if (listaVoo == NULL) {
     imprimir("[PASSOU] teste_lista_voo_libera_dados_validos");
   } else {
     imprimir("[FALHOU] teste_lista_voo_libera_dados_validos");
