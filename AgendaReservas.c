@@ -22,7 +22,7 @@ struct agenda {
   Reserva *reserva;
   Agenda *esq;
   Agenda *dir;
-  Agenda *raiz;
+  Agenda *pai;
 };
 
 //-------------------------------------------------------------FUNÇOES DE RESERVA-----------------------------------------------------------------------------
@@ -315,4 +315,31 @@ Data *criaData(int dia, int mes, int ano){
   data->mes = mes;
   data->ano =ano;
   return data;
+}
+
+ //Retorna:
+ //   1, se data1 > data2;
+ //  -1, se data1 < data2;
+ //   0, caso contrario (data1 == data2)
+ 
+int data_compara(Data *data1, Data *data2){
+  if (data1->ano > data2->ano) {
+    return 1;
+  }
+  if(data1->ano < data2->ano) {
+    return -1;
+  }
+  if(data1->mes > data2->mes) {
+    return 1;
+  }
+  if(data1->mes < data2->mes) {
+    return -1;
+  }
+  if(data1->dia > data2->dia) {
+    return 1;
+  }
+  if(data1->dia < data2->dia) {
+    return -1;
+  }
+  return 0;
 }

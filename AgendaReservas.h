@@ -56,3 +56,7 @@ void edita_reserva(Agenda *raiz,Reserva *reserva,int codigo,Data *data_viagem, P
 void remove_reserva(Reserva **reserva);
 void reserva_acessa(Reserva *reserva, int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo, Assento assento);
 int reserva_igual(Reserva *reserva1, Reserva *reserva2);
+
+void transplantar(Agenda **noRaiz, Agenda *noDestino, Agenda *noOrigem);
+
+int data_compara(Data *data1, Data *data2);
