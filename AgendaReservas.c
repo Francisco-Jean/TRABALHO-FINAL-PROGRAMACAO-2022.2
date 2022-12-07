@@ -67,13 +67,15 @@ void edita_reserva(Agenda *raiz,Reserva *reserva,int codigo,Data *data_viagem, P
   }
 }
 
-//Remove a reserva e desaloca o ponteiro reserva
-void remove_reserva(Reserva **reserva){
+//Libera a reserva e desaloca o ponteiro reserva
+void libera_reserva(Reserva **reserva){
   if(reserva!=NULL){
     free(reserva);
     *reserva = NULL;
   }
 }
+
+
 
 //copia os dados de uma derterminada reserva para os parametros indicados
 void reserva_acessa(Reserva *reserva, int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo, Assento assento){
@@ -193,6 +195,47 @@ Reserva *abb_busca_reserva_data(Agenda *raiz,int id, Data *data_viagem) {
   return NULL;
 }
 
+//Remove um nó da agenda e retorna o no removido
+Reserva *abb_no_remove(Agenda *raiz, Agenda* noRemover) {
+  if (noRemover->esq==NULL){
+    transplantar(&raiz,noRemover,noRemover->dir);
+  }
+  else{
+    if(noRemover->dir==NULL){
+      transplantar(&raiz,noRemover,noRemover->esq);
+    }
+    else{
+      Agenda *y=busca_minimo(noRemover->dir);
+      if(y->pai != noRemover){
+        transplantar(&raiz,y,y->dir);
+        y->dir=noRemover->dir;
+        y->dir->pai=y;
+      }
+      transplantar(&raiz,noRemover,y);
+      y->esq=noRemover->esq;
+      y->esq->pai=y;
+      
+    }
+  }
+  return noRemover->reserva;
+}
+
+void transplantar(Agenda **noRaiz, Agenda *noDestino, Agenda *noOrigem){
+  if (noDestino->pai == NULL){
+    *noRaiz=noOrigem;
+  }
+  else{
+    if(noDestino==noDestino->pai->esq){
+      noDestino->pai->esq=noOrigem;
+    }
+    else{
+      noDestino->pai->dir=noOrigem;
+    }
+    if (noOrigem!=NULL){
+      noOrigem->pai=noDestino->pai;
+    }
+  }
+}
 
 //Faz a verificação se exite os parametros são negativos ou NULL. Retorna 1 caso não haja erro ou 0 caso haja impossibilidade em algum dos parametros passados
 int verifica_dados(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
