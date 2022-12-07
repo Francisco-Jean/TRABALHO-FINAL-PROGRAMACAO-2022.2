@@ -674,10 +674,6 @@ void teste_lista_voo_busca_dados_nulos() {
 
 // ================== TESTES FUNÇÕES DE RESERVA ==================
 
-void teste_criar_reserva_dados_validos(){
-  Passageiro *passageiro1 = criarPassageiro(3, "Levy", "UFC");
-  Reserva *reserva1 = criarReserva();
-}
 
 
 int main(void) {

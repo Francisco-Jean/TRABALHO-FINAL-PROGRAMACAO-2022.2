@@ -26,3 +26,5 @@ int vooIgual(Voo *voo1, Voo *voo2);
 int listaVoo_libera(ListaVoo **listaVoo);
 
 Voo *listaVoo_busca(ListaVoo *listaVoo, int codigo);
+
+int verifica_params(int codigo,char *origem, char *destino);

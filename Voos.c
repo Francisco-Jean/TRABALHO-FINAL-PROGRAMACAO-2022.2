@@ -56,7 +56,7 @@ void liberarVoo(Voo * voo){
 // ↓↓ Edita os campos de um vôo existente ↓↓ //
 
 Voo *editarVoo(Voo *voo, int codigo, char *origem, char *destino) {
-  if (voo != NULL) {
+  if (voo != NULL && verifica_params(codigo, origem,destino) == 1) {
     voo->codigo=codigo;
     strcpy(voo->origem,origem);
     strcpy(voo->destino,destino);
@@ -178,5 +178,3 @@ int verifica_params(int codigo,char *origem, char *destino){
   }
   return 1;
 }
-
-
