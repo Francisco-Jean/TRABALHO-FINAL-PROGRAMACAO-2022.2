@@ -47,3 +47,5 @@ Reserva *em_ordem2(Agenda *agenda,int codigo);
 int busca_codigo(Agenda *raiz,int codigo_reserva);
 
 Data *criaData(int dia, int mes, int ano);
+
+int data_compara(Data *data1, Data *data2);
