@@ -343,3 +343,28 @@ int data_compara(Data *data1, Data *data2){
   }
   return 0;
 }
+
+//Encontra o nó mínimo da árvore binária de busca //
+Agenda *busca_minimo(Agenda *noRaiz) {
+  if (noRaiz==NULL){
+    return NULL;
+  }
+  while(noRaiz->esq != NULL){
+    noRaiz=noRaiz->esq;
+  }
+  return noRaiz;
+}
+
+//Encontra o sucessor de um nó passado por parâmetro da árvore binária de busca //
+Agenda *busca_sucessor(Agenda *no) {
+  if (no->dir != NULL){
+    return busca_minimo(no->dir);
+  }
+  Agenda * noPai=no->pai;
+  while(noPai!=NULL && no==noPai->dir){
+    no=noPai;
+    noPai=no->pai;
+  }
+  return noPai;
+}
+
