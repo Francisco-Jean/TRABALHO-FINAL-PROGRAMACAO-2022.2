@@ -5,8 +5,8 @@
 
 struct voo {
   int codigo;
-  char *origem;
-  char *destino;
+  char origem[30];
+  char destino[30];
 };
 
 struct no_voo {
@@ -28,6 +28,11 @@ void vooAcessa(Voo *voo, int *codigo, char *origem, char *destino) {
     strcpy(origem,voo->origem);
     strcpy(destino,voo->destino);
   }
+  else{
+    *codigo = -1;
+    strcpy(origem,"NULL");
+    strcpy(destino,"NULL");
+  }
 }
 
 // ↓↓ Aloca espaço em memória para um vôo, para os campos desse vôo, e depois atribui os valores passados por referência para esse vôo ↓↓ //
@@ -36,9 +41,7 @@ Voo *criarVoo(int codigo, char *origem, char *destino) {
   if (verifica_params(codigo,origem,destino)==1){
     Voo *novo_voo = (Voo *) malloc(sizeof(Voo));
     novo_voo->codigo = codigo;
-    novo_voo->origem = (char *) malloc(30*sizeof(char));
     strcpy(novo_voo->origem, origem);
-    novo_voo->destino = (char *) malloc(30*sizeof(char));
     strcpy(novo_voo->destino, destino);
     return novo_voo;
     }
@@ -55,13 +58,12 @@ void liberarVoo(Voo * voo){
 
 // ↓↓ Edita os campos de um vôo existente ↓↓ //
 
-Voo *editarVoo(Voo *voo, int codigo, char *origem, char *destino) {
+void editarVoo(Voo *voo, int codigo, char *origem, char *destino) {
   if (voo != NULL && verifica_params(codigo, origem,destino) == 1) {
     voo->codigo=codigo;
     strcpy(voo->origem,origem);
     strcpy(voo->destino,destino);
   }
-  return voo;
 }
 
 //▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬❴ FUNÇÕES DA LISTA DE VÔOS ❵▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬//
@@ -88,20 +90,50 @@ int tamanho_lista(ListaVoo *lista){
 
 // ↓↓ Aloca espaço na memória pra um nó e insere ele na lista ↓↓ //
 
-int listaVoo_insere(ListaVoo *listaVoo, Voo *voo) { 
-  NoVoo *novoNo= (NoVoo * )malloc(sizeof(NoVoo));
-  if (novoNo==NULL){
+int listaVoo_insere(ListaVoo *listaVoo, Voo *voo) {
+  if(listaVoo == NULL || voo == NULL){
+    return -1;
+  }
+  int codigo_base;
+  char origem[30];
+  char destino[30];
+  vooAcessa(voo, &codigo_base, origem, destino);
+  
+  if (listaVoo->primeiro == NULL){
+    NoVoo *n_no = (NoVoo*) malloc(sizeof(NoVoo));
+    n_no -> voo = voo;
+    n_no->proximo = NULL;
+    NoVoo **aux = &(listaVoo->primeiro);
+    *aux = n_no;
     return 1;
   }
-  novoNo->voo= voo;
-  novoNo->proximo= listaVoo->primeiro;
-  listaVoo->primeiro=novoNo;
-  return 0;
+  
+  NoVoo *no_aux = listaVoo->primeiro;
+  NoVoo *no_aux_anterior = no_aux;
+  while(no_aux != NULL){
+    int codigo;
+    vooAcessa(no_aux->voo, &codigo, origem, destino);
+    if (codigo_base == codigo){
+      return 0;
+    }
+    no_aux_anterior = no_aux;
+    no_aux = no_aux->proximo;
+  }
+  NoVoo *n_no = (NoVoo*) malloc(sizeof(NoVoo));
+  n_no -> voo = voo;
+  n_no->proximo = NULL;
+  
+  NoVoo **aux = &(no_aux_anterior->proximo);
+  *aux = n_no;
+  return 1;
 }
 
 // ↓↓ Retira e libera memória de um nó alocado na lista ↓↓ //
 
 Voo *listaVoo_retira(ListaVoo *listaVoo, int codigo) {
+  if(listaVoo == NULL || codigo < 0 || listaVoo->primeiro->voo == NULL){
+    return NULL;
+  }
   NoVoo *noAtual = listaVoo->primeiro;
   NoVoo *noAnt = NULL;
   while (noAtual != NULL) {
@@ -136,27 +168,21 @@ int vooIgual(Voo *voo1, Voo *voo2) {
 
 // ↓↓ Libera a memória de uma lista de vôos e retorna 0 caso seja possível fazer a liberação ↓↓ //
 
-int listaVoo_libera(ListaVoo **listaVoo) { 
-  if(listaVoo != NULL) {
-    if(*listaVoo != NULL) {
-      NoVoo *noAtual=(*listaVoo)->primeiro;
-      NoVoo*noProx=NULL;
-      while(noAtual != NULL) {
-        noProx = noAtual->proximo;
-        liberarVoo(noAtual->voo);
-        free(noAtual);
-        noAtual= noProx;
-      }
-      free(*listaVoo);
-      return 0;
-    }
+
+int listaVoo_libera(ListaVoo **listaVoo) {
+  if (listaVoo == NULL) {
+    return 0;
   }
+  free(*listaVoo);
+  *listaVoo = NULL;
   return 1;
 }
-
 // ↓↓ Realiza a busca por código em uma lista de vôos ↓↓ //
 
 Voo *listaVoo_busca(ListaVoo *listaVoo, int codigo) {
+  if (listaVoo == NULL || listaVoo->primeiro == 0 || codigo<0) {
+    return NULL;
+  }
   NoVoo *noAux=listaVoo->primeiro;
   while (noAux != NULL) {
     if(noAux->voo->codigo == codigo) {
@@ -170,7 +196,7 @@ Voo *listaVoo_busca(ListaVoo *listaVoo, int codigo) {
 // ↓↓ Função que verifica se os parâmetros passados por referência estão conforme o padrão ↓↓ //
 
 int verifica_params(int codigo,char *origem, char *destino){
-  if (codigo < 0 || origem == NULL || destino == NULL){
+  if (codigo <= 0 || origem == NULL || destino == NULL){
     return -1;
   }
   if (strlen(origem) > 30 || strlen(destino) > 30) {

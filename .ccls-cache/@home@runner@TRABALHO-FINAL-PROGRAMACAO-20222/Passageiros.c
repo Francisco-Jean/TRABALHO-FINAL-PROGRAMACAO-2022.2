@@ -98,7 +98,7 @@ Passageiro *lista_retira(Lista *lista, int id) {
 
 
 Passageiro *lista_busca(Lista *lista, int id) {
-  if (lista == NULL || lista->primeiro == 0) {
+  if (lista == NULL || lista->primeiro == 0|| id<0) {
     return NULL;
   }
   

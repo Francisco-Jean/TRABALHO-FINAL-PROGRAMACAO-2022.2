@@ -9,7 +9,7 @@ void vooAcessa(Voo *voo, int *codigo, char *origem, char *destino);
 
 Voo *criarVoo(int codigo, char *origem, char *destino);
 
-Voo *editarVoo(Voo *voo, int codigo, char *origem, char *destino);
+void editarVoo(Voo *voo, int codigo, char *origem, char *destino);
 
 void liberarVoo(Voo * voo);
 
