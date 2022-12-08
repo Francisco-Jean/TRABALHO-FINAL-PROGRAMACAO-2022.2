@@ -195,6 +195,28 @@ Reserva *abb_busca_reserva_data(Agenda *raiz,int id, Data *data_viagem) {
   return NULL;
 }
 
+Agenda *busca_minimo(Agenda *noRaiz) {
+  if (noRaiz==NULL){
+    return NULL;
+  }
+  while(noRaiz->esq != NULL){
+    noRaiz=noRaiz->esq;
+  }
+  return noRaiz;
+}
+
+Agenda *busca_sucessor(Agenda *no) {
+  if (no->dir != NULL){
+    return busca_minimo(no->dir);
+  }
+  Agenda * noPai=no->pai;
+  while(noPai!=NULL && no==noPai->dir){
+    no=noPai;
+    noPai=no->pai;
+  }
+  return noPai;
+}
+
 //Remove um nó da agenda e retorna o no removido
 Reserva *abb_no_remove(Agenda *raiz, Agenda* noRemover) {
   if (noRemover->esq==NULL){
@@ -307,7 +329,7 @@ Reserva *em_ordem2(Agenda *agenda,int codigo){
 
 // Cria e aloca um dia, mes e ano como formato de data. Retorna a data caso seja possivel alocar ou NULL, caso não seja possível.
 Data *criaData(int dia, int mes, int ano){
-  if(dia <= 0 || mes<= 0 || ano<= 0){
+  if(dia <= 0 || mes < 1 || ano< 2022){
     return NULL;
   }
   Data *data = (Data*) malloc(sizeof(Data));

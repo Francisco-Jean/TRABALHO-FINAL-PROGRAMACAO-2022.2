@@ -145,7 +145,7 @@ int lista_vazia(Lista *lista) {
 
 //FUNÇÕES PARA PASSAGEIRO
 
-int verifica_params(int id,char *nome, char *endereco){
+int verifica_params1(int id,char *nome, char *endereco){
   if (id < 0 || nome == NULL || endereco == NULL){
     return -1;
   }
@@ -156,7 +156,7 @@ int verifica_params(int id,char *nome, char *endereco){
 }
 
 Passageiro *criarPassageiro(int id,char *nome, char *endereco){
-  if(verifica_params(id, nome, endereco) == -1){
+  if(verifica_params1(id, nome, endereco) == -1){
     return NULL;
   }
   Passageiro *passageiro = (Passageiro*) malloc(sizeof(Passageiro));
@@ -174,7 +174,7 @@ void removerPassageiro(Passageiro **passageiro){
 }
 
 void editarPassageiro(Passageiro *passageiro,int id, char *nome, char *endereco){
-  if(passageiro != NULL && verifica_params(id, nome, endereco) == 1){
+  if(passageiro != NULL && verifica_params1(id, nome, endereco) == 1){
     passageiro->id = id;
     strcpy(passageiro->nome,nome);
     strcpy(passageiro->endereco,endereco);

@@ -1,6 +1,6 @@
-#include "AgendaReservas.h"
 #include "Passageiros.h"
 #include "Voos.h"
+#include "AgendaReservas.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -412,8 +412,7 @@ void teste_editar_voo_dados_validos(Voo *voo) {
 
 void teste_editar_voo_dados_invalidos(Voo *voo) {
   int codigo, codigoAux = 2;
-
-  char origemAux[40], destinoAux[40];
+  char origemAux[60], destinoAux[60];
 
   for (int i = 0; i < 35; i++) {
     strcat(origemAux, "N");
@@ -509,7 +508,7 @@ void teste_lista_voo_cria_dados_validos() {
 void teste_lista_voo_libera_dados_validos() {
   ListaVoo *listaVoo = listaVoo_cria();
   listaVoo_libera(&listaVoo);
-  if (listaVoo != NULL) {
+  if (listaVoo == NULL) {
     imprimir("[PASSOU] teste_lista_voo_libera_dados_validos");
   } else {
     imprimir("[FALHOU] teste_lista_voo_libera_dados_validos");
@@ -684,23 +683,22 @@ void teste_lista_voo_busca_dados_nulos() {
 // ================== TESTES FUNÇÕES DE RESERVA ==================
 
 void teste_criar_reserva_dados_validos(){
-  printf("io");
-  int codigo_teste = 1;
   Data *data_teste = criaData(10, 10, 2010);
   Passageiro *passageiro_teste = criarPassageiro(3, "Levy", "UFC");
   Voo *voo_teste = criarVoo(2, "UFC", "Quixeramobim");
-  Reserva *reserva1 =
-  cria_reserva(NULL, 1, data_teste, passageiro_teste, voo_teste, A0);
-  
+  imprimir("io");
+  Reserva *reserva1 = cria_reserva(NULL, 1, data_teste, passageiro_teste, voo_teste, A0);
+  imprimir("io");
   int *codigo_teste2;
   Data *data_teste2;
   Passageiro *passageiro_teste2;
   Voo *voo_teste2;
   Assento *cadeira_teste2;
-
+  imprimir("io");
   reserva_acessa(reserva1, *codigo_teste2, data_teste2, passageiro_teste2, voo_teste2, *cadeira_teste2);
-
+  imprimir("io");
   if (*codigo_teste2 == 1 && data_compara(data_teste, data_teste2) == 0) {
+    imprimir("io");
     if (passageiroIgual(passageiro_teste, passageiro_teste2) == 1 &&
         vooIgual(voo_teste, voo_teste2) == 1) {
       if (cadeira_teste2 == 0) {
@@ -788,7 +786,7 @@ void teste_editar_reserva_dados_nulos() {
   Reserva *reserva2 =
       cria_reserva(NULL, 1, data_teste2, passageiro_teste3, NULL, A1);
   Reserva *reserva3 = reserva2;
-  edita_reserva(NULL, reserva2, -7, -5, NULL, NULL, -1);
+  edita_reserva(NULL, reserva2, -7, NULL, NULL, NULL, -1);
 
   if (reserva_igual(reserva2, reserva3)) {
     imprimir("[PASSOU] teste_editar_reserva_dados_validos");
