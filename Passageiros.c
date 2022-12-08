@@ -145,7 +145,7 @@ int lista_vazia(Lista *lista) {
 
 //FUNÇÕES PARA PASSAGEIRO
 
-int verifica_params(int id,char *nome, char *endereco){
+int verifica_params1(int id,char *nome, char *endereco){
   if (id < 0 || nome == NULL || endereco == NULL){
     return -1;
   }

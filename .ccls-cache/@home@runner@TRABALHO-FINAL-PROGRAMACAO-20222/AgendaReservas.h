@@ -32,6 +32,8 @@ int fun_hash(int id, int codigo);
 
 Agenda *abb_busca_agenda(Agenda *raiz,int id, int codigo, Data *data_viagem);
 
+Reserva *abb_no_remove(Agenda *raiz, Agenda* noRemover);
+
 Reserva *em_ordem(Agenda *agenda, int id,int codigo);
 
 int verifica_dados(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento);
@@ -52,5 +54,9 @@ Data *criaData(int dia, int mes, int ano);
 Reserva *cria_reserva(Agenda *raiz,int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento);
 void edita_reserva(Agenda *raiz,Reserva *reserva,int codigo,Data *data_viagem, Passageiro *passageiro, Voo *voo,Assento assento);
 void remove_reserva(Reserva **reserva);
-void reserva_acessa(Reserva *reserva, int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo, Assento assento);
+void reserva_acessa(Reserva *reserva, int *codigo, Data **data_viagem,Passageiro **passageiro,Voo **voo, Assento *assento);
 int reserva_igual(Reserva *reserva1, Reserva *reserva2);
+
+void transplantar(Agenda **noRaiz, Agenda *noDestino, Agenda *noOrigem);
+
+int data_compara(Data *data1, Data *data2);

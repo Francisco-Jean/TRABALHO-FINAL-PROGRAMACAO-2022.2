@@ -683,23 +683,19 @@ void teste_lista_voo_busca_dados_nulos() {
 // ================== TESTES FUNÇÕES DE RESERVA ==================
 
 void teste_criar_reserva_dados_validos(){
-  printf("io");
   int codigo_teste = 1;
   Data *data_teste = criaData(10, 10, 2010);
   Passageiro *passageiro_teste = criarPassageiro(3, "Levy", "UFC");
   Voo *voo_teste = criarVoo(2, "UFC", "Quixeramobim");
   Reserva *reserva1 =
   cria_reserva(NULL, 1, data_teste, passageiro_teste, voo_teste, A0);
-  
-  int *codigo_teste2;
+  int codigo_teste2;
   Data *data_teste2;
   Passageiro *passageiro_teste2;
   Voo *voo_teste2;
-  Assento *cadeira_teste2;
-
-  reserva_acessa(reserva1, *codigo_teste2, data_teste2, passageiro_teste2, voo_teste2, *cadeira_teste2);
-
-  if (*codigo_teste2 == 1 && data_compara(data_teste, data_teste2) == 0) {
+  Assento cadeira_teste2;
+  reserva_acessa(reserva1, &codigo_teste2, &data_teste2, &passageiro_teste2, &voo_teste2, &cadeira_teste2);
+  if (codigo_teste2 == 1 && data_compara(data_teste, data_teste2) == 0) {
     if (passageiroIgual(passageiro_teste, passageiro_teste2) == 1 &&
         vooIgual(voo_teste, voo_teste2) == 1) {
       if (cadeira_teste2 == 0) {
@@ -750,8 +746,9 @@ void teste_editar_reserva_dados_validos() {
   Reserva *reserva3 = reserva2;
   edita_reserva(NULL, reserva2, 4, data_teste3, passageiro_teste3, voo_teste3,
                 A2);
+  imprimir("aqui 1");
 
-  if (reserva_igual(reserva2, reserva3)) {
+  if (reserva_igual(reserva2, reserva3)==1) {
     imprimir("[FALHOU] teste_editar_reserva_dados_validos");
   } else {
     imprimir("[PASSOU] teste_editar_reserva_dados_validos");
@@ -774,9 +771,9 @@ void teste_editar_reserva_dados_invalidos() {
                 A2);
 
   if (reserva_igual(reserva2, reserva3)) {
-    imprimir("[PASSOU] teste_editar_reserva_dados_validos");
+    imprimir("[PASSOU] teste_editar_reserva_dados_invalidos");
   } else {
-    imprimir("[FALHOU] teste_editar_reserva_dados_validos");
+    imprimir("[FALHOU] teste_editar_reserva_dados_invalidos");
   }
 }
 
@@ -790,9 +787,9 @@ void teste_editar_reserva_dados_nulos() {
   edita_reserva(NULL, reserva2, -7, -5, NULL, NULL, -1);
 
   if (reserva_igual(reserva2, reserva3)) {
-    imprimir("[PASSOU] teste_editar_reserva_dados_validos");
+    imprimir("[PASSOU] teste_editar_reserva_dados_nulos");
   } else {
-    imprimir("[FALHOU] teste_editar_reserva_dados_validos");
+    imprimir("[FALHOU] teste_editar_reserva_dados_nulos");
   }
 }
 

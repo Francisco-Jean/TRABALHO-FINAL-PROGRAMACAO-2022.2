@@ -15,7 +15,7 @@ Passageiro *criarPassageiro(int id, char *nome, char *endereco);
 void editarPassageiro(Passageiro *passageiro, int id, char *nome, char *endereco);
 
 /* Verifica se o ID é não negativo, e se o nome e endereco tem tamanho menor ou igual      a 51 */
-int verifica_params(int id, char *nome, char *endereco);
+int verifica_params1(int id, char *nome, char *endereco);
 
 void removerPassageiro(Passageiro **passageiro);
 
