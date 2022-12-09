@@ -1,5 +1,6 @@
 #include "hash.h"
 #include "Passageiros.h"
+#include "Voos.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -51,6 +52,61 @@ Trecho *cria_trecho(Reserva *reserva) {
   return novoTrecho;
 }
 
+// Insere o trecho na última posição da lista encadeada de trechos de uma Viagem
+// Retorna 1 se sucesso na inserção; 0, caso contrário.
+int insere_trecho(Viagem *viagem, Trecho *novoTrecho) {
+  if(viagem == NULL || novoTrecho == NULL) {
+    return 0;
+  }
+
+  // não há nenhum trecho na viagem ainda
+  if(viagem->trechos == NULL) {
+    viagem->trechos = novoTrecho;
+    return 1;
+  }
+
+  // se já há algum trecho na viagem
+  Trecho trechoAtual = viagem->trechos;
+  // procura o último trecho da viagem (prox == NULL)
+  while(trechoAtual->prox != NULL) {
+    trechoAtual = trechoAtual->proximo;
+  }
+  if(verifica_trecho(trechoAtual, novoTrecho) == 1) {
+    trechoAtual->proximo = novoTrecho;
+    return 1;
+  }
+
+  return 0;
+}
+
+// Se for possível inserir trechoDestino após trechoOrigem, retorna 1; retorna 0, caso contrário.
+int verifica_trecho(Trecho *trechoOrigem, Trecho *trechoDestino) {
+  //if ((trechoOrigem->reserva->voo->origem =trechoDestino) && (data_compara(trechoOrigem->reserva->data_viagem,trechoDestino->reserva->data_viagem)==-1)) && (trecho1->reserva)
+
+  if(trechoOrigem == NULL || trechoDestino == NULL) {
+    return 0;
+  }
+
+  // a data do trecho de destino deve ser maior que a data do trecho de origem
+  if(data_compara(trechoOrigem->reserva->data_viagem, trechoDestino->reserva->dataViagem) != -1) {
+    printf("ERRO: a data do trecho de destino deve ser maior que a data do trecho de origem!\n");
+    return 0;
+  }
+
+  // o passageiro do trecho de destino deve ser o mesmo do trecho de origem
+  if(passageiroIgual(trechoDestino->reserva->passageiro, trechoOrigem->reserva->passageiro) != 1) {
+    printf("ERRO: o passageiro do trecho de destino deve ser o mesmo do trecho de origem!\n");
+    return 0;
+  }
+
+  // o destino do voo do trecho de origem deve ser a origem do voo do trecho de destino
+  if(verificaSequenciaVoos(trechoOrigem->voo, trechoDestino->voo) != 1) {
+    printf("ERRO: o destino do voo do trecho de origem deve coincidir com a orugem do voo do trecho de destino!\n");
+    return 0;
+  }
+
+  return 1;
+} 
 //▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬❴FUNÇÕES DE TABELA VIAGEM ❵▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬//
 // ↓↓ Cria, aloca espaço pra tabela hash e atribui NULO pra cada
 // ponteiro-posição do vetor ↓↓ //
