@@ -49,6 +49,90 @@ int remover_viagem(Viagem **viagem) {
   return 0;
 }
 
+Reserva *viagem_busca(Viagem *viagem, int codigo) {
+  if (viagem != NULL && viagem->trechos != NULL) {
+
+    Trecho *x = viagem->trechos;
+    int codigo_aux;
+    Data *data;
+    Passageiro *passageiro;
+    Voo *voo;
+    Assento assento;
+    do {
+      reserva_acessa(x->reserva, &codigo_aux, &data, &passageiro, &voo,
+                     &assento);
+      if (codigo == codigo_aux) {
+        return x->reserva;
+      }
+      x = x->proximo;
+    } while (x != NULL);
+  }
+  return NULL;
+}
+
+int viagem_insere(Viagem *viagem, Reserva *reserva) {
+  if (viagem == NULL || reserva == NULL) {
+    return -1;
+  }
+  if (viagem->trechos != NULL) {
+    int codigo;
+    Data *data;
+    Passageiro *passageiro;
+    Voo *voo;
+    Assento assento;
+    reserva_acessa(reserva, &codigo, &data, &passageiro, &voo, &assento);
+    Reserva *aux = viagem_busca(viagem, codigo);
+
+    if (aux != NULL) {
+      return 0;
+    }
+
+    Trecho *trecho_novo = trecho_cria(reserva);
+
+    Trecho *trecho_aux = viagem->trechos;
+    while (trecho_aux->proximo != NULL) {
+      trecho_aux = trecho_aux->proximo;
+    }
+    if (trecho_valido(trecho_aux, trecho_novo) == 1) {
+      trecho_aux->proximo = trecho_novo;
+      return 1;
+    }
+  } else if (viagem->trechos == NULL) {
+    Trecho *trecho_novo = trecho_cria(reserva);
+    viagem->trechos = trecho_novo;
+    return 1;
+  }
+  return 0;
+}
+
+int viagem_vazia(Viagem *viagem) {
+  if (viagem == NULL) {
+    return -1;
+  }
+  if (viagem->trechos == NULL) {
+    return 1;
+  }
+  return 0;
+}
+
+Trecho *viagem_primeiro(Viagem *viagem) {
+  if (viagem == NULL || viagem->trechos == NULL) {
+    return NULL;
+  }
+  return viagem->trechos;
+}
+
+Trecho *lista_viagem_retira(Viagem *viagem) {
+  if (viagem == NULL || viagem->trechos == NULL) {
+    return NULL;
+  }
+  Trecho *primeiro_trecho_aux = viagem->trechos;
+  viagem->trechos = viagem->trechos->proximo;
+
+  return primeiro_trecho_aux;
+}
+
+
 //▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬❴FUNÇÕES DE TABELA VIAGEM ❵▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬//
 // ↓↓ Cria, aloca espaço pra tabela hash e atribui NULO pra cada
 // ponteiro-posição do vetor ↓↓ //
