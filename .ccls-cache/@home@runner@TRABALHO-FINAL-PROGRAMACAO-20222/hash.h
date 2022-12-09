@@ -1,6 +1,9 @@
 #include "AgendaReservas.h"
 #include "Passageiros.h"
 #include "Voos.h"
+#include <stdio.h>
+#include <stdlib.h>
+
 /*enum cod_assento {
     A0, B0, C0,
     A1, B1, C1, 
@@ -20,8 +23,8 @@
 //typedef struct lista_voo ListaVoo;
 //typedef struct passageiro Passageiro;
 //typedef struct lista_passageiro ListaPassageiro;
-//typedef struct reserva Reserva;
 //typedef struct agenda Agenda;
+typedef struct reserva Reserva;
 typedef struct viagem Viagem;
 typedef struct tabela_viagem TabelaViagem;
 typedef struct trecho Trecho;

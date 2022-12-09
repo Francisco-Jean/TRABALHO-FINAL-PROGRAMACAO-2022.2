@@ -1,57 +1,15 @@
 #include "hash.h"
+#include "Passageiros.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-/*struct data {
-  int dia;
-  int mes;
-  int ano;
-};*/
-
-/*struct voo {
-  int codigo;
-  char *origem;
-  char *destino;
-};*/
-
-/*struct no_voo {
-  Voo *voo;
-  struct no_voo *proximo;
-};*/
-
-/*struct lista_voo {
-  struct no_voo *primeiro;
-};*/
-
-/*struct passageiro {
-  int id;
-  char *nome;
-  char *endereco;
-};*/
-
-/*struct no_passageiro {
-  Passageiro *passageiro;
-  struct no_passageiro *proximo;
-};*/
-
-/*struct lista_passageiro {
-  struct no_passageiro *primeiro;
-};*/
-
-/*struct reserva {
+struct reserva {
   int codigo;
   Data *data_viagem;
   Passageiro *passageiro;
   Voo *voo;
   Assento assento;
-};*/
-
-/*struct agenda {
-  Reserva *reserva;
-  Agenda *esq;
-  Agenda *dir;
-};*/
-
+};
 struct trecho {
   Reserva *reserva;
   struct trecho *proximo;
@@ -66,43 +24,106 @@ struct tabela_viagem {
   Viagem *tabela_hash;
 };
 
+//▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬❴FUNÇÕES DE VIAGEM ❵▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬//
+Viagem *criar_viagem() {
+  Viagem *viagem = (Viagem *)malloc(sizeof(Viagem));
+  viagem->trechos = NULL;
+
+  return viagem;
+}
+
+void remover_viagem(Viagem **viagem) {
+  if (viagem != NULL) {
+    free(*viagem);
+    *viagem = NULL;
+  }
+}
+
+//▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬❴FUNÇÕES DE TRECHO ❵▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬//
 Trecho *cria_trecho(Reserva *reserva) {
-  if(reserva==NULL){
+  if (reserva == NULL) {
     return NULL;
   }
   Trecho *novoTrecho = (Trecho *)malloc(sizeof(Trecho));
   novoTrecho->reserva = reserva;
+  novoTrecho->proximo = NULL;
+
   return novoTrecho;
 }
-  
 
-// ↓↓ Cria, aloca espaço pra tabela hash e atribui NULO pra cada ponteiro-posição do vetor ↓↓ //
-TabelaViagem *cria_tabela(int tamanho) {
+//▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬❴FUNÇÕES DE TABELA VIAGEM ❵▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬//
+// ↓↓ Cria, aloca espaço pra tabela hash e atribui NULO pra cada
+// ponteiro-posição do vetor ↓↓ //
+TabelaViagem *cria_tabela_hash(int tamanho) {
   TabelaViagem *novaTabela = (TabelaViagem *)malloc(sizeof(TabelaViagem));
   novaTabela->tamanho = tamanho;
   novaTabela->tabela_hash = (Viagem *)malloc(tamanho * sizeof(Viagem));
-  // Atribuindo nulo pra cada posição do vetor pra marcar quando tem conteúdo ou
-  // não
+
+  // Atribuindo nulo pra cada posição do vetor pra marcar quando tem conteúdo ou não
   for (int i = 0; i < tamanho; i++) {
-    novaTabela->tabela_hash[i].trechos = NULL;
+    (&(novaTabela->tabela_hash))[i] = NULL;
   }
+
+  return novaTabela;
 }
 
-TabelaViagem *cria_hash(){
-  TabelaViagem *tabela = (TabelaViagem*) malloc(sizeof(TabelaViagem));
-  tabela->tamanho = 0;
-  tabela->tabela_hash = malloc(sizeof(Viagem) *10);
-  return tabela;
+int insere_hash(TabelaViagem *tabela, Viagem *viagem) {
+  if (tabela == NULL && viagem == NULL) {
+    return 0;
+  }
+
+  int cod = funcao_hash(viagem);
+
+  if((&(tabela -> tabela_hash))[cod] == NULL){
+   (&(tabela -> tabela_hash))[cod] = viagem;
+    return 1;
+  }
+  return 0;
 }
 
-int fun_hash(int id, int codigo){
-  int pos = id+codigo;
-  return pos;
-}
-
-TabelaViagem *insere_hash(TabelaViagem *tabela,Viagem *tabela_hash){
-  if(tabela == NULL && tabela_hash == NULL){
+Viagem* busca_hash(TabelaViagem* tabela, int cod) {
+  if (tabela == NULL || cod < 0) {
     return NULL;
   }
-  tabela->tabela_hash = tabela_hash;
+  
+  if((&(tabela->tabela_hash))[cod] != NULL){
+    return &(tabela->tabela_hash[cod]);
+  }
+  return NULL;
+} 
+
+Viagem* retira_hash(TabelaViagem* tabela, int cod){
+  if (tabela == NULL || cod < 0) {
+    return NULL;
+  }
+  
+  Viagem* aux;
+  if ((&(tabela->tabela_hash))[cod] != NULL) {
+    aux = (&(tabela->tabela_hash))[cod];
+    (&(tabela->tabela_hash))[cod] = NULL;
+  } else{
+    return NULL;
+  }
+  
+  return aux;
+}
+
+//▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬❴FUNÇÕES DE HASH ❵▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬//
+int funcao_hash(Viagem *viagem) {
+  int soma = 0, id;
+  char nome[30], endereco[30];
+
+  Trecho *aux = viagem->trechos;
+
+  while (aux->proximo != NULL) {
+    soma += aux->reserva->codigo;
+    aux = aux->proximo;
+  }
+
+  passageiroAcessa(aux->reserva->passageiro, &id, nome, endereco);
+
+  soma += aux->reserva->codigo;
+  soma += id;
+
+  return soma;
 }
