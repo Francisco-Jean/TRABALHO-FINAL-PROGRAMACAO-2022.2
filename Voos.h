@@ -28,3 +28,5 @@ int listaVoo_libera(ListaVoo **listaVoo);
 Voo *listaVoo_busca(ListaVoo *listaVoo, int codigo);
 
 int verifica_params(int codigo,char *origem, char *destino);
+
+int verificaSequenciaVoos(Voo *voo1, Voo *voo2);
