@@ -204,3 +204,15 @@ int verifica_params(int codigo,char *origem, char *destino){
   }
   return 1;
 }
+
+int verificaSequenciaVoos(Voo *voo1, Voo *voo2) {
+  if(voo1 == NULL || voo2 == NULL) {
+    return 0;
+  }
+
+  if(strcmp(voo1->destino, voo2->origem) == 0) {
+    return 1;
+  }
+
+  return 0;
+}

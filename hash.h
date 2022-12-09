@@ -26,3 +26,8 @@ Viagem* busca_hash(TabelaViagem* tabela, int cod);
 Viagem* retira_hash(TabelaViagem* tabela, int cod);
 
 int funcao_hash(Viagem *viagem);
+
+Trecho *cria_trecho(Reserva *reserva);
+
+int insere_trecho(Viagem *viagem, Trecho *novoTrecho);
+int verifica_trecho(Trecho *trechoOrigem, Trecho *trechoDestino);
