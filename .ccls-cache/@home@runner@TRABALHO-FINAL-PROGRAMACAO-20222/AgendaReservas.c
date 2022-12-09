@@ -56,6 +56,10 @@ Reserva *cria_reserva(Agenda *raiz,int codigo, Data *data_viagem,Passageiro *pas
     reserva->passageiro = passageiro;
     reserva->voo = voo;
     reserva->assento = assento;
+    Agenda *agenda_raiz = (Agenda*) malloc(sizeof(Agenda));
+    agenda_raiz->reserva = reserva;
+    agenda_raiz->esq = NULL;
+    agenda_raiz->dir = NULL;
     return reserva;
   }
   return NULL;
@@ -64,7 +68,7 @@ Reserva *cria_reserva(Agenda *raiz,int codigo, Data *data_viagem,Passageiro *pas
 //Verifica se os dados passados como parametro para a reserva são válidos e, se forem, edita a reserva com os novos dados
 void edita_reserva(Agenda *raiz,Reserva *reserva,int codigo,Data *data_viagem, Passageiro *passageiro, Voo *voo,Assento assento){
   if(raiz != NULL){
-    if(reserva!= NULL && verifica_dados(codigo,data_viagem,passageiro,voo,assento) == 1 && verifica_reserva(raiz,codigo,data_viagem,passageiro,voo,assento == -1)){
+    if(reserva!= NULL && verifica_dados(codigo,data_viagem,passageiro,voo,assento) == 1 && verifica_reserva(raiz,codigo,data_viagem,passageiro,voo,assento) == -1){
       int id; char nome[30];char endereco[30];
       int codigo; char origem[30];char destino[30];
       passageiroAcessa(passageiro, &id, nome, endereco);
@@ -79,11 +83,13 @@ void edita_reserva(Agenda *raiz,Reserva *reserva,int codigo,Data *data_viagem, P
     }
   }
   if(verifica_dados(codigo,data_viagem,passageiro,voo,assento) == 1){
+   // printf("ue1");
     reserva->codigo = codigo;
     reserva->data_viagem = data_viagem;
     reserva->passageiro = passageiro;
     reserva->voo = voo;
     reserva->assento = assento;
+    printf("ue");
   }
 }
 
@@ -120,10 +126,56 @@ int reserva_igual(Reserva *reserva1, Reserva *reserva2){
   if (reserva1== NULL || reserva2== NULL){
     return -1;
   }
-  if(reserva1->codigo == reserva2->codigo && data(reserva1->data_viagem) == data(reserva2->data_viagem) && reserva1->passageiro == reserva2->passageiro && reserva1->voo == reserva2->voo && reserva1->assento == reserva2->assento){
+  if(reserva1->codigo == reserva2->codigo && data(reserva1->data_viagem) == data(reserva2->data_viagem) && passageiroIgual(reserva1->passageiro, reserva2->passageiro)== 1 && vooIgual(reserva1->voo, reserva2->voo)==1  && reserva1->assento == reserva2->assento){
     return 1;
   }
   return 0;
+}
+int passageiro_igual(Passageiro *passageiro1, Passageiro *passageiro2){
+  int id1; char nome1[30];char endereco1[30];
+  passageiroAcessa(passageiro1, &id1, nome1, endereco1);
+  int id2; char nome2[30];char endereco2[30];
+  passageiroAcessa(passageiro2, &id2, nome2, endereco2);
+  if (passageiro1 == NULL || passageiro2 == NULL) {
+    return -1;
+  }
+
+  if (id1 != id2) {
+    return 0;
+  }
+
+  if (strcmp(nome1, nome2) != 0) {
+    return 0;
+  }
+
+  if (strcmp(endereco1, endereco2) != 0) {
+    return 0;
+  }
+
+  return 1;
+}
+int voo_igual(Voo *voo1, Voo *voo2){
+  int codigo1; char origem1[30];char destino1[30];
+  vooAcessa(voo1, &codigo1, origem1, destino1);
+  int codigo2; char origem2[30];char destino2[30];
+  vooAcessa(voo2, &codigo2, origem2, destino2);
+  if (voo1 == NULL || voo2 == NULL) {
+    return -1;
+  }
+
+  if (codigo1 != codigo2) {
+    return 0;
+  }
+
+  if (strcmp(origem1, origem2) != 0) {
+    return 0;
+  }
+
+  if (strcmp(destino1, destino2) != 0) {
+    return 0;
+  }
+
+  return 1;
 }
 //---------------------------------------------------------------FUNÇOES DE AGENDA-------------------------------------------------------------------------
 

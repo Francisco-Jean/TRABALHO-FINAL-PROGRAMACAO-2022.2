@@ -30,25 +30,7 @@ struct agenda {
 /*Verifica se os dados passados como parametro para a reserva valem e, se valerem, cria a reserva e retorna a reserva criada ou NULL 
 caso não possa ser criada a reserva*/
 
-Reserva *cria_reserva(Agenda *raiz,int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
-  if(raiz != NULL){
-    if(verifica_dados(codigo,data_viagem,passageiro,voo,assento) == 1 && verifica_reserva(raiz,codigo,data_viagem,passageiro,voo,assento) == -1){
-      int id; char nome[30];char endereco[30];
-      int codigo; char origem[30];char destino[30];
-      passageiroAcessa(passageiro, &id, nome, endereco);
-      vooAcessa(voo, &codigo, origem, destino);
-      if(strcmp(endereco,origem) == 0){
-        editarPassageiro(passageiro,id, nome,destino);
-        Reserva *reserva = (Reserva*) malloc(sizeof(Reserva));
-        reserva->codigo = codigo;
-        reserva->data_viagem = data_viagem;
-        reserva->passageiro = passageiro;
-        reserva->voo = voo;
-        reserva->assento = assento;
-        return reserva;
-      }
-    }
-  }
+Reserva *cria_reserva(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
   if(verifica_dados(codigo,data_viagem,passageiro,voo,assento) == 1){
     Reserva *reserva = (Reserva*) malloc(sizeof(Reserva));
     reserva->codigo = codigo;
@@ -64,7 +46,7 @@ Reserva *cria_reserva(Agenda *raiz,int codigo, Data *data_viagem,Passageiro *pas
 //Verifica se os dados passados como parametro para a reserva são válidos e, se forem, edita a reserva com os novos dados
 void edita_reserva(Agenda *raiz,Reserva *reserva,int codigo,Data *data_viagem, Passageiro *passageiro, Voo *voo,Assento assento){
   if(raiz != NULL){
-    if(reserva!= NULL && verifica_dados(codigo,data_viagem,passageiro,voo,assento) == 1 && verifica_reserva(raiz,codigo,data_viagem,passageiro,voo,assento == -1)){
+    if(reserva!= NULL && verifica_dados(codigo,data_viagem,passageiro,voo,assento) == 1 && verifica_reserva(raiz,codigo,data_viagem,passageiro,voo,assento) == 1){
       int id; char nome[30];char endereco[30];
       int codigo; char origem[30];char destino[30];
       passageiroAcessa(passageiro, &id, nome, endereco);
@@ -120,10 +102,56 @@ int reserva_igual(Reserva *reserva1, Reserva *reserva2){
   if (reserva1== NULL || reserva2== NULL){
     return -1;
   }
-  if(reserva1->codigo == reserva2->codigo && data(reserva1->data_viagem) == data(reserva2->data_viagem) && reserva1->passageiro == reserva2->passageiro && reserva1->voo == reserva2->voo && reserva1->assento == reserva2->assento){
+  if(reserva1->codigo == reserva2->codigo && data(reserva1->data_viagem) == data(reserva2->data_viagem) && passageiroIgual(reserva1->passageiro, reserva2->passageiro)== 1 && vooIgual(reserva1->voo, reserva2->voo)==1  && reserva1->assento == reserva2->assento){
     return 1;
   }
   return 0;
+}
+int passageiro_igual(Passageiro *passageiro1, Passageiro *passageiro2){
+  int id1; char nome1[30];char endereco1[30];
+  passageiroAcessa(passageiro1, &id1, nome1, endereco1);
+  int id2; char nome2[30];char endereco2[30];
+  passageiroAcessa(passageiro2, &id2, nome2, endereco2);
+  if (passageiro1 == NULL || passageiro2 == NULL) {
+    return -1;
+  }
+
+  if (id1 != id2) {
+    return 0;
+  }
+
+  if (strcmp(nome1, nome2) != 0) {
+    return 0;
+  }
+
+  if (strcmp(endereco1, endereco2) != 0) {
+    return 0;
+  }
+
+  return 1;
+}
+int voo_igual(Voo *voo1, Voo *voo2){
+  int codigo1; char origem1[30];char destino1[30];
+  vooAcessa(voo1, &codigo1, origem1, destino1);
+  int codigo2; char origem2[30];char destino2[30];
+  vooAcessa(voo2, &codigo2, origem2, destino2);
+  if (voo1 == NULL || voo2 == NULL) {
+    return -1;
+  }
+
+  if (codigo1 != codigo2) {
+    return 0;
+  }
+
+  if (strcmp(origem1, origem2) != 0) {
+    return 0;
+  }
+
+  if (strcmp(destino1, destino2) != 0) {
+    return 0;
+  }
+
+  return 1;
 }
 //---------------------------------------------------------------FUNÇOES DE AGENDA-------------------------------------------------------------------------
 
@@ -265,14 +293,14 @@ int verifica_dados(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo
   return 1;
 }
 
-//Faz a verificação se reserva ja alocada em alguma agenda com os dados passados por parametro. Retorna 1 caso haja reserva com os dados passados ou -1 caso não haja reserva já alocada com os dados passados por parametro
+//Faz a verificação se reserva ja alocada em alguma agenda com os dados passados por parametro. Retorna -1 caso haja reserva com os dados passados ou 1 caso não haja reserva já alocada com os dados passados por parametro
 int verifica_reserva(Agenda *raiz,int codigo,Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
   int id; char nome[30];char endereco[30];
   passageiroAcessa(passageiro, &id, nome, endereco);
   if(busca_codigo(raiz,codigo) == -1 && abb_busca_reserva_data(raiz, id,data_viagem) == NULL && abb_busca_reserva_codigo(raiz, id,codigo) == NULL){
-    return -1;
+    return 1;
   }
-  return 1;
+  return -1;
 }
 
 //Converte uma dada data criada na forma de soma de dias

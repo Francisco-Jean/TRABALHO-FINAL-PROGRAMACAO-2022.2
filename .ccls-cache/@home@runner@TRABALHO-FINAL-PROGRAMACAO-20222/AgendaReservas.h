@@ -24,7 +24,7 @@ typedef struct tabela_viagem TabelaViagem;
 
 /* Aloca e retorna um No com os dados passados por parâmetro. Retorna no nó
  * criado ou NULL caso não seja posivel criar o nó. */
-No *abb_cria_no(Reserva *reserva);
+Agenda *abb_cria_agenda(Reserva *reserva);
 
 Agenda *abb_insere_agenda(Agenda *agenda, Agenda *raiz);
 
@@ -60,3 +60,5 @@ int reserva_igual(Reserva *reserva1, Reserva *reserva2);
 void transplantar(Agenda **noRaiz, Agenda *noDestino, Agenda *noOrigem);
 
 int data_compara(Data *data1, Data *data2);
+int voo_igual(Voo *voo1, Voo *voo2);
+int passageiro_igual(Passageiro *passageiro1, Passageiro *passageiro2);

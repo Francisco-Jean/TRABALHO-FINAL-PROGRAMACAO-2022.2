@@ -744,10 +744,7 @@ void teste_editar_reserva_dados_validos() {
   Reserva *reserva2 =
       cria_reserva(NULL, 3, data_teste2, passageiro_teste2, voo_teste2, A1);
   Reserva *reserva3 = reserva2;
-  edita_reserva(NULL, reserva2, 4, data_teste3, passageiro_teste3, voo_teste3,
-                A2);
-  imprimir("aqui 1");
-
+  edita_reserva(NULL, reserva2, 4, data_teste3, passageiro_teste3, voo_teste3,A2);
   if (reserva_igual(reserva2, reserva3)==1) {
     imprimir("[FALHOU] teste_editar_reserva_dados_validos");
   } else {
