@@ -680,6 +680,145 @@ void teste_lista_voo_busca_dados_nulos() {
   }
 }
 
+// ================== TESTES FUNÇÕES DE VIAGENS ==================
+
+void teste_viagem_insere_dados_validos() {
+  Viagem *viagem = criar_viagem();
+  if (viagem != NULL) {
+    Data *data1 = criaData(16, 4, 2023);
+    Data *data2 = criaData(25, 4, 2023);
+    Data *data3 = criaData(8, 5, 2023);
+    
+    Assento assento1 = A0;
+    
+    Passageiro *passageiro1 = criarPassageiro(1, "Roberval", "Trairi");
+    
+    Voo *voo1 = criarVoo(1, "Trairi", "São Paulo");
+    Voo *voo2 = criarVoo(2, "São Paulo", "Aracati");
+    Voo *voo3 = criarVoo(2, "Aracati", "Fortaleza");
+
+    Reserva *reserva1 = cria_reserva(1, data1, passageiro1, voo1, assento1);
+    Reserva *reserva2 = cria_reserva(2, data2, passageiro1, voo2, assento1);
+    Reserva *reserva3 = cria_reserva(3, data3, passageiro1, voo3, assento1);
+
+    if (viagem_insere(viagem, reserva1) == 1 && viagem_insere(viagem, reserva2) == 1 && viagem_insere(viagem, reserva3) == 1) {
+      imprimir("[PASSOU] teste_viagem_insere_dados_validos");
+    } else {
+      imprimir("[FALHOU] teste_viagem_insere_dados_validos");
+    }
+  } else {
+    imprimir("[FALHOU] teste_viagem_insere_dados_validos");
+  }
+}
+
+void teste_viagem_insere_dados_invalidos() {
+  Viagem *viagem = criar_viagem();
+  if (viagem != NULL) {
+    Data *data = criaData(16, 4, 2023);
+    
+    Assento assento = A0;
+    
+    Passageiro *passageiro = criarPassageiro(1, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    
+    Voo *voo = criarVoo(1, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
+    Reserva *reserva = cria_reserva(1, data, passageiro, voo, assento);
+
+    if (viagem_insere(viagem, reserva) == -1) {
+      imprimir("[PASSOU] teste_viagem_insere_dados_invalidos");
+    } else if (viagem_insere(viagem, reserva) == 1) {
+      imprimir("[FALHOU] teste_viagem_insere_dados_invalidos");
+    }
+  } else {
+    imprimir("[FALHOU] teste_viagem_insere_dados_invalidos");
+  }
+}
+
+void teste_viagem_insere_dados_nulos() {
+  Viagem *viagem = NULL;
+  if (viagem != NULL) {
+    Data *data = criaData(16, 4, 2023);
+    
+    Assento assento = A0;
+    
+    Passageiro *passageiro = criarPassageiro(1, NULL, NULL);
+    
+    Voo *voo = criarVoo(1, NULL, NULL);
+
+    Reserva *reserva = cria_reserva(1, data, passageiro, voo, assento);
+
+    if (viagem_insere(viagem, reserva) == 1) {
+      imprimir("[FALHOU] teste_viagem_insere_dados_nulos");
+    } else {
+      imprimir("[PASSOU] teste_viagem_insere_dados_nulos");
+    }
+  } else {
+    imprimir("[PASSOU] teste_viagem_insere_dados_nulos");
+  }
+}
+
+void teste_viagem_remove() {
+  Viagem *viagem = criar_viagem();
+  if (viagem != NULL) {
+    Data *data1 = criaData(16, 4, 2023);
+    Data *data2 = criaData(25, 4, 2023);
+    Data *data3 = criaData(8, 5, 2023);
+    
+    Assento assento1 = A0;
+    
+    Passageiro *passageiro1 = criarPassageiro(1, "Roberval", "Trairi");
+    
+    Voo *voo1 = criarVoo(1, "Trairi", "São Paulo");
+    Voo *voo2 = criarVoo(2, "São Paulo", "Aracati");
+    Voo *voo3 = criarVoo(2, "Aracati", "Fortaleza");
+
+    Reserva *reserva1 = cria_reserva(1, data1, passageiro1, voo1, assento1);
+    Reserva *reserva2 = cria_reserva(2, data2, passageiro1, voo2, assento1);
+    Reserva *reserva3 = cria_reserva(3, data3, passageiro1, voo3, assento1);
+  
+    viagem_insere(viagem, reserva1);
+    viagem_insere(viagem, reserva2);
+    viagem_insere(viagem, reserva3);
+
+    if(remover_viagem(&viagem) == 1) {
+      imprimir("[PASSOU] teste_viagem_remove");
+    } else {
+      imprimir("[FALHOU] teste_viagem_remove");
+    }
+  } else {
+    imprimir("[FALHOU] teste_viagem_remove");
+  }
+}
+
+void teste_viagem_retira_dados_validos() {
+  Viagem *viagem = criar_viagem();
+  if (viagem != NULL) {
+    Data *data1 = criaData(16, 4, 2023);
+    Data *data2 = criaData(25, 4, 2023);
+    Data *data3 = criaData(8, 5, 2023);
+    
+    Assento assento1 = A0;
+    
+    Passageiro *passageiro1 = criarPassageiro(1, "Roberval", "Trairi");
+    
+    Voo *voo1 = criarVoo(1, "Trairi", "São Paulo");
+    Voo *voo2 = criarVoo(2, "São Paulo", "Aracati");
+    Voo *voo3 = criarVoo(2, "Aracati", "Fortaleza");
+
+    Reserva *reserva1 = cria_reserva(1, data1, passageiro1, voo1, assento1);
+    Reserva *reserva2 = cria_reserva(2, data2, passageiro1, voo2, assento1);
+    Reserva *reserva3 = cria_reserva(3, data3, passageiro1, voo3, assento1);
+
+    if () {
+      imprimir("[PASSOU] teste_viagem_insere_dados_validos");
+    } else {
+      imprimir("[FALHOU] teste_viagem_insere_dados_validos");
+    }
+  } else {
+    imprimir("[FALHOU] teste_viagem_insere_dados_validos");
+  }
+}
+
 // ================== TESTES FUNÇÕES DE HASH ==================
 
 void teste_hash_criar() {
