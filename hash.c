@@ -74,6 +74,7 @@ Trecho *cria_trecho(Reserva *reserva) {
   }
   Trecho *novoTrecho = (Trecho *)malloc(sizeof(Trecho));
   novoTrecho->reserva = reserva;
+  novoTrecho->proximo = NULL;
   return novoTrecho;
 }
   
