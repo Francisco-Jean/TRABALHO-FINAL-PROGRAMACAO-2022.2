@@ -9,9 +9,18 @@ typedef struct viagem Viagem;
 typedef struct tabela_viagem TabelaViagem;
 typedef struct trecho Trecho;
 
+Viagem *criar_viagem();
+
+void remover_viagem(Viagem **viagem);
+
+Trecho *cria_trecho(Reserva *reserva);
 
 TabelaViagem *cria_tabela_hash(int tamanho);
 
-Trecho *cria_trecho(Reserva *reserva);
+int insere_hash(TabelaViagem *tabela, Viagem *viagem);
+
+Viagem* busca_hash(TabelaViagem* tabela, int cod);
+
+Viagem* retira_hash(TabelaViagem* tabela, int cod);
 
 int funcao_hash(Viagem *viagem);

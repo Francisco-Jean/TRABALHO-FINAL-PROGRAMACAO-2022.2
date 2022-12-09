@@ -679,7 +679,9 @@ void teste_lista_voo_busca_dados_nulos() {
   }
 }
 
-// ================== TESTES FUNÇÕES DE RESERVA ==================
+// ================== TESTES FUNÇÕES DE HASH ==================
+
+void 
 
 int main(void) {
   Passageiro *passageiro1 = criarPassageiro(1, "Jean", "Vincente Pinzon");
