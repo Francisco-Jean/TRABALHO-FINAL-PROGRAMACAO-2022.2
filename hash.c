@@ -49,18 +49,6 @@ int remover_viagem(Viagem **viagem) {
   return 0;
 }
 
-//▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬❴FUNÇÕES DE TRECHO ❵▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬//
-Trecho *cria_trecho(Reserva *reserva) {
-  if (reserva == NULL) {
-    return NULL;
-  }
-  Trecho *novoTrecho = (Trecho *)malloc(sizeof(Trecho));
-  novoTrecho->reserva = reserva;
-  novoTrecho->proximo = NULL;
-
-  return novoTrecho;
-}
-
 //▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬❴FUNÇÕES DE TABELA VIAGEM ❵▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬//
 // ↓↓ Cria, aloca espaço pra tabela hash e atribui NULO pra cada
 // ponteiro-posição do vetor ↓↓ //
@@ -127,7 +115,7 @@ Viagem* retira_hash(TabelaViagem* tabela, int cod){
 }
 
 //▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬❴FUNÇÕES DE HASH ❵▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬//
-int funcao_hash(Viagem *viagem) {
+int cod_hash(Viagem *viagem) {
   int soma = 0, id;
   char nome[30], endereco[30];
 
@@ -144,6 +132,10 @@ int funcao_hash(Viagem *viagem) {
   soma += id;
 
   return soma;
+}
+
+int funcao_hash(TabelaViagem *tabela, int codigoHash) {
+  return codigoHash % tabela->tamanho;
 }
 
 

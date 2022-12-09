@@ -1,5 +1,6 @@
 #include "Passageiros.h"
 #include "Voos.h"
+#include "hash.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -681,7 +682,124 @@ void teste_lista_voo_busca_dados_nulos() {
 
 // ================== TESTES FUNÇÕES DE HASH ==================
 
-void 
+void teste_hash_criar() {
+  TabelaViagem *novaHASH = cria_tabela_hash(5);
+
+  if (novaHASH != NULL && tamanho_hash(novaHASH) == 5) {
+    imprimir("[PASSOU] teste_hash_criar");
+  } else {
+    imprimir("[FALHOU] teste_hash_criar");
+  }
+}
+
+void teste_hash_insere() {
+  int tamanho = 10;
+  TabelaViagem* novo_hash = cria_tabela_hash(tamanho);
+  if (novo_hash != NULL){ 
+    Viagem *viagem = criar_viagem();
+    if (viagem != NULL) {
+      Data *data1 = criaData(16, 4, 2023);
+      Data *data2 = criaData(25, 4, 2023);
+      Data *data3 = criaData(8, 5, 2023);
+      
+      Assento assento1 = A0;
+      
+      Passageiro *passageiro1 = criarPassageiro(1, "Roberval", "Trairi");
+      
+      Voo *voo1 = criarVoo(1, "Trairi", "São Paulo");
+      Voo *voo2 = criarVoo(2, "São Paulo", "Aracati");
+      Voo *voo3 = criarVoo(2, "Aracati", "Fortaleza");
+
+      Reserva *reserva1 = cria_reserva(1, data1, passageiro1, voo1, assento1);
+      Reserva *reserva2 = cria_reserva(2, data2, passageiro1, voo2, assento1);
+      Reserva *reserva3 = cria_reserva(3, data3, passageiro1, voo3, assento1);
+      
+      if (viagem_insere(viagem, reserva1) == 1 && viagem_insere(viagem, reserva2) == 1  && viagem_insere(viagem, reserva3) == 1){
+    
+       int id = funcao_hash(novo_hash, cod_hash(viagem));
+    
+        if (insere_hash(novo_hash, viagem) == 1){
+          imprimir("[PASSOU] teste_hash_insere");
+        } else{
+          imprimir("[FALHOU] teste_hash_insere");
+          }
+      } else{
+          imprimir("[FALHOU] teste_hash_insere");
+        }
+    } else{
+      imprimir("[FALHOU] teste_hash_insere");
+    }
+  } else{
+    imprimir("[FALHOU] teste_hash_insere");
+  }
+}
+
+int teste_buscar_hash(){
+  int tamanho = 10;
+  TabelaViagem* novo_hash = cria_tabela_hash(tamanho);
+  if (novo_hash != NULL){        
+    Viagem *viagem = criar_viagem();
+    if (viagem != NULL) {
+      Data *data1 = criaData(16, 4, 2023);
+      Data *data2 = criaData(25, 4, 2023);
+      Data *data3 = criaData(8, 5, 2023);
+      Assento assento1 = A0;
+      Passageiro *passageiro1 = criarPassageiro(1, "Roberta Montenegro", "Av. Humberto Monte, 2202");
+      Voo *voo1 = criarVoo(1, "Trairi", "São Paulo");
+      Voo *voo2 = criarVoo(2, "São Paulo", "Aracati");
+      Voo *voo3 = criarVoo(2, "Aracati", "Fortaleza");
+
+      Reserva *reserva1 = cria_reserva(1, data1, passageiro1, voo1, assento1);
+      Reserva *reserva2 = cria_reserva(2, data2, passageiro1, voo2, assento1);
+      Reserva *reserva3 = cria_reserva(3, data3, passageiro1, voo3, assento1);
+      if (viagem_insere(viagem, reserva1) == 1 && viagem_insere(viagem, reserva2) == 1 && viagem_insere(viagem, reserva3) == 1){
+        int id = funcao_hash(novo_hash, cod_hash(viagem));
+        if (insere_hash(novo_hash, viagem) == 1){
+          Viagem* aux = busca_hash(novo_hash, id);
+          if (viagem == aux){
+            imprimir("[PASSOU] teste_buscar_hash");
+          }
+        }
+      }
+    }
+  }
+  imprimir("[FALHOU] teste_buscar_hash");
+}
+
+int teste_retira_hash(){
+  int tamanho = 10;
+  TabelaViagem* novo_hash = cria_tabela_hash(tamanho);
+  if (novo_hash != NULL){
+        
+    Viagem *viagem = criar_viagem();
+    if (viagem != NULL) {
+      Data *data1 = criaData(16, 4, 2023);
+      Data *data2 = criaData(25, 4, 2023);
+      Data *data3 = criaData(8, 5, 2023);
+      Assento assento1 = A0;
+      Passageiro *passageiro1 = criarPassageiro(1, "Roberta Montenegro", "Av. Humberto Monte, 2202");
+      Voo *voo1 = criarVoo(1, "Trairi", "São Paulo");
+      Voo *voo2 = criarVoo(2, "São Paulo", "Aracati");
+      Voo *voo3 = criarVoo(2, "Aracati", "Fortaleza");
+
+      Reserva *reserva1 = cria_reserva(1, data1, passageiro1, voo1, assento1);
+      Reserva *reserva2 = cria_reserva(2, data2, passageiro1, voo2, assento1);
+      Reserva *reserva3 = cria_reserva(3, data3, passageiro1, voo3, assento1);
+          
+      if (viagem_insere(viagem, reserva1) == 1 && viagem_insere(viagem, reserva2) == 1 && viagem_insere(viagem, reserva3) == 1){
+        if (insere_hash(novo_hash, viagem) == 1){
+          int id = funcao_hash(novo_hash, cod_hash(viagem));
+          Viagem* aux_1 = retira_hash(novo_hash, id);
+          Viagem* aux_2 = busca_hash(novo_hash, id);
+          if (viagem == aux_1 && aux_2 == NULL){
+            imprimir("[PASSOU] teste_retira_hash");
+          }
+        }
+      }
+    }
+  }
+  imprimir("[PASSOU] teste_retira_hash");
+}
 
 int main(void) {
   Passageiro *passageiro1 = criarPassageiro(1, "Jean", "Vincente Pinzon");
@@ -821,5 +939,12 @@ int main(void) {
   teste_lista_voo_busca_dados_validos();
   teste_lista_voo_busca_dados_invalidos();
   teste_lista_voo_busca_dados_nulos();  
+  imprimir("");
+  imprimir("# - TESTES HASH - #");
+  imprimir("");
+  teste_hash_criar();
+  teste_hash_insere();
+  teste_buscar_hash();  
+  teste_retira_hash();
   imprimir("");
 }
