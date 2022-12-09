@@ -165,9 +165,9 @@ int insere_trecho(Viagem *viagem, Trecho *novoTrecho) {
   }
 
   // se já há algum trecho na viagem
-  Trecho trechoAtual = viagem->trechos;
+  Trecho *trechoAtual = viagem->trechos;
   // procura o último trecho da viagem (prox == NULL)
-  while(trechoAtual->prox != NULL) {
+  while(trechoAtual->proximo != NULL) {
     trechoAtual = trechoAtual->proximo;
   }
   if(verifica_trecho(trechoAtual, novoTrecho) == 1) {
