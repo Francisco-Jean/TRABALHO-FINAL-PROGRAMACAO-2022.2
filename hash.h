@@ -11,11 +11,13 @@ typedef struct trecho Trecho;
 
 Viagem *criar_viagem();
 
-void remover_viagem(Viagem **viagem);
+int remover_viagem(Viagem **viagem);
 
 Trecho *cria_trecho(Reserva *reserva);
 
 TabelaViagem *cria_tabela_hash(int tamanho);
+
+int tamanho_hash(TabelaViagem *tabela);
 
 int insere_hash(TabelaViagem *tabela, Viagem *viagem);
 

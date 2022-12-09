@@ -21,6 +21,6 @@ int insere_hash(TabelaViagem *tabela, Viagem *viagem);
 
 Viagem* busca_hash(TabelaViagem* tabela, int cod);
 
-Viagem* retira_hash(TabelaViagem* tabela, int cod){
+Viagem* retira_hash(TabelaViagem* tabela, int cod);
 
 int funcao_hash(Viagem *viagem);

@@ -1,5 +1,6 @@
 #include "Passageiros.h"
 #include "Voos.h"
+#include "hash.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -681,7 +682,51 @@ void teste_lista_voo_busca_dados_nulos() {
 
 // ================== TESTES FUNÇÕES DE HASH ==================
 
-void 
+void teste_hash_criar_dados_validos() {
+  TabelaViagem *novaHASH = cria_tabela_hash(5);
+
+  if (novaHASH != NULL && tamanho_hash(novaHASH) == 5) {
+    imprimir("[PASSOU] teste_hash_criar_dados_validos");
+  } else {
+    imprimir("[FALHOU] teste_hash_criar_dados_validos");
+  }
+}
+
+void teste_hash_criar_dados_invalidos() {
+  TabelaViagem *novaHASH = cria_tabela_hash(-5);
+
+  if (novaHASH == NULL) {
+    imprimir("[PASSOU] teste_hash_criar_dados_validos");
+  } else {
+    imprimir("[FALHOU] teste_hash_criar_dados_validos");
+  }
+}
+
+void teste_hash_insere_dados_validos() {
+  TabelaViagem *novoHASH = cria_tabela_hash(2);
+  Viagem *viagem = criar_viagem();
+
+  int aux = insere_hash(novoHASH, viagem);
+
+  if (aux == 1) {
+    imprimir("[PASSOU] teste_hash_insere_dados_validos");
+  } else {
+    imprimir("[FALHOU] teste_hash_insere_dados_validos");
+  }
+}
+
+void teste_hash_insere_dados_validos() {
+  TabelaViagem *novoHASH = cria_tabela_hash(2);
+  Viagem *viagem = criar_viagem();
+
+  int aux = insere_hash(novoHASH, viagem);
+
+  if (aux == 1) {
+    imprimir("[PASSOU] teste_hash_insere_dados_validos");
+  } else {
+    imprimir("[FALHOU] teste_hash_insere_dados_validos");
+  }
+}
 
 int main(void) {
   Passageiro *passageiro1 = criarPassageiro(1, "Jean", "Vincente Pinzon");

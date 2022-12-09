@@ -40,6 +40,8 @@ Reserva *cria_reserva(Agenda *raiz,int codigo, Data *data_viagem,Passageiro *pas
 
 int verifica_reserva(Agenda *raiz,int codigo,Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento);
 
+void libera_reserva(Reserva **reserva);
+
 int data(Data *data_viagem);
 
 Reserva *em_ordem2(Agenda *agenda,int codigo);

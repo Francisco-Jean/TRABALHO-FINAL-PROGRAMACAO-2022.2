@@ -1,6 +1,5 @@
 #include "hash.h"
 #include "Passageiros.h"
-#include "Voos.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -11,6 +10,7 @@ struct reserva {
   Voo *voo;
   Assento assento;
 };
+
 struct trecho {
   Reserva *reserva;
   struct trecho *proximo;
@@ -33,11 +33,20 @@ Viagem *criar_viagem() {
   return viagem;
 }
 
-void remover_viagem(Viagem **viagem) {
+int remover_viagem(Viagem **viagem) {
   if (viagem != NULL) {
+    if ((*viagem)->trechos != NULL) {
+      Trecho *aux = (*viagem)->trechos;
+      do {
+        libera_reserva(&aux->reserva);
+        aux = aux->proximo;
+      } while (aux != NULL);
+    }
     free(*viagem);
     *viagem = NULL;
+    return 1;
   }
+  return 0;
 }
 
 //▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬❴FUNÇÕES DE TRECHO ❵▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬//
@@ -52,65 +61,14 @@ Trecho *cria_trecho(Reserva *reserva) {
   return novoTrecho;
 }
 
-// Insere o trecho na última posição da lista encadeada de trechos de uma Viagem
-// Retorna 1 se sucesso na inserção; 0, caso contrário.
-int insere_trecho(Viagem *viagem, Trecho *novoTrecho) {
-  if(viagem == NULL || novoTrecho == NULL) {
-    return 0;
-  }
-
-  // não há nenhum trecho na viagem ainda
-  if(viagem->trechos == NULL) {
-    viagem->trechos = novoTrecho;
-    return 1;
-  }
-
-  // se já há algum trecho na viagem
-  Trecho trechoAtual = viagem->trechos;
-  // procura o último trecho da viagem (prox == NULL)
-  while(trechoAtual->prox != NULL) {
-    trechoAtual = trechoAtual->proximo;
-  }
-  if(verifica_trecho(trechoAtual, novoTrecho) == 1) {
-    trechoAtual->proximo = novoTrecho;
-    return 1;
-  }
-
-  return 0;
-}
-
-// Se for possível inserir trechoDestino após trechoOrigem, retorna 1; retorna 0, caso contrário.
-int verifica_trecho(Trecho *trechoOrigem, Trecho *trechoDestino) {
-  //if ((trechoOrigem->reserva->voo->origem =trechoDestino) && (data_compara(trechoOrigem->reserva->data_viagem,trechoDestino->reserva->data_viagem)==-1)) && (trecho1->reserva)
-
-  if(trechoOrigem == NULL || trechoDestino == NULL) {
-    return 0;
-  }
-
-  // a data do trecho de destino deve ser maior que a data do trecho de origem
-  if(data_compara(trechoOrigem->reserva->data_viagem, trechoDestino->reserva->dataViagem) != -1) {
-    printf("ERRO: a data do trecho de destino deve ser maior que a data do trecho de origem!\n");
-    return 0;
-  }
-
-  // o passageiro do trecho de destino deve ser o mesmo do trecho de origem
-  if(passageiroIgual(trechoDestino->reserva->passageiro, trechoOrigem->reserva->passageiro) != 1) {
-    printf("ERRO: o passageiro do trecho de destino deve ser o mesmo do trecho de origem!\n");
-    return 0;
-  }
-
-  // o destino do voo do trecho de origem deve ser a origem do voo do trecho de destino
-  if(verificaSequenciaVoos(trechoOrigem->voo, trechoDestino->voo) != 1) {
-    printf("ERRO: o destino do voo do trecho de origem deve coincidir com a orugem do voo do trecho de destino!\n");
-    return 0;
-  }
-
-  return 1;
-} 
 //▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬❴FUNÇÕES DE TABELA VIAGEM ❵▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬//
 // ↓↓ Cria, aloca espaço pra tabela hash e atribui NULO pra cada
 // ponteiro-posição do vetor ↓↓ //
 TabelaViagem *cria_tabela_hash(int tamanho) {
+  if (tamanho <= 0) {
+    return NULL;
+  }
+  
   TabelaViagem *novaTabela = (TabelaViagem *)malloc(sizeof(TabelaViagem));
   novaTabela->tamanho = tamanho;
   novaTabela->tabela_hash = (Viagem *)malloc(tamanho * sizeof(Viagem));
@@ -123,6 +81,10 @@ TabelaViagem *cria_tabela_hash(int tamanho) {
   return novaTabela;
 }
 
+int tamanho_hash(TabelaViagem *tabela) { 
+  return tabela->tamanho; 
+}
+
 int insere_hash(TabelaViagem *tabela, Viagem *viagem) {
   if (tabela == NULL && viagem == NULL) {
     return 0;
@@ -131,7 +93,7 @@ int insere_hash(TabelaViagem *tabela, Viagem *viagem) {
   int cod = funcao_hash(viagem);
 
   if((&(tabela -> tabela_hash))[cod] == NULL){
-   (&(tabela -> tabela_hash))[cod] = viagem;
+    (&(tabela -> tabela_hash))[cod] = viagem;
     return 1;
   }
   return 0;

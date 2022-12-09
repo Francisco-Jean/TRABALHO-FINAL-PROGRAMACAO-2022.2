@@ -10,6 +10,7 @@ struct reserva {
   Voo *voo;
   Assento assento;
 };
+
 struct trecho {
   Reserva *reserva;
   struct trecho *proximo;
@@ -32,11 +33,20 @@ Viagem *criar_viagem() {
   return viagem;
 }
 
-void remover_viagem(Viagem **viagem) {
+int remover_viagem(Viagem **viagem) {
   if (viagem != NULL) {
+    if ((*viagem)->trechos != NULL) {
+      Trecho *aux = (*viagem)->trechos;
+      do {
+        libera_reserva(&aux->reserva);
+        aux = aux->proximo;
+      } while (aux != NULL);
+    }
     free(*viagem);
     *viagem = NULL;
+    return 1;
   }
+  return 0;
 }
 
 //▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬❴FUNÇÕES DE TRECHO ❵▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬//
@@ -55,6 +65,10 @@ Trecho *cria_trecho(Reserva *reserva) {
 // ↓↓ Cria, aloca espaço pra tabela hash e atribui NULO pra cada
 // ponteiro-posição do vetor ↓↓ //
 TabelaViagem *cria_tabela_hash(int tamanho) {
+  if (tamanho <= 0) {
+    return NULL;
+  }
+  
   TabelaViagem *novaTabela = (TabelaViagem *)malloc(sizeof(TabelaViagem));
   novaTabela->tamanho = tamanho;
   novaTabela->tabela_hash = (Viagem *)malloc(tamanho * sizeof(Viagem));
@@ -67,6 +81,10 @@ TabelaViagem *cria_tabela_hash(int tamanho) {
   return novaTabela;
 }
 
+int tamanho_hash(TabelaViagem *tabela) { 
+  return tabela->tamanho; 
+}
+
 int insere_hash(TabelaViagem *tabela, Viagem *viagem) {
   if (tabela == NULL && viagem == NULL) {
     return 0;
@@ -75,7 +93,7 @@ int insere_hash(TabelaViagem *tabela, Viagem *viagem) {
   int cod = funcao_hash(viagem);
 
   if((&(tabela -> tabela_hash))[cod] == NULL){
-   (&(tabela -> tabela_hash))[cod] = viagem;
+    (&(tabela -> tabela_hash))[cod] = viagem;
     return 1;
   }
   return 0;
