@@ -78,20 +78,20 @@ void libera_reserva(Reserva **reserva){
 
 
 //copia os dados de uma derterminada reserva para os parametros indicados
-void reserva_acessa(Reserva *reserva, int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo, Assento assento){
+void reserva_acessa(Reserva *reserva, int *codigo, Data **data_viagem,Passageiro **passageiro,Voo **voo, Assento *assento){
   if(reserva == NULL){
-    codigo = -1;
-    data_viagem = NULL;
-    passageiro = NULL;
-    voo= NULL;
-    assento = -1;
+    *codigo = -1;
+    *data_viagem = NULL;
+    *passageiro = NULL;
+    *voo= NULL;
+    *assento = -1;
   }
   else{
-    codigo = reserva->codigo;
-    data_viagem = reserva->data_viagem;
-    passageiro = reserva->passageiro;
-    voo= reserva->voo;
-    assento = reserva->assento;
+    *codigo = reserva->codigo;
+    *data_viagem = reserva->data_viagem;
+    *passageiro = reserva->passageiro;
+    *voo= reserva->voo;
+    *assento = reserva->assento;
   }
 }
 

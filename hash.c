@@ -2,6 +2,7 @@
 #include "Passageiros.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct reserva {
   int codigo;
@@ -87,7 +88,7 @@ int viagem_insere(Viagem *viagem, Reserva *reserva) {
       return 0;
     }
 
-    Trecho *trecho_novo = trecho_cria(reserva);
+    Trecho *trecho_novo = cria_trecho(reserva);
 
     Trecho *trecho_aux = viagem->trechos;
     while (trecho_aux->proximo != NULL) {
@@ -98,7 +99,7 @@ int viagem_insere(Viagem *viagem, Reserva *reserva) {
       return 1;
     }
   } else if (viagem->trechos == NULL) {
-    Trecho *trecho_novo = trecho_cria(reserva);
+    Trecho *trecho_novo = cria_trecho(reserva);
     viagem->trechos = trecho_novo;
     return 1;
   }
@@ -262,6 +263,56 @@ int insere_trecho(Viagem *viagem, Trecho *novoTrecho) {
   return 0;
 }
 
+int libera_trecho(Trecho **trecho) {
+  if (trecho == NULL) {
+    return 0;
+  }
+
+  free(*trecho);
+  trecho = NULL;
+  return 1;
+};
+
+int trechoAcessa(Trecho *trecho, Reserva *reserva, Trecho *proximo_trecho) {
+  if (trecho == NULL) {
+    return 0;
+  }
+
+  Reserva **reserva_aux = &(reserva);
+  Trecho **trecho_aux = &(proximo_trecho);
+
+  *reserva_aux = trecho->reserva;
+  *trecho_aux = trecho->proximo;
+
+  return 1;
+};
+
+int trecho_atribui(Trecho *trecho, Reserva *nova_reserva,Trecho *novo_proximo_trecho) {
+  if (trecho == NULL || nova_reserva == NULL || novo_proximo_trecho == NULL) {
+    return 0;
+  };
+
+  Reserva **reserva_aux = &(trecho->reserva);
+  Trecho **trecho_aux = &(trecho->proximo);
+
+  *reserva_aux = nova_reserva;
+  if (trecho_valido(trecho, novo_proximo_trecho) == 1) {
+    *trecho_aux = novo_proximo_trecho;
+  } else {
+    *trecho_aux = NULL;
+  }
+  return 1;
+};
+
+int trecho_igual(Trecho *trecho1, Trecho *trecho2) {
+  if (trecho1 == NULL || trecho2 == NULL) {
+    return -1;
+  }
+
+  int igual = reserva_igual(trecho1->reserva, trecho2->reserva);
+  return igual;
+}
+
 // Se for possível inserir trechoDestino após trechoOrigem, retorna 1; retorna 0, caso contrário.
 int verifica_trecho(Trecho *trechoOrigem, Trecho *trechoDestino) {
   //if ((trechoOrigem->reserva->voo->origem =trechoDestino) && (data_compara(trechoOrigem->reserva->data_viagem,trechoDestino->reserva->data_viagem)==-1)) && (trecho1->reserva)
@@ -272,21 +323,55 @@ int verifica_trecho(Trecho *trechoOrigem, Trecho *trechoDestino) {
 
   // a data do trecho de destino deve ser maior que a data do trecho de origem
   if(data_compara(trechoOrigem->reserva->data_viagem, trechoDestino->reserva->dataViagem) != -1) {
-    printf("ERRO: a data do trecho de destino deve ser maior que a data do trecho de origem!\n");
     return 0;
   }
 
   // o passageiro do trecho de destino deve ser o mesmo do trecho de origem
   if(passageiroIgual(trechoDestino->reserva->passageiro, trechoOrigem->reserva->passageiro) != 1) {
-    printf("ERRO: o passageiro do trecho de destino deve ser o mesmo do trecho de origem!\n");
     return 0;
   }
 
   // o destino do voo do trecho de origem deve ser a origem do voo do trecho de destino
   if(verificaSequenciaVoos(trechoOrigem->voo, trechoDestino->voo) != 1) {
-    printf("ERRO: o destino do voo do trecho de origem deve coincidir com a orugem do voo do trecho de destino!\n");
     return 0;
   }
 
   return 1;
 } 
+
+int trecho_valido(Trecho *trecho_origem, Trecho *trecho_destino) {
+
+  int codigo_trecho_origem;
+  Data *data_trecho_origem;
+  Passageiro *passageiro_trecho_origem;
+  Voo *voo_trecho_origem;
+  Assento assento_trecho_origem;
+
+  int cd_trecho_destino;
+  Data *dt_trecho_destino;
+  Passageiro *pas_trecho_destino;
+  Voo *voo_trecho_destino;
+  Assento assento_trecho_destino;
+
+  reserva_acessa(trecho_origem->reserva, &(codigo_trecho_origem),
+                 &(data_trecho_origem), &(passageiro_trecho_origem),
+                 &(voo_trecho_origem), &(assento_trecho_origem));
+  reserva_acessa(trecho_destino->reserva, &(cd_trecho_destino),
+                 &(dt_trecho_destino), &(pas_trecho_destino),
+                 &(voo_trecho_destino), &(assento_trecho_destino));
+
+  if (data(data_trecho_origem) < data(dt_trecho_destino)) {
+    int id1;char nome1[30];char endereco1[30];int id2;char nome2[30];char endereco2[30];
+    passageiroAcessa(passageiro_trecho_origem,&id1,nome1,endereco1);
+    passageiroAcessa(pas_trecho_destino,&id2,nome2,endereco2);
+    if (id1 == id2) {
+      int codigo1;char origem1[30];char destino1[30];int codigo2;char origem2[30];char destino2[30];
+      vooAcessa(voo_trecho_origem,&codigo1,origem1,destino1);
+      vooAcessa(voo_trecho_destino,&codigo2,origem2,destino2);
+      if (strcmp(destino1,origem2) == 0) {
+        return 1;
+      }
+    }
+  }
+  return 0;
+}

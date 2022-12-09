@@ -34,3 +34,5 @@ Trecho *cria_trecho(Reserva *reserva);
 int insere_trecho(Viagem *viagem, Trecho *novoTrecho);
 
 int verifica_trecho(Trecho *trechoOrigem, Trecho *trechoDestino);
+
+int trecho_valido(Trecho *trecho_origem, Trecho *trecho_destino);

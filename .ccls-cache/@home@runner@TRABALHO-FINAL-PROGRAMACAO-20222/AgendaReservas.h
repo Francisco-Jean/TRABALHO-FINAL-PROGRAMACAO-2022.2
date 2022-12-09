@@ -55,3 +55,6 @@ int data_compara(Data *data1, Data *data2);
 Agenda *busca_minimo(Agenda *noRaiz);
 
 Agenda *busca_sucessor(Agenda *no);
+
+void reserva_acessa(Reserva *reserva, int *codigo, Data **data_viagem,Passageiro **passageiro,Voo **voo, Assento *assento);
+int reserva_igual(Reserva *reserva1, Reserva *reserva2);
