@@ -72,7 +72,7 @@ void edita_reserva(Agenda *raiz,Reserva *reserva,int codigo,Data *data_viagem, P
 //Libera a reserva e desaloca o ponteiro reserva
 void libera_reserva(Reserva **reserva){
   if(reserva!=NULL){
-    free(reserva);
+    free(*reserva);
     *reserva = NULL;
   }
 }
@@ -241,6 +241,14 @@ Reserva *abb_busca_reserva_data(Agenda *raiz,int id, Data *data_viagem) {
     return agenda_aux->reserva;
   }
   return NULL;
+}
+
+//Libera um nó da agenda e desaloca o ponteiro agenda
+void libera_agenda(Reserva **agenda){
+  if(agenda!=NULL){
+    free(*agenda);
+    *agenda = NULL;
+  }
 }
 
 //Remove um nó da agenda e retorna o no removido

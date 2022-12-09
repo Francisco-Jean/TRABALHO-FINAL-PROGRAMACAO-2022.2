@@ -688,7 +688,7 @@ void teste_criar_reserva_dados_validos(){
   Passageiro *passageiro_teste = criarPassageiro(3, "Levy", "UFC");
   Voo *voo_teste = criarVoo(2, "UFC", "Quixeramobim");
   Reserva *reserva1 =
-  cria_reserva(NULL, 1, data_teste, passageiro_teste, voo_teste, A0);
+  cria_reserva(1, data_teste, passageiro_teste, voo_teste, A0);
   int codigo_teste2;
   Data *data_teste2;
   Passageiro *passageiro_teste2;
@@ -714,7 +714,7 @@ void teste_criar_reserva_dados_validos(){
 void teste_criar_reserva_dados_invalidos(Passageiro *passageiro, Voo *voo) {
   Data *data_teste = criaData(32, 13, 0000);
   Reserva *reserva_invalida =
-      cria_reserva(NULL, 1, data_teste, passageiro, voo, -1);
+      cria_reserva(1, data_teste, passageiro, voo, -1);
 
   if (reserva_invalida == NULL) {
     imprimir("[PASSOU] teste_criar_reserva_dados_invalidos");
@@ -725,7 +725,7 @@ void teste_criar_reserva_dados_invalidos(Passageiro *passageiro, Voo *voo) {
 
 void teste_criar_reserva_dados_nulos() {
   Data *data_teste = criaData(-1, -1, -1);
-  Reserva *reserva_nula = cria_reserva(NULL, -1, data_teste, NULL, NULL, -1);
+  Reserva *reserva_nula = cria_reserva(-1, data_teste, NULL, NULL, -1);
 
   if (reserva_nula == NULL) {
     imprimir("[PASSOU] teste_criar_reserva_dados_invalidos");
@@ -742,9 +742,9 @@ void teste_editar_reserva_dados_validos() {
   Data *data_teste2 = criaData(02, 12, 2022);
   Data *data_teste3 = criaData(03, 01, 2023);
   Reserva *reserva2 =
-      cria_reserva(NULL, 3, data_teste2, passageiro_teste2, voo_teste2, A1);
-  Reserva *reserva3 = reserva2;
-  edita_reserva(NULL, reserva2, 4, data_teste3, passageiro_teste3, voo_teste3,A2);
+      cria_reserva(3, data_teste2, passageiro_teste2, voo_teste2, A1);
+  Reserva *reserva3 = cria_reserva( 3, data_teste2, passageiro_teste2, voo_teste2, A1);
+  edita_reserva(NULL,reserva2, 4, data_teste3, passageiro_teste3, voo_teste3,A2);
   if (reserva_igual(reserva2, reserva3)==1) {
     imprimir("[FALHOU] teste_editar_reserva_dados_validos");
   } else {
@@ -762,9 +762,9 @@ void teste_editar_reserva_dados_invalidos() {
   Data *data_teste2 = criaData(02, 12, 2022);
   Data *data_teste3 = criaData(33, 01, 2023);
   Reserva *reserva2 =
-      cria_reserva(NULL, -1, data_teste2, passageiro_teste2, voo_teste2, A1);
-  Reserva *reserva3 = reserva2;
-  edita_reserva(NULL, reserva2, 4, data_teste3, passageiro_teste3, voo_teste3,
+      cria_reserva(-1, data_teste2, passageiro_teste2, voo_teste2, A1);
+  Reserva *reserva3 = cria_reserva(-1, data_teste2, passageiro_teste2, voo_teste2, A1);
+  edita_reserva(NULL,reserva2, 4, data_teste3, passageiro_teste3, voo_teste3,
                 A2);
 
   if (reserva_igual(reserva2, reserva3)) {
@@ -779,9 +779,9 @@ void teste_editar_reserva_dados_nulos() {
   Voo *voo_teste3 = criarVoo(2, "UFC", "Quixeramobim");
   Data *data_teste2 = criaData(02, 12, 2022);
   Reserva *reserva2 =
-      cria_reserva(NULL, 1, data_teste2, passageiro_teste3, NULL, A1);
-  Reserva *reserva3 = reserva2;
-  edita_reserva(NULL, reserva2, -7, -5, NULL, NULL, -1);
+      cria_reserva(1, data_teste2, passageiro_teste3, NULL, A1);
+  Reserva *reserva3 = cria_reserva(1, data_teste2, passageiro_teste3, NULL, A1);
+  edita_reserva(NULL,reserva2, -7, NULL, NULL, NULL, -1);
 
   if (reserva_igual(reserva2, reserva3)) {
     imprimir("[PASSOU] teste_editar_reserva_dados_nulos");
