@@ -51,7 +51,7 @@ int remover_viagem(Viagem **viagem) {
 }
 
 Reserva *viagem_busca(Viagem *viagem, int codigo) {
-  if (viagem != NULL && viagem->trechos != NULL) {
+  if (viagem != NULL && viagem->trechos != NULL && codigo >= 0) {
 
     Trecho *x = viagem->trechos;
     int codigo_aux;
@@ -60,8 +60,7 @@ Reserva *viagem_busca(Viagem *viagem, int codigo) {
     Voo *voo;
     Assento assento;
     do {
-      reserva_acessa(x->reserva, &codigo_aux, &data, &passageiro, &voo,
-                     &assento);
+      reserva_acessa(x->reserva, &codigo_aux, &data, &passageiro, &voo, &assento);
       if (codigo == codigo_aux) {
         return x->reserva;
       }
@@ -116,14 +115,14 @@ int viagem_vazia(Viagem *viagem) {
   return 0;
 }
 
-Trecho *viagem_primeiro(Viagem *viagem) {
+Trecho *primeiro(Viagem *viagem) {
   if (viagem == NULL || viagem->trechos == NULL) {
     return NULL;
   }
   return viagem->trechos;
 }
 
-Trecho *lista_viagem_retira(Viagem *viagem) {
+Trecho *viagem_retira(Viagem *viagem) {
   if (viagem == NULL || viagem->trechos == NULL) {
     return NULL;
   }

@@ -691,15 +691,15 @@ void teste_viagem_insere_dados_validos() {
     
     Assento assento1 = A0;
     
-    Passageiro *passageiro1 = criarPassageiro(1, "Roberval", "Trairi");
+    Passageiro *passageiro = criarPassageiro(1, "Roberval", "Trairi");
     
     Voo *voo1 = criarVoo(1, "Trairi", "São Paulo");
     Voo *voo2 = criarVoo(2, "São Paulo", "Aracati");
     Voo *voo3 = criarVoo(2, "Aracati", "Fortaleza");
 
-    Reserva *reserva1 = cria_reserva(1, data1, passageiro1, voo1, assento1);
-    Reserva *reserva2 = cria_reserva(2, data2, passageiro1, voo2, assento1);
-    Reserva *reserva3 = cria_reserva(3, data3, passageiro1, voo3, assento1);
+    Reserva *reserva1 = cria_reserva(1, data1, passageiro, voo1, assento1);
+    Reserva *reserva2 = cria_reserva(2, data2, passageiro, voo2, assento1);
+    Reserva *reserva3 = cria_reserva(3, data3, passageiro, voo3, assento1);
 
     if (viagem_insere(viagem, reserva1) == 1 && viagem_insere(viagem, reserva2) == 1 && viagem_insere(viagem, reserva3) == 1) {
       imprimir("[PASSOU] teste_viagem_insere_dados_validos");
@@ -766,15 +766,15 @@ void teste_viagem_remove() {
     
     Assento assento1 = A0;
     
-    Passageiro *passageiro1 = criarPassageiro(1, "Roberval", "Trairi");
+    Passageiro *passageiro = criarPassageiro(1, "Roberval", "Trairi");
     
     Voo *voo1 = criarVoo(1, "Trairi", "São Paulo");
     Voo *voo2 = criarVoo(2, "São Paulo", "Aracati");
     Voo *voo3 = criarVoo(2, "Aracati", "Fortaleza");
 
-    Reserva *reserva1 = cria_reserva(1, data1, passageiro1, voo1, assento1);
-    Reserva *reserva2 = cria_reserva(2, data2, passageiro1, voo2, assento1);
-    Reserva *reserva3 = cria_reserva(3, data3, passageiro1, voo3, assento1);
+    Reserva *reserva1 = cria_reserva(1, data1, passageiro, voo1, assento1);
+    Reserva *reserva2 = cria_reserva(2, data2, passageiro, voo2, assento1);
+    Reserva *reserva3 = cria_reserva(3, data3, passageiro, voo3, assento1);
   
     viagem_insere(viagem, reserva1);
     viagem_insere(viagem, reserva2);
@@ -790,7 +790,7 @@ void teste_viagem_remove() {
   }
 }
 
-void teste_viagem_retira_dados_validos() {
+void teste_viagem_retira() {
   Viagem *viagem = criar_viagem();
   if (viagem != NULL) {
     Data *data1 = criaData(16, 4, 2023);
@@ -799,29 +799,143 @@ void teste_viagem_retira_dados_validos() {
     
     Assento assento1 = A0;
     
-    Passageiro *passageiro1 = criarPassageiro(1, "Roberval", "Trairi");
+    Passageiro *passageiro = criarPassageiro(1, "Roberval", "Trairi");
     
     Voo *voo1 = criarVoo(1, "Trairi", "São Paulo");
     Voo *voo2 = criarVoo(2, "São Paulo", "Aracati");
     Voo *voo3 = criarVoo(2, "Aracati", "Fortaleza");
 
-    Reserva *reserva1 = cria_reserva(1, data1, passageiro1, voo1, assento1);
-    Reserva *reserva2 = cria_reserva(2, data2, passageiro1, voo2, assento1);
-    Reserva *reserva3 = cria_reserva(3, data3, passageiro1, voo3, assento1);
+    Reserva *reserva1 = cria_reserva(1, data1, passageiro, voo1, assento1);
+    Reserva *reserva2 = cria_reserva(2, data2, passageiro, voo2, assento1);
+    Reserva *reserva3 = cria_reserva(3, data3, passageiro, voo3, assento1);
 
-    if () {
-      imprimir("[PASSOU] teste_viagem_insere_dados_validos");
+    viagem_insere(viagem, reserva1);
+    viagem_insere(viagem, reserva2);
+    viagem_insere(viagem, reserva3);
+    
+    Trecho *aux1 = viagem_retira(viagem);
+    Trecho *aux2;
+    Reserva *reservaComparar;
+    trechoAcessa(aux1, reservaComparar, aux2);
+    
+    if (reserva_igual(reservaComparar, reserva1) == 1) {
+      Trecho *aux1 = viagem_retira(viagem);
+      Trecho *aux2;
+      Reserva *reservaComparar;
+      trechoAcessa(aux1, reservaComparar, aux2);
+
+      if (reserva_igual(reservaComparar, reserva2) == 1) {
+        Trecho *aux1 = viagem_retira(viagem);
+        Trecho *aux2;
+        Reserva *reservaComparar;
+        trechoAcessa(aux1, reservaComparar, aux2);
+  
+        if (reserva_igual(reservaComparar, reserva3) == 1) {
+          imprimir("[PASSOU] teste_viagem_retira_dados_validos");
+        } else {
+          imprimir("[FALHOU] teste_viagem_retira_dados_validos");
+        }
+      } else {
+        imprimir("[FALHOU] teste_viagem_retira_dados_validos");
+      }
     } else {
-      imprimir("[FALHOU] teste_viagem_insere_dados_validos");
+      imprimir("[FALHOU] teste_viagem_retira_dados_validos");
     }
   } else {
-    imprimir("[FALHOU] teste_viagem_insere_dados_validos");
+    imprimir("[FALHOU] teste_viagem_retira_dados_validos");
+  }
+}
+
+void teste_viagem_busca_dados_validos() {
+  Viagem *viagem = criar_viagem();
+  if (viagem != NULL) {
+    Data *data1 = criaData(16, 4, 2023);
+    Data *data2 = criaData(25, 4, 2023);
+    Data *data3 = criaData(8, 5, 2023);
+    
+    Assento assento1 = A0;
+    
+    Passageiro *passageiro = criarPassageiro(1, "Roberval", "Trairi");
+    
+    Voo *voo1 = criarVoo(1, "Trairi", "São Paulo");
+    Voo *voo2 = criarVoo(2, "São Paulo", "Aracati");
+    Voo *voo3 = criarVoo(2, "Aracati", "Fortaleza");
+
+    Reserva *reserva1 = cria_reserva(1, data1, passageiro, voo1, assento1);
+    Reserva *reserva2 = cria_reserva(2, data2, passageiro, voo2, assento1);
+    Reserva *reserva3 = cria_reserva(3, data3, passageiro, voo3, assento1);
+
+    Reserva *reserva_buscar = viagem_busca(viagem, 2);
+
+    if (reserva_buscar != NULL) {
+      if (reserva_igual(reserva_buscar, reserva2) == 1) {
+        imprimir("[PASSOU] teste_viagem_busca_dados_validos");
+      } else {
+        imprimir("[FALHOU] teste_viagem_busca_dados_validos");
+      }
+    } else {
+      imprimir("[FALHOU] teste_viagem_busca_dados_validos");
+    }
+  } else {
+    imprimir("[FALHOU] teste_viagem_busca_dados_validos");
+  }
+}
+
+void teste_viagem_busca_dados_invalidos() {
+  Viagem *viagem = criar_viagem();
+  if (viagem != NULL) {
+    Data *data1 = criaData(16, 4, 2023);
+    Data *data2 = criaData(25, 4, 2023);
+    Data *data3 = criaData(8, 5, 2023);
+    
+    Assento assento1 = A0;
+    
+    Passageiro *passageiro = criarPassageiro(1, "Roberval", "Trairi");
+    
+    Voo *voo1 = criarVoo(1, "Trairi", "São Paulo");
+    Voo *voo2 = criarVoo(2, "São Paulo", "Aracati");
+    Voo *voo3 = criarVoo(2, "Aracati", "Fortaleza");
+
+    Reserva *reserva1 = cria_reserva(1, data1, passageiro, voo1, assento1);
+    Reserva *reserva2 = cria_reserva(2, data2, passageiro, voo2, assento1);
+    Reserva *reserva3 = cria_reserva(3, data3, passageiro, voo3, assento1);
+
+    Reserva *reserva_buscar = viagem_busca(viagem, -1);
+
+    if (reserva_buscar == NULL) {
+      imprimir("[PASSOU] teste_viagem_busca_dados_invalidos");
+    } else {
+      imprimir("[FALHOU] teste_viagem_busca_dados_invalidos");
+    }
+  }
+}
+
+void teste_viagem_busca_dados_nulos() {
+  Viagem *viagem = criar_viagem();
+  if (viagem != NULL) {
+    Data *data = criaData(16, 4, 2023);
+    
+    Assento assento = A0;
+    
+    Passageiro *passageiro = criarPassageiro(1, "Roberval", "Trairi");
+    
+    Voo *voo = criarVoo(1, "Trairi", "São Paulo");
+
+    Reserva *reserva = cria_reserva(1, data, passageiro, voo, assento);
+
+    Reserva *reserva_buscar = viagem_busca(NULL, -1);
+
+    if (reserva_buscar == NULL) {
+      imprimir("[PASSOU] teste_viagem_busca_dados_nulos");
+    } else {
+      imprimir("[FALHOU] teste_viagem_busca_dados_nulos");
+    }
   }
 }
 
 // ================== TESTES FUNÇÕES DE HASH ==================
 
-void teste_hash_criar() {
+void teste_hash_cria() {
   TabelaViagem *novaHASH = cria_tabela_hash(5);
 
   if (novaHASH != NULL && tamanho_hash(novaHASH) == 5) {
@@ -843,15 +957,15 @@ void teste_hash_insere() {
       
       Assento assento1 = A0;
       
-      Passageiro *passageiro1 = criarPassageiro(1, "Roberval", "Trairi");
+      Passageiro *passageiro = criarPassageiro(1, "Roberval", "Trairi");
       
       Voo *voo1 = criarVoo(1, "Trairi", "São Paulo");
       Voo *voo2 = criarVoo(2, "São Paulo", "Aracati");
       Voo *voo3 = criarVoo(2, "Aracati", "Fortaleza");
 
-      Reserva *reserva1 = cria_reserva(1, data1, passageiro1, voo1, assento1);
-      Reserva *reserva2 = cria_reserva(2, data2, passageiro1, voo2, assento1);
-      Reserva *reserva3 = cria_reserva(3, data3, passageiro1, voo3, assento1);
+      Reserva *reserva1 = cria_reserva(1, data1, passageiro, voo1, assento1);
+      Reserva *reserva2 = cria_reserva(2, data2, passageiro, voo2, assento1);
+      Reserva *reserva3 = cria_reserva(3, data3, passageiro, voo3, assento1);
       
       if (viagem_insere(viagem, reserva1) == 1 && viagem_insere(viagem, reserva2) == 1  && viagem_insere(viagem, reserva3) == 1){
     
@@ -873,7 +987,7 @@ void teste_hash_insere() {
   }
 }
 
-int teste_buscar_hash(){
+int teste_hash_busca(){
   int tamanho = 10;
   TabelaViagem* novo_hash = cria_tabela_hash(tamanho);
   if (novo_hash != NULL){        
@@ -883,14 +997,14 @@ int teste_buscar_hash(){
       Data *data2 = criaData(25, 4, 2023);
       Data *data3 = criaData(8, 5, 2023);
       Assento assento1 = A0;
-      Passageiro *passageiro1 = criarPassageiro(1, "Roberta Montenegro", "Av. Humberto Monte, 2202");
+      Passageiro *passageiro = criarPassageiro(1, "Roberta Montenegro", "Av. Humberto Monte, 2202");
       Voo *voo1 = criarVoo(1, "Trairi", "São Paulo");
       Voo *voo2 = criarVoo(2, "São Paulo", "Aracati");
       Voo *voo3 = criarVoo(2, "Aracati", "Fortaleza");
 
-      Reserva *reserva1 = cria_reserva(1, data1, passageiro1, voo1, assento1);
-      Reserva *reserva2 = cria_reserva(2, data2, passageiro1, voo2, assento1);
-      Reserva *reserva3 = cria_reserva(3, data3, passageiro1, voo3, assento1);
+      Reserva *reserva1 = cria_reserva(1, data1, passageiro, voo1, assento1);
+      Reserva *reserva2 = cria_reserva(2, data2, passageiro, voo2, assento1);
+      Reserva *reserva3 = cria_reserva(3, data3, passageiro, voo3, assento1);
       if (viagem_insere(viagem, reserva1) == 1 && viagem_insere(viagem, reserva2) == 1 && viagem_insere(viagem, reserva3) == 1){
         int id = funcao_hash(novo_hash, cod_hash(viagem));
         if (insere_hash(novo_hash, viagem) == 1){
@@ -905,7 +1019,7 @@ int teste_buscar_hash(){
   imprimir("[FALHOU] teste_buscar_hash");
 }
 
-int teste_retira_hash(){
+int teste_hash_retira(){
   int tamanho = 10;
   TabelaViagem* novo_hash = cria_tabela_hash(tamanho);
   if (novo_hash != NULL){
@@ -916,14 +1030,14 @@ int teste_retira_hash(){
       Data *data2 = criaData(25, 4, 2023);
       Data *data3 = criaData(8, 5, 2023);
       Assento assento1 = A0;
-      Passageiro *passageiro1 = criarPassageiro(1, "Roberta Montenegro", "Av. Humberto Monte, 2202");
+      Passageiro *passageiro = criarPassageiro(1, "Roberta Montenegro", "Av. Humberto Monte, 2202");
       Voo *voo1 = criarVoo(1, "Trairi", "São Paulo");
       Voo *voo2 = criarVoo(2, "São Paulo", "Aracati");
       Voo *voo3 = criarVoo(2, "Aracati", "Fortaleza");
 
-      Reserva *reserva1 = cria_reserva(1, data1, passageiro1, voo1, assento1);
-      Reserva *reserva2 = cria_reserva(2, data2, passageiro1, voo2, assento1);
-      Reserva *reserva3 = cria_reserva(3, data3, passageiro1, voo3, assento1);
+      Reserva *reserva1 = cria_reserva(1, data1, passageiro, voo1, assento1);
+      Reserva *reserva2 = cria_reserva(2, data2, passageiro, voo2, assento1);
+      Reserva *reserva3 = cria_reserva(3, data3, passageiro, voo3, assento1);
           
       if (viagem_insere(viagem, reserva1) == 1 && viagem_insere(viagem, reserva2) == 1 && viagem_insere(viagem, reserva3) == 1){
         if (insere_hash(novo_hash, viagem) == 1){
@@ -1079,11 +1193,40 @@ int main(void) {
   teste_lista_voo_busca_dados_invalidos();
   teste_lista_voo_busca_dados_nulos();  
   imprimir("");
-  imprimir("# - TESTES HASH - #");
+  imprimir("# - TESTE HASH CRIAR - #");
   imprimir("");
-  teste_hash_criar();
+  teste_hash_cria();
+  imprimir("");
+  imprimir("# - TESTE HASH INSERE - #");
+  imprimir("");
   teste_hash_insere();
-  teste_buscar_hash();  
-  teste_retira_hash();
+  imprimir("");
+  imprimir("# - TESTE HASH BUSCA - #");
+  imprimir("");
+  teste_hash_busca();
+  imprimir("");
+  imprimir("# - TESTE HASH RETIRA - #");
+  imprimir("");
+  teste_hash_retira();
+  imprimir("");
+  imprimir("# - TESTES VIAGEM INSERE - #");
+  imprimir("");
+  teste_viagem_insere_dados_validos();
+  teste_viagem_insere_dados_invalidos();
+  teste_viagem_insere_dados_nulos();
+  imprimir("");
+  imprimir("# - TESTE VIAGEM REMOVE - #");
+  imprimir("");
+  teste_viagem_remove();
+  imprimir("");
+  imprimir("# - TESTE RESERVA VIAGEM RETIRA - #");
+  imprimir("");
+  teste_viagem_retira();
+  imprimir("");
+  imprimir("# - TESTE RESERVA VIAGEM BUSCA - #");
+  imprimir("");
+  teste_viagem_busca_dados_validos();
+  teste_viagem_busca_dados_invalidos();
+  teste_viagem_busca_dados_nulos();
   imprimir("");
 }
