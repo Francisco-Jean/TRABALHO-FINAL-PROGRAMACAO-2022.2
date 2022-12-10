@@ -162,7 +162,7 @@ int insere_hash(TabelaViagem *tabela, Viagem *viagem) {
     return 0;
   }
 
-  int cod = funcao_hash(viagem, cod_hash);
+  int cod = funcao_hash(tabela, cod_hash(viagem));
 
   if((&(tabela -> tabela_hash))[cod] == NULL){
     (&(tabela -> tabela_hash))[cod] = viagem;
