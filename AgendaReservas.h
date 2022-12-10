@@ -69,3 +69,4 @@ void transplantar(Agenda **noRaiz, Agenda *noDestino, Agenda *noOrigem);
 
 int data_compara(Data *data1, Data *data2);
 
+void data_acessa(Data *data, int *dia, int *mes, int *ano);

@@ -126,10 +126,10 @@ Trecho *viagem_retira(Viagem *viagem) {
   if (viagem == NULL || viagem->trechos == NULL) {
     return NULL;
   }
-  Trecho *primeiro_trecho_aux = viagem->trechos;
+  Trecho *trecho_aux = viagem->trechos;
   viagem->trechos = viagem->trechos->proximo;
 
-  return primeiro_trecho_aux;
+  return trecho_aux;
 }
 
 
@@ -172,12 +172,12 @@ int insere_hash(TabelaViagem *tabela, Viagem *viagem) {
 }
 
 Viagem* busca_hash(TabelaViagem* tabela, int cod) {
-  if (tabela == NULL || cod < 0) {
+  if(tabela == NULL || cod<0) {
     return NULL;
   }
   
-  if((&(tabela->tabela_hash))[cod] != NULL){
-    return &(tabela->tabela_hash[cod]);
+  if ((&(tabela->tabela_hash))[cod] != NULL) {
+    return (&(tabela->tabela_hash))[cod];
   }
   return NULL;
 } 
@@ -380,7 +380,6 @@ int trecho_valido(Trecho *trecho_origem, Trecho *trecho_destino) {
 
 //▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬❴FUNÇÕES DE IMPRIMIR ❵▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬//
 void imprimir_viagem(TabelaViagem *tabela, int indice) {
-
   Trecho *aux = (&(tabela->tabela_hash))[indice]->trechos;
   int ordem = 1;
   printf("\tITINERÁRIO DA VIAGEM:\n");

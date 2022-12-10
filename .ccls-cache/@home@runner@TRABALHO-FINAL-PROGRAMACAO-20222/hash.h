@@ -44,5 +44,9 @@ int viagem_insere(Viagem *viagem, Reserva *reserva);
 int trechoAcessa(Trecho *trecho, Reserva *reserva, Trecho *proximo_trecho);
 
 Reserva *viagem_busca(Viagem *viagem, int codigo);
+
+void imprimir_viagem(TabelaViagem *tabela, int indice);
+
 void printa_data(Data *data);
+
 void printa_assento(int assento);
