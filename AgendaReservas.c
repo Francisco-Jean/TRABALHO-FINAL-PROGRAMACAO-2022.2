@@ -29,57 +29,57 @@ struct agenda {
 
 /*Verifica se os dados passados como parametro para a reserva valem e, se valerem, cria a reserva e retorna a reserva criada ou NULL 
 caso não possa ser criada a reserva*/
-
-Reserva *cria_reserva(Agenda *raiz,int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
-  if(verifica_dados(codigo,data_viagem,passageiro,voo,assento) == 0 && verifica_reserva(raiz,codigo,data_viagem,passageiro,voo,assento) == 0){
-    int id; char nome[30];char endereco[30];
-    int codigo; char origem[30];char destino[30];
-    passageiroAcessa(passageiro, &id, nome, endereco);
-    vooAcessa(voo, &codigo, origem, destino);
-    if(strcmp(endereco,origem) == 0){
-      editarPassageiro(passageiro,id, nome,destino);
-      Reserva *reserva = (Reserva*) malloc(sizeof(Reserva));
-      reserva->codigo = codigo;
-      reserva->data_viagem = data_viagem;
-      reserva->passageiro = passageiro;
-      reserva->voo = voo;
-      reserva->assento = assento;
-      return reserva;
-    }
+Reserva *cria_reserva(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento){
+  if(verifica_dados(codigo,data_viagem,passageiro,voo,assento) == 1){
+    Reserva *reserva = (Reserva*) malloc(sizeof(Reserva));
+    reserva->codigo = codigo;
+    reserva->data_viagem = data_viagem;
+    reserva->passageiro = passageiro;
+    reserva->voo = voo;
+    reserva->assento = assento;
+    return reserva;
   }
   return NULL;
 }
 
 //Verifica se os dados passados como parametro para a reserva são válidos e, se forem, edita a reserva com os novos dados
 void edita_reserva(Agenda *raiz,Reserva *reserva,int codigo,Data *data_viagem, Passageiro *passageiro, Voo *voo,Assento assento){
-  if(reserva!= NULL && verifica_dados(codigo,data_viagem,passageiro,voo,assento) == 0 && verifica_reserva(raiz,codigo,data_viagem,passageiro,voo,assento == 0)){
-    int id; char nome[30];char endereco[30];
-    int codigo; char origem[30];char destino[30];
-    passageiroAcessa(passageiro, &id, nome, endereco);
-    vooAcessa(voo, &codigo, origem, destino);
-    if(strcmp(endereco,origem) == 0){
-      reserva->codigo = codigo;
-      reserva->data_viagem = data_viagem;
-      reserva->passageiro = passageiro;
-      reserva->voo = voo;
-      reserva->assento = assento;
+  if(raiz != NULL){
+    if(reserva!= NULL && verifica_dados(codigo,data_viagem,passageiro,voo,assento) == 1 && verifica_reserva(raiz,codigo,data_viagem,passageiro,voo,assento) == 1){
+      int id; char nome[30];char endereco[30];
+      int codigo; char origem[30];char destino[30];
+      passageiroAcessa(passageiro, &id, nome, endereco);
+      vooAcessa(voo, &codigo, origem, destino);
+      if(strcmp(endereco,origem) == 0){
+        reserva->codigo = codigo;
+        reserva->data_viagem = data_viagem;
+        reserva->passageiro = passageiro;
+        reserva->voo = voo;
+        reserva->assento = assento;
+      }
     }
+  }
+  if(verifica_dados(codigo,data_viagem,passageiro,voo,assento) == 1){
+    reserva->codigo = codigo;
+    reserva->data_viagem = data_viagem;
+    reserva->passageiro = passageiro;
+    reserva->voo = voo;
+    reserva->assento = assento;
   }
 }
 
 //Libera a reserva e desaloca o ponteiro reserva
 void libera_reserva(Reserva **reserva){
   if(reserva!=NULL){
-    free(reserva);
+    free(*reserva);
     *reserva = NULL;
   }
 }
 
-
-
 //copia os dados de uma derterminada reserva para os parametros indicados
 void reserva_acessa(Reserva *reserva, int *codigo, Data **data_viagem,Passageiro **passageiro,Voo **voo, Assento *assento){
   if(reserva == NULL){
+    
     *codigo = -1;
     *data_viagem = NULL;
     *passageiro = NULL;
@@ -94,6 +94,7 @@ void reserva_acessa(Reserva *reserva, int *codigo, Data **data_viagem,Passageiro
     *assento = reserva->assento;
   }
 }
+
 
 // Verifica se duas reservas são iguais ou não. Caso sejam iguais, retorna 1. Caso seja NULL, retorna -1 e caso não seja igual, retorna 0.
 int reserva_igual(Reserva *reserva1, Reserva *reserva2){
@@ -125,8 +126,8 @@ Agenda *abb_cria_agenda(Reserva *reserva) {
 /* Adiciona um nó à esquerda ou à direita do no raiz. Retorna a raiz da árvore
  * resultante ou NULL caso (i) a raiz e o nó sejam NULL e (ii) caso o nó possua
  * mesma chave que outro nó previamente inserido na árvore. */
-
 Agenda *abb_insere_agenda(Agenda *raiz, Agenda *agenda) {
+  
   if (agenda == NULL || raiz == NULL) {
     return NULL;
   }
@@ -134,24 +135,30 @@ Agenda *abb_insere_agenda(Agenda *raiz, Agenda *agenda) {
   Agenda *aux2 = NULL;
   int data1 = data(agenda->reserva->data_viagem);
   int data2 = data(aux1->reserva->data_viagem);
-  int data3 = data(aux2->reserva->data_viagem);
-  
   while (aux1 != NULL) {
     aux2 = aux1;
     if (data1 < data2) {
       aux1 = aux1->esq;
+      data2 = data(aux1->reserva->data_viagem);
     }
     else if (data1 > data2) {
       aux1 = aux1->dir;
+      data1 = data(agenda->reserva->data_viagem);
     }
-    else if (data1 == data3){
-      return NULL;
+      
+    else if (data1 == data2){
+      if(passageiroIgual(aux1->reserva->passageiro,agenda->reserva->passageiro) == 1){
+        return NULL;
+      }
+      else{
+        aux2->dir = agenda;
+      }
     }
   }
   if(reserva_igual(agenda->reserva,aux2->reserva) == 1){
     return NULL;
   }
-  if (data1 < data3) {
+  if (data1 < data2) {
     aux2->esq = agenda;
   }
   else {
@@ -175,15 +182,17 @@ Reserva *abb_busca_reserva_codigo(Agenda *raiz,int id, int codigo) {
 /*Vai buscar uma reserva dado o id e a data de uma certa viagem. Retorna a reserva caso a busca obtenha sucesso ou NULL
  * em caso contrário.*/
 Reserva *abb_busca_reserva_data(Agenda *raiz,int id, Data *data_viagem) {
-  if(id != 0 && data_viagem != NULL){
+  if(id > 0 && data_viagem != NULL){
     Agenda *agenda_aux = raiz;
-    int data1 = data(agenda_aux->reserva->data_viagem);
-    int data2 = data(data_viagem);
+    int data1 = data(data_viagem);
+    int data2 = data(agenda_aux->reserva->data_viagem);
     int id_aux; char nome[30];char endereco[30];
-    int codigo; char origem[30];char destino[30];
     passageiroAcessa(agenda_aux->reserva->passageiro, &id, nome, endereco);
-    while(data1 != data2 && id_aux != id){
-      if (agenda_aux->reserva->data_viagem <= data_viagem){
+    
+    while(agenda_aux != NULL && data1 != data2 && id_aux != id){
+      passageiroAcessa(agenda_aux->reserva->passageiro, &id_aux, nome, endereco);
+      data2 = data(agenda_aux->reserva->data_viagem);
+      if (data1 < data2){
         agenda_aux = agenda_aux->esq;
       }
       else{
@@ -192,11 +201,34 @@ Reserva *abb_busca_reserva_data(Agenda *raiz,int id, Data *data_viagem) {
     }
     return agenda_aux->reserva;
   }
+  printf("NULL");
   return NULL;
+}
+
+//Encontra o nó mínimo da árvore binária de busca //
+Agenda *busca_minimo(Agenda *noRaiz) {
+  if (noRaiz==NULL){
+    return NULL;
+  }
+  while(noRaiz->esq != NULL){
+    noRaiz=noRaiz->esq;
+  }
+  return noRaiz;
+}
+
+//Libera um nó da agenda e desaloca o ponteiro agenda
+void abb_agenda_libera(Reserva **agenda){
+  if(agenda!=NULL){
+    free(*agenda);
+    *agenda = NULL;
+  }
 }
 
 //Remove um nó da agenda e retorna o no removido
 Reserva *abb_no_remove(Agenda *raiz, Agenda* noRemover) {
+  if(raiz == NULL || noRemover == NULL){
+    return NULL;
+  }
   if (noRemover->esq==NULL){
     transplantar(&raiz,noRemover,noRemover->dir);
   }
@@ -214,7 +246,6 @@ Reserva *abb_no_remove(Agenda *raiz, Agenda* noRemover) {
       transplantar(&raiz,noRemover,y);
       y->esq=noRemover->esq;
       y->esq->pai=y;
-      
     }
   }
   return noRemover->reserva;
@@ -323,36 +354,19 @@ Data *criaData(int dia, int mes, int ano){
  //   0, caso contrario (data1 == data2)
  
 int data_compara(Data *data1, Data *data2){
-  if (data1->ano > data2->ano) {
-    return 1;
-  }
-  if(data1->ano < data2->ano) {
+  if(data2 == NULL){
+    
     return -1;
   }
-  if(data1->mes > data2->mes) {
-    return 1;
+  if (data1->ano == data2->ano && data1->mes == data2->mes && data1->dia  == data2->dia ) {
+    return 0;
   }
-  if(data1->mes < data2->mes) {
-    return -1;
+  int data_1 = data(data1); 
+  int data_2 = data(data2);
+  if(data1<data2){
+    return -1;    
   }
-  if(data1->dia > data2->dia) {
-    return 1;
-  }
-  if(data1->dia < data2->dia) {
-    return -1;
-  }
-  return 0;
-}
-
-//Encontra o nó mínimo da árvore binária de busca //
-Agenda *busca_minimo(Agenda *noRaiz) {
-  if (noRaiz==NULL){
-    return NULL;
-  }
-  while(noRaiz->esq != NULL){
-    noRaiz=noRaiz->esq;
-  }
-  return noRaiz;
+  return 1;
 }
 
 //Encontra o sucessor de um nó passado por parâmetro da árvore binária de busca //
@@ -366,12 +380,4 @@ Agenda *busca_sucessor(Agenda *no) {
     noPai=no->pai;
   }
   return noPai;
-}
-
-void data_acessa(Data *data, int *dia, int *mes, int *ano){
-  if (data!=NULL){
-    *dia = data->dia;
-    *mes = data->mes;
-    *ano = data->ano;
-  }
 }

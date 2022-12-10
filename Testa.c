@@ -680,6 +680,262 @@ void teste_lista_voo_busca_dados_nulos() {
   }
 }
 
+// ================== TESTES FUNÇÕES DE RESERVA ==================
+
+void teste_criar_reserva_dados_validos(){
+  int codigo_teste = 1;
+  Data *data_teste = criaData(10, 12, 2010);
+  Passageiro *passageiro_teste = criarPassageiro(3, "Levy", "UFC");
+  Voo *voo_teste = criarVoo(2, "UFC", "Quixeramobim");
+  Reserva *reserva1 =
+  cria_reserva(1, data_teste, passageiro_teste, voo_teste, A0);
+  
+  int codigo_teste2;
+  Data *data_teste2;
+  Passageiro *passageiro_teste2;
+  Voo *voo_teste2;
+  Assento cadeira_teste2;
+  
+  reserva_acessa(reserva1, &codigo_teste2, &data_teste2, &passageiro_teste2, &voo_teste2, &cadeira_teste2);
+  
+  if (codigo_teste2 == 1 && data_compara(data_teste, data_teste2) == 0) {
+    if (passageiroIgual(passageiro_teste, passageiro_teste2) == 1 &&
+        vooIgual(voo_teste, voo_teste2) == 1) {
+      if (cadeira_teste2 == 0) {
+        imprimir("[PASSOU] teste_criar_reserva_dados_validos");
+      } else {
+        imprimir("[FALHOU] teste_criar_reserva_dados_validos");
+      }
+    } else {
+      imprimir("[FALHOU] teste_criar_reserva_dados_validos");
+    }
+  } else {
+    imprimir("[FALHOU] teste_criar_reserva_dados_validos");
+  }
+}
+
+void teste_criar_reserva_dados_invalidos(Passageiro *passageiro, Voo *voo) {
+  Data *data_teste = criaData(32, 13, 0000);
+  Reserva *reserva_invalida =
+      cria_reserva(1, data_teste, passageiro, voo, -1);
+
+  if (reserva_invalida == NULL) {
+    imprimir("[PASSOU] teste_criar_reserva_dados_invalidos");
+  } else {
+    imprimir("[FALHOU] teste_criar_reserva_dados_invalidos");
+  }
+}
+
+void teste_criar_reserva_dados_nulos() {
+  Data *data_teste = criaData(-1, -1, -1);
+  Reserva *reserva_nula = cria_reserva(-1, data_teste, NULL, NULL, -1);
+
+  if (reserva_nula == NULL) {
+    imprimir("[PASSOU] teste_criar_reserva_dados_invalidos");
+  } else {
+    imprimir("[FALHOU] teste_criar_reserva_dados_invalidos");
+  }
+}
+
+void teste_editar_reserva_dados_validos() {
+  Passageiro *passageiro_teste2 = criarPassageiro(3, "Levy", "UFC");
+  Passageiro *passageiro_teste3 = criarPassageiro(4, "Victoria", "Fortaleza");
+  Voo *voo_teste2 = criarVoo(2, "UFC", "Quixeramobim");
+  Voo *voo_teste3 = criarVoo(3, "Fortaleza", "Quixeramobim");
+  Data *data_teste2 = criaData(02, 12, 2022);
+  Data *data_teste3 = criaData(03, 01, 2023);
+  Reserva *reserva2 = cria_reserva(3, data_teste2, passageiro_teste2, voo_teste2, A1);
+  Reserva *reserva3 = cria_reserva(3, data_teste2, passageiro_teste2, voo_teste2, A1);
+  edita_reserva(NULL, reserva2, 4, data_teste3, passageiro_teste3, voo_teste3, A2);
+
+  if (reserva_igual(reserva2, reserva3) == 1) {
+    imprimir("[FALHOU] teste_editar_reserva_dados_validos");
+  } else {
+    imprimir("[PASSOU] teste_editar_reserva_dados_validos");
+  }
+}
+
+void teste_editar_reserva_dados_invalidos() {
+  Passageiro *passageiro_teste2 = criarPassageiro(3, "Levy", "UFC");
+  Passageiro *passageiro_teste3 = criarPassageiro(
+      -1, "Victoriaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "Fortalezaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+  Voo *voo_teste2 = criarVoo(2, "UFC", "Quixeramobim");
+  Voo *voo_teste3 = criarVoo(-1, "Fortaleza", "Quixeramobim");
+  Data *data_teste2 = criaData(02, 12, 2022);
+  Data *data_teste3 = criaData(33, 01, 2023);
+  Reserva *reserva2 =
+      cria_reserva(-1, data_teste2, passageiro_teste2, voo_teste2, A1);
+  Reserva *reserva3 = reserva2;
+  edita_reserva(NULL, reserva2, 4, data_teste3, passageiro_teste3, voo_teste3,
+                A2);
+
+  if (reserva_igual(reserva2, reserva3)) {
+    imprimir("[PASSOU] teste_editar_reserva_dados_invalidos");
+  } else {
+    imprimir("[FALHOU] teste_editar_reserva_dados_invalidos");
+  }
+}
+
+void teste_editar_reserva_dados_nulos() {
+  Passageiro *passageiro_teste3 = criarPassageiro(3, "Levy", "UFC");
+  Voo *voo_teste3 = criarVoo(2, "UFC", "Quixeramobim");
+  Data *data_teste2 = criaData(02, 12, 2022);
+  Reserva *reserva2 =
+      cria_reserva(1, data_teste2, passageiro_teste3, NULL, A1);
+  Reserva *reserva3 = reserva2;
+  edita_reserva(NULL, reserva2, -7, NULL, NULL, NULL, -1);
+
+  if (reserva_igual(reserva2, reserva3)) {
+    imprimir("[PASSOU] teste_editar_reserva_dados_nulos");
+  } else {
+    imprimir("[FALHOU] teste_editar_reserva_dados_nulos");
+  }
+}
+
+void teste_liberar_reserva_dados_validos(){
+  int codigo_teste = 1;
+  Data *data_teste = criaData(10, 10, 2010);
+  Passageiro *passageiro_teste = criarPassageiro(3, "Levy", "UFC");
+  Voo *voo_teste = criarVoo(2, "UFC", "Quixeramobim");
+  Reserva *reserva =
+  cria_reserva(1, data_teste, passageiro_teste, voo_teste, A0);
+  
+  libera_reserva(&reserva);
+  
+  if(reserva == NULL){
+    imprimir("[PASSOU] teste_liberar_reserva_dados_validos");
+  }
+  else{
+    imprimir("[FALHOU] teste_liberar_reserva_dados_validos");
+  }
+}
+
+// ================== TESTES FUNÇÕES DE AGENDA ==================
+
+void teste_agenda_cria_dados_validos() {
+  Passageiro *passageiro_teste = criarPassageiro(3, "Levy", "UFC");
+  Voo *voo_teste = criarVoo(2, "UFC", "Quixeramobim");
+  Data *data_teste = criaData(02, 12, 2022);
+  Reserva *reserva = cria_reserva(1, data_teste, passageiro_teste, voo_teste, A1);
+  Agenda *agenda = abb_cria_agenda(reserva);
+  
+  if(agenda != NULL){
+    imprimir("[PASSOU] teste_agenda_cria_dados_validos");
+  } else {
+    imprimir("[FALHOU] teste_agenda_cria_dados_validos");
+  }
+}
+
+void teste_agenda_libera_dados_validos() {
+  Passageiro *passageiro_teste = criarPassageiro(1, "Jean", "Mucuripe");
+  Voo *voo_teste = criarVoo(2, "UFC", "Quixeramobim");
+  Data *data_teste = criaData(03, 12, 2022);
+  Reserva *reserva = cria_reserva(1, data_teste, passageiro_teste, voo_teste, A1);
+  Agenda *agenda = abb_cria_agenda(reserva);
+
+  abb_agenda_libera(&agenda);
+  if (agenda == NULL) {
+    imprimir("[PASSOU] teste_lista_voo_libera_dados_validos");
+  } else {
+    imprimir("[FALHOU] teste_lista_voo_libera_dados_validos");
+  }
+}
+
+
+void teste_agenda_insere_dados_validos(){
+  
+  Passageiro *passageiro_teste = criarPassageiro(1, "Jean", "Mucuripe");
+  Voo *voo_teste = criarVoo(2, "Mucuripe", "Quixeramobim");
+  Data *data_teste = criaData(1, 12, 2022);
+  Reserva *reserva = cria_reserva(1, data_teste, passageiro_teste, voo_teste, A1);
+  Agenda *agenda_raiz = abb_cria_agenda(reserva);
+
+
+  if (agenda_raiz != NULL) {
+    imprimir("[PASSOU] teste_agenda_insere_dados_validos");
+  } else {
+    imprimir("[FALHOU] teste_agenda_insere_dados_validos");
+    }
+}
+
+void teste_agenda_insere_dados_nulos() {
+  
+  Passageiro *passageiro_teste = criarPassageiro(1, "Jean", "Mucuripe");
+  Voo *voo_teste = criarVoo(2, "Mucuripe", "Quixeramobim");
+  Data *data_teste = criaData(1, 12, 2022);
+  Reserva *reserva = cria_reserva(1, data_teste, passageiro_teste, voo_teste, A1);
+  Agenda *agenda_raiz = abb_cria_agenda(reserva);
+  
+  Agenda *agenda = NULL;
+
+  agenda_raiz = abb_insere_agenda(agenda_raiz, agenda);
+  
+  if (agenda_raiz == NULL) { 
+    imprimir("[PASSOU] teste_lista_voo_insere_dados_nulos");
+  } else {
+    imprimir("[FALHOU] teste_lista_voo_insere_dados_nulos");
+    }
+}
+
+
+void teste_agenda_retira_dados_validos() {
+
+  Passageiro *passageiro_teste = criarPassageiro(3, "Levy", "UFC");
+  Voo *voo_teste = criarVoo(2, "UFC", "Quixeramobim");
+  Data *data_teste = criaData(02, 12, 2022);
+  Reserva *reserva = cria_reserva(1, data_teste, passageiro_teste, voo_teste, A1);
+  Reserva *reserva1 = cria_reserva(1, data_teste, passageiro_teste, voo_teste, A1);
+  Agenda *agenda = abb_cria_agenda(reserva);
+
+  Reserva *reserva_retirada = abb_no_remove(agenda, agenda);
+  
+  if (reserva_igual(reserva_retirada,reserva1) == 1) {
+    imprimir("[PASSOU] teste_agenda_retira_dados_validos");
+  } else {
+      imprimir("[FALHOU] teste_agenda_retira_dados_validos");
+    }
+}
+
+
+void teste_agenda_retira_dados_nulos() {
+  if (abb_no_remove(NULL, NULL) == NULL) {
+    imprimir("[PASSOU] teste_agenda_retira_dados_nulos");
+  } else {
+    imprimir("[FALHOU] teste_agenda_retira_dados_nulos");
+  }
+}
+
+void teste_agenda_busca_dados_validos() {
+  int id_p1 = 1;
+  Passageiro *passageiro_teste1 = criarPassageiro(id_p1, "Bruna", "Caucaia");
+  Voo *voo_teste1 = criarVoo(1, "Caucaia", "Quixeramobim");
+  Data *data_teste1 = criaData(10, 12, 2022);
+  Reserva *reserva1 = cria_reserva(1, data_teste1, passageiro_teste1, voo_teste1, A1);
+  Agenda *agenda_raiz = abb_cria_agenda(reserva1);
+
+
+  int id_p2 = 2;
+  Passageiro *passageiro_teste2 = criarPassageiro(id_p2, "Levy", "UFC");
+  Voo *voo_teste2 = criarVoo(2, "UFC", "Quixeramobim");
+  Data *data_teste2 = criaData(25, 12, 2022);
+  Reserva *reserva2 = cria_reserva(2, data_teste2, passageiro_teste2, voo_teste2, A2);
+  Agenda *agenda2 = abb_cria_agenda(reserva2);
+  abb_insere_agenda(agenda_raiz, agenda2);
+  
+  Reserva *reserva_c1 = abb_busca_reserva_data(agenda_raiz, id_p1, data_teste1);
+  if (reserva_igual(reserva1, reserva_c1) == 1) {
+    Reserva *reserva_c2 = abb_busca_reserva_data(agenda_raiz, id_p1, data_teste1);
+    if (reserva_igual(reserva1, reserva_c2) == 1) {
+      imprimir("[PASSOU] teste_agenda_busca_dados_validos");
+    } else {
+        imprimir("[FALHOU] teste_agenda_busca_dados_validos");
+      }
+  } else {
+      imprimir("[FALHOU] teste_agenda_busca_dados_validos");
+    }
+}
+
 // ================== TESTES FUNÇÕES DE VIAGENS ==================
 
 void teste_viagem_insere_dados_validos() {
@@ -1063,7 +1319,7 @@ int main(void) {
   Passageiro *passageiro4 = criarPassageiro(-1, NULL, NULL);
 
   imprimir("");
-  imprimir("# - TESTES PASSAGEIRO CRIA - #");
+  imprimir("# - TESTES CRIAR PASSAGEIRO - #");
   imprimir("");
   testa_criar_passageiro_dados_validos(passageiro1);
   testa_criar_passageiro_dados_invalidos(passageiro3);
@@ -1071,7 +1327,7 @@ int main(void) {
   imprimir("");
   printf("\n");
   imprimir("");
-  imprimir("# - TESTES PASSAGEIRO EDITAR- #");
+  imprimir("# - TESTES EDITAR PASSAGEIRO - #");
   imprimir("");
   teste_editar_passageiro_dados_validos(passageiro1);
   teste_editar_passageiro_dados_invalidos(passageiro2);
@@ -1079,21 +1335,13 @@ int main(void) {
   imprimir("");
   printf("\n");
   imprimir("");
-  imprimir("# - TESTES PASSAGEIRO RETIRA- #");
-  imprimir("");
-  teste_retira_passageiro_dados_validos(); // falta implementação de funções
-                                           // necessárias
-  teste_retira_passageiro_dados_nulos();
-  imprimir("");
-  printf("\n");
-  imprimir("");
-  imprimir("# - TESTES LISTA PASSAGEIRO CRIA- #");
+  imprimir("# - TESTES CRIAR LISTA PASSAGEIRO - #");
   imprimir("");
   teste_lista_passageiro_cria_dados_validos();
   imprimir("");
   printf("\n");
   imprimir("");
-  imprimir("# - TESTES LISTA PASSAGEIRO LIBERA- #");
+  imprimir("# - TESTES LISTA LIBERAR PASSAGEIRO - #");
   imprimir("");
   teste_lista_passageiro_libera_dados_validos();
   teste_lista_passageiro_libera_dados_nulos();
@@ -1114,7 +1362,7 @@ int main(void) {
   imprimir("");
   printf("\n");
   imprimir("");
-  imprimir("# - TESTES LISTA PASSAGEIRO INSERE - #");
+  imprimir("# - TESTES LISTA PASSAGEIRO RETIRA - #");
   imprimir("");
   teste_lista_passageiro_retira_dados_validos();
   teste_lista_passageiro_retira_dados_nulos();
@@ -1144,18 +1392,11 @@ int main(void) {
   imprimir("");
   printf("\n");
   imprimir("");
-  imprimir("# - TESTES VOOS EDITA - #");
+  imprimir("# - TESTES EDITAR VOOS - #");
   imprimir("");
   teste_editar_voo_dados_validos(voo1);
   teste_editar_voo_dados_invalidos(voo2);
   teste_editar_voo_dados_nulos(voo1);
-  imprimir("");
-  printf("\n");
-  imprimir("");
-  imprimir("# - TESTES VOOS RETIRA - #");
-  imprimir("");
-  teste_retira_voo_dados_validos();
-  teste_retira_voo_dados_nulos();
   imprimir("");
   printf("\n");
   imprimir("");
@@ -1191,7 +1432,63 @@ int main(void) {
   imprimir("");
   teste_lista_voo_busca_dados_validos();
   teste_lista_voo_busca_dados_invalidos();
-  teste_lista_voo_busca_dados_nulos();  
+  teste_lista_voo_busca_dados_nulos();
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES CRIAR RESERVA - #");
+  imprimir("");
+  teste_criar_reserva_dados_validos();
+  teste_criar_reserva_dados_invalidos(passageiro2, voo2);
+  teste_criar_reserva_dados_nulos();
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES LIBERAR RESERVA - #");
+  imprimir("");
+  teste_liberar_reserva_dados_validos();
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES EDITAR RESERVA - #");
+  imprimir("");
+  teste_editar_reserva_dados_validos();
+  teste_editar_reserva_dados_invalidos();
+  teste_editar_reserva_dados_nulos();
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES CRIAR AGENDA - #");
+  imprimir("");
+  teste_agenda_cria_dados_validos();
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES LIBERAR AGENDA - #");
+  imprimir("");
+  teste_agenda_libera_dados_validos();
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES AGENDA INSERE - #");
+  imprimir("");
+  teste_agenda_insere_dados_validos();
+  teste_agenda_insere_dados_nulos();
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES AGENDA RETIRA - #");
+  imprimir("");
+  teste_agenda_retira_dados_validos();
+  teste_agenda_retira_dados_nulos();
+  imprimir("");
+  printf("\n");
+  imprimir("");
+  imprimir("# - TESTES AGENDA BUSCA - #");
+  imprimir("");
+  teste_agenda_busca_dados_validos();
+  imprimir("");
+  printf("\n");
   imprimir("");
   imprimir("# - TESTE HASH CRIAR - #");
   imprimir("");
