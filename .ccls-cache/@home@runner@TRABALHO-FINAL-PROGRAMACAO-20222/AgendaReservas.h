@@ -26,11 +26,15 @@ typedef struct tabela_viagem TabelaViagem;
  * criado ou NULL caso não seja posivel criar o nó. */
 Agenda *abb_cria_agenda(Reserva *reserva);
 
-Agenda *abb_insere_agenda(Agenda *agenda, Agenda *raiz);
+void abb_agenda_libera(Reserva **agenda);
+
+Agenda *abb_insere_agenda(Agenda *raiz, Agenda *agenda);
 
 int fun_hash(int id, int codigo);
 
 Agenda *abb_busca_agenda(Agenda *raiz,int id, int codigo, Data *data_viagem);
+
+Reserva *abb_busca_reserva_data(Agenda *raiz,int id, Data *data_viagem);
 
 Reserva *abb_no_remove(Agenda *raiz, Agenda* noRemover);
 
@@ -49,7 +53,7 @@ int busca_codigo(Agenda *raiz,int codigo_reserva);
 Data *criaData(int dia, int mes, int ano);
 
 // Funções de Reserva
-Reserva *cria_reserva(Agenda *raiz,int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento);
+Reserva *cria_reserva(int codigo, Data *data_viagem,Passageiro *passageiro,Voo *voo,Assento assento);
 
 void libera_reserva(Reserva **reserva);
 
