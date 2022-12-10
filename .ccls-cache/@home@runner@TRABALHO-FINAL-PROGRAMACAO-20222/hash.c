@@ -312,26 +312,29 @@ int trecho_igual(Trecho *trecho1, Trecho *trecho2) {
   return igual;
 }
 
-// Se for possível inserir trechoDestino após trechoOrigem, retorna 1; retorna 0, caso contrário.
-int verifica_trecho(Trecho *trechoOrigem, Trecho *trechoDestino) {
-  //if ((trechoOrigem->reserva->voo->origem =trechoDestino) && (data_compara(trechoOrigem->reserva->data_viagem,trechoDestino->reserva->data_viagem)==-1)) && (trecho1->reserva)
+// Se for possível inserir trecho_destino após trecho_origem, retorna 1; retorna 0, caso contrário.
+int verifica_trecho(Trecho *trecho_origem, Trecho *trecho_destino) {
+  //if ((trecho_origem->reserva->voo->origem =trecho_destino) && (data_compara(trecho_origem->reserva->data_viagem,trecho_destino->reserva->data_viagem)==-1)) && (trecho1->reserva)
 
-  if(trechoOrigem == NULL || trechoDestino == NULL) {
+  if(trecho_origem == NULL || trecho_destino == NULL) {
     return 0;
   }
-
+  int codigo1;Data *data_viagem1;Passageiro *passageiro1;Voo *voo1;Assento assento1;
+  reserva_acessa(trecho_origem->reserva,&codigo1,&data_viagem1,&passageiro1,&voo1,&assento1);
+  int codigo2;Data *data_viagem2;Passageiro *passageiro2;Voo *voo2;Assento assento2;
+  reserva_acessa(trecho_destino->reserva,&codigo2,&data_viagem2,&passageiro2,&voo2,&assento2);
   // a data do trecho de destino deve ser maior que a data do trecho de origem
-  if(data_compara(trechoOrigem->reserva->data_viagem, trechoDestino->reserva->dataViagem) != -1) {
+  if(data_compara(data_viagem1, data_viagem2) != -1) {
     return 0;
   }
 
   // o passageiro do trecho de destino deve ser o mesmo do trecho de origem
-  if(passageiroIgual(trechoDestino->reserva->passageiro, trechoOrigem->reserva->passageiro) != 1) {
+  if(passageiroIgual(passageiro1, passageiro2) != 1) {
     return 0;
   }
 
   // o destino do voo do trecho de origem deve ser a origem do voo do trecho de destino
-  if(verificaSequenciaVoos(trechoOrigem->voo, trechoDestino->voo) != 1) {
+  if(verificaSequenciaVoos(voo1, voo2) != 1) {
     return 0;
   }
 
@@ -418,7 +421,7 @@ void printa_data(Data *data) {
   mes2 = mes1;
   ano2 = ano1;
 
-  printf("Data da viagem: %d/%d/%d\n", dia, mes, ano);
+  printf("Data da viagem: %d/%d/%d\n", dia2, mes2, ano2);
 }
 
 void printa_assento(int assento) {
