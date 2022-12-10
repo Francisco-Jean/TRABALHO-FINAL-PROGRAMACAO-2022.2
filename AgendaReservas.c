@@ -354,19 +354,25 @@ Data *criaData(int dia, int mes, int ano){
  //   0, caso contrario (data1 == data2)
  
 int data_compara(Data *data1, Data *data2){
-  if(data2 == NULL){
-    
+  if (data1->ano > data2->ano) {
+    return 1;
+  }
+  if(data1->ano < data2->ano) {
     return -1;
   }
-  if (data1->ano == data2->ano && data1->mes == data2->mes && data1->dia  == data2->dia ) {
-    return 0;
+  if(data1->mes > data2->mes) {
+    return 1;
   }
-  int data_1 = data(data1); 
-  int data_2 = data(data2);
-  if(data1<data2){
-    return -1;    
+  if(data1->mes < data2->mes) {
+    return -1;
   }
-  return 1;
+  if(data1->dia > data2->dia) {
+    return 1;
+  }
+  if(data1->dia < data2->dia) {
+    return -1;
+  }
+  return 0;
 }
 
 //Encontra o sucessor de um nó passado por parâmetro da árvore binária de busca //
@@ -380,4 +386,11 @@ Agenda *busca_sucessor(Agenda *no) {
     noPai=no->pai;
   }
   return noPai;
+}
+void data_acessa(Data *data, int *dia, int *mes, int *ano){
+  if (data!=NULL){
+    *dia = data->dia;
+    *mes = data->mes;
+    *ano = data->ano;
+  }
 }
