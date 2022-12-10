@@ -368,3 +368,10 @@ Agenda *busca_sucessor(Agenda *no) {
   return noPai;
 }
 
+void data_acessa(Data *data, int *dia, int *mes, int *ano){
+  if (data!=NULL){
+    *dia = data->dia;
+    *mes = data->mes;
+    *ano = data->ano;
+  }
+}

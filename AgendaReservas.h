@@ -58,3 +58,4 @@ Agenda *busca_sucessor(Agenda *no);
 
 void reserva_acessa(Reserva *reserva, int *codigo, Data **data_viagem,Passageiro **passageiro,Voo **voo, Assento *assento);
 int reserva_igual(Reserva *reserva1, Reserva *reserva2);
+void data_acessa(Data *data, int *dia, int *mes, int *ano);

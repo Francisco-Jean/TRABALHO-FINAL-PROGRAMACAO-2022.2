@@ -374,3 +374,79 @@ int trecho_valido(Trecho *trecho_origem, Trecho *trecho_destino) {
   }
   return 0;
 }
+
+//▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬❴FUNÇÕES DE IMPRIMIR ❵▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬//
+void imprimir_viagem(TabelaViagem *tabela, int indice) {
+
+  Trecho *aux = (&(tabela->tabela_hash))[indice]->trechos;
+  int ordem = 1;
+  printf("\tITINERÁRIO DA VIAGEM:\n");
+  int id; char nome[30];char endereco[30];
+  int codigo; char origem[30];char destino[30];
+  passageiroAcessa(aux->reserva->passageiro, &id, nome, endereco);
+  vooAcessa(aux->reserva->voo, &codigo, origem, destino);
+  printf("Nome do passageiro: %s\n", nome);
+  printf("Id do passageiro: %d\n", id);
+  printf("Endereço do passageiro: %s\n", endereco);
+  while (aux != NULL) {
+    int id; char nome[30];char endereco[30];
+    int codigo; char origem[30];char destino[30];
+    passageiroAcessa(aux->reserva->passageiro, &id, nome, endereco);
+    vooAcessa(aux->reserva->voo, &codigo, origem, destino);
+    printf("-----------------------------------------------\n");
+    printf("\t Reserva %d\n", ordem);
+    printf("Codigo da reserva: %d\n", aux->reserva->codigo);
+    printa_data(aux->reserva->data_viagem);
+    printf("Origem do voo: %s\n", origem);
+    printf("Destino do voo: %s\n", destino);
+    printf("Codigo do Voo: %d\n", codigo);
+    printa_assento(aux->reserva->assento);
+    ordem++;
+    aux = aux->proximo;
+  }
+}
+
+void printa_data(Data *data) {
+  if(data==NULL){
+    printf("Data da viagem inconsistente");
+  }
+  int dia1, mes1, ano1;
+  int dia2, mes2, ano2;
+  data_acessa(data,&dia1,&mes1,&ano1);
+  
+  dia2 = dia1;
+  mes2 = mes1;
+  ano2 = ano1;
+
+  printf("Data da viagem: %d/%d/%d\n", dia, mes, ano);
+}
+
+void printa_assento(int assento) {
+  if (assento == 1) {
+    printf("Assento = A%d\n", assento);
+  } else if (assento % 3 == 0) {
+    int aux = 3, total = 0;
+
+    while (aux != assento) {
+      aux += 3;
+      total++;
+    }
+    printf("Assento = C%d\n", total);
+  } else if ((assento - 1) % 3 == 0) {
+    int aux = 1, total = 0;
+
+    while (aux != assento) {
+      aux += 3;
+      total++;
+    }
+    printf("Assento = A%d\n", total);
+  } else {
+    int aux = 2, total = 0;
+
+    while (aux != assento) {
+      aux += 3;
+      total++;
+    }
+    printf("Assento = B%d\n", total);
+  }
+}
