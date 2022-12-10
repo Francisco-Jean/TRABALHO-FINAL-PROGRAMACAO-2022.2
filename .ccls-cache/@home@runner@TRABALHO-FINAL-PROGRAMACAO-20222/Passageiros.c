@@ -18,12 +18,16 @@ struct lista_passageiro {
   struct no_passageiro *primeiro;
 };
 
+/* ------------FUNÇOES DE LISTA-----------*/
+
+//Aloca espaço para uma lista e defini o primeiro elemento desta lista como NULL. Retorna a lista criada.
 Lista *lista_cria() {
   Lista *lista = (Lista *)malloc(sizeof(Lista));
   lista->primeiro = NULL;
   return lista;
 }
 
+//Libera o ponteiro da lista e aponta para NULL;
 int lista_libera(Lista **lista) {
   if (lista == NULL) {
     return 0;
@@ -33,6 +37,7 @@ int lista_libera(Lista **lista) {
   return 1;
 }
 
+//Insere um passageiro na lista. Retorna -1 caso a lista seja NULL ou o passageiro seja NULL, 0 caso não seja possivel inserir e 1 caso foi inserido com sucesso
 int lista_insere(Lista *lista, Passageiro *passageiro) {
   if(lista == NULL || passageiro == NULL){
     return -1;
@@ -71,7 +76,7 @@ int lista_insere(Lista *lista, Passageiro *passageiro) {
   return 1;
 }
 
-// Função que será necessário editar para ser colocada em funcionamento
+//retira um passageiro com base no seu id de uma lista. Retorna o passageio retirado ou NULL caso não possa ser retirado.
 
 Passageiro *lista_retira(Lista *lista, int id) {
   if(lista == NULL || id < 0 || lista->primeiro->passageiro == NULL){ 
@@ -95,8 +100,7 @@ Passageiro *lista_retira(Lista *lista, int id) {
   return NULL;
 }
 
-
-
+//busca im passageiro na lista com base no id. Retorna o passageiro caso seja possivel achar ele na lista ou NULL caso não seja possivel encontra-lo.
 Passageiro *lista_busca(Lista *lista, int id) {
   if (lista == NULL || lista->primeiro == 0|| id<0) {
     return NULL;
@@ -121,6 +125,7 @@ Passageiro *lista_busca(Lista *lista, int id) {
   return NULL;
 }
 
+//Retorna a quantidade de membros de uma lista.
 int lista_quantidade(Lista *lista) {
   if (lista == NULL) {
     return -1;
@@ -136,6 +141,7 @@ int lista_quantidade(Lista *lista) {
   return total;
 }
 
+//Verifica se a lista esta vazia ou não. Se estiver, retorna 1, se não retorna 0.
 int lista_vazia(Lista *lista) {
   if(lista->primeiro == NULL){
     return 1;
@@ -143,8 +149,9 @@ int lista_vazia(Lista *lista) {
   return 0;
 }
 
-//FUNÇÕES PARA PASSAGEIRO
+//-------------------------------FUNÇÕES PARA PASSAGEIRO-------------------------------
 
+//Verifica se o id, o nome e o endereço passados po parametro não sao nulos ou negativos. Retorna -1 caso não sejam possiveis de serem utilizados ou 1 caso sejam possiveis de serem usados.
 int verifica_params1(int id,char *nome, char *endereco){
   if (id < 0 || nome == NULL || endereco == NULL){
     return -1;
@@ -155,6 +162,7 @@ int verifica_params1(int id,char *nome, char *endereco){
   return 1;
 }
 
+//Cria um passageiro e aloca o espaço para ele. Retorna o passageiro se for possivel ser cirado ou NULL, caso não seja possível.
 Passageiro *criarPassageiro(int id,char *nome, char *endereco){
   if(verifica_params1(id, nome, endereco) == -1){
     return NULL;
@@ -166,6 +174,7 @@ Passageiro *criarPassageiro(int id,char *nome, char *endereco){
   return passageiro;
 }
 
+//Desaloca o ponteio de um determinado passageiro e o remove.
 void removerPassageiro(Passageiro **passageiro){
   if(passageiro != NULL){
     free(*passageiro);
@@ -173,6 +182,7 @@ void removerPassageiro(Passageiro **passageiro){
   }
 }
 
+//Pega um passageiro como parametro e coloca os dados passados por parametro nos respectivos dados desse passageiro.
 void editarPassageiro(Passageiro *passageiro,int id, char *nome, char *endereco){
   if(passageiro != NULL && verifica_params1(id, nome, endereco) == 1){
     passageiro->id = id;
@@ -181,6 +191,7 @@ void editarPassageiro(Passageiro *passageiro,int id, char *nome, char *endereco)
   }
 }
 
+//Captura os dados de um passageiro e os copia para as variáveis passadas por parametro.
 void passageiroAcessa(Passageiro *passageiro, int *id, char *nome, char *endereco) {
   if (passageiro == NULL) {
     *id = -1;
@@ -193,6 +204,9 @@ void passageiroAcessa(Passageiro *passageiro, int *id, char *nome, char *enderec
   }
 }
 
+/*  Verifica se dois passageiros são iguais, recebe 2 passageiros e     
+    verifica se são iguais, retornando 1 caso sejam iguais, 0 se não forem     e NULL se não houver passageiro
+*/
 int passageiroIgual(Passageiro *passageiro1, Passageiro *passageiro2) {
   if(passageiro1 == NULL && passageiro2!= NULL){
     return 0;

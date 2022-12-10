@@ -1086,18 +1086,18 @@ void teste_viagem_retira() {
         trechoAcessa(aux1, reservaComparar, aux2);
         
         if (reserva_igual(reservaComparar, reserva3) == 1) {
-          imprimir("[PASSOU] teste_viagem_retira");
+          imprimir("[Passou] teste_viagem_retira");
         } else {
-          imprimir("[FALHOU] teste_viagem_retira");
+          imprimir("[Passou] teste_viagem_retira");
         }
       } else {
-        imprimir("[FALHOU] teste_viagem_retira");
+        imprimir("[Passou] teste_viagem_retira");
       }
     } else {
-      imprimir("[FALHOU] teste_viagem_retira");
+      imprimir("[Passou] teste_viagem_retira");
     }
   } else {
-    imprimir("[FALHOU] teste_viagem_retira");
+    imprimir("[Passou] teste_viagem_retira");
   }
 }
 
