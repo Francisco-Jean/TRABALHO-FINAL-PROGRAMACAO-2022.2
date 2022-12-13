@@ -1086,18 +1086,18 @@ void teste_viagem_retira() {
         trechoAcessa(aux1, reservaComparar, aux2);
         
         if (reserva_igual(reservaComparar, reserva3) == 1) {
-          imprimir("[Passou] teste_viagem_retira");
+          imprimir("[PASSOU] teste_viagem_retira");
         } else {
-          imprimir("[Passou] teste_viagem_retira");
+          imprimir("[FALHOU] teste_viagem_retira");
         }
       } else {
-        imprimir("[Passou] teste_viagem_retira");
+        imprimir("[FALHOU] teste_viagem_retira");
       }
     } else {
-      imprimir("[Passou] teste_viagem_retira");
+      imprimir("[FALHOU] teste_viagem_retira");
     }
   } else {
-    imprimir("[Passou] teste_viagem_retira");
+    imprimir("[FALHOU] teste_viagem_retira");
   }
 }
 
@@ -1529,17 +1529,25 @@ int main(void) {
   imprimir("");
   teste_hash_cria();
   imprimir("");
+  printf("\n");
+  imprimir("");
   imprimir("# - TESTE HASH INSERE - #");
   imprimir("");
   teste_hash_insere();
+  imprimir("");
+  printf("\n");
   imprimir("");
   imprimir("# - TESTE HASH BUSCA - #");
   imprimir("");
   teste_hash_busca();
   imprimir("");
+  printf("\n");
+  imprimir("");
   imprimir("# - TESTE HASH RETIRA - #");
   imprimir("");
   teste_hash_retira();
+  imprimir("");
+  printf("\n");
   imprimir("");
   imprimir("# - TESTES VIAGEM INSERE - #");
   imprimir("");
@@ -1547,13 +1555,19 @@ int main(void) {
   teste_viagem_insere_dados_invalidos();
   teste_viagem_insere_dados_nulos();
   imprimir("");
+  printf("\n");
+  imprimir("");
   imprimir("# - TESTE VIAGEM REMOVE - #");
   imprimir("");
   teste_viagem_remove();
   imprimir("");
+  printf("\n");
+  imprimir("");
   imprimir("# - TESTE RESERVA VIAGEM RETIRA - #");
   imprimir("");
   teste_viagem_retira();
+  imprimir("");
+  printf("\n");
   imprimir("");
   imprimir("# - TESTE RESERVA VIAGEM BUSCA - #");
   imprimir("");
@@ -1561,6 +1575,7 @@ int main(void) {
   teste_viagem_busca_dados_invalidos();
   teste_viagem_busca_dados_nulos();
   imprimir("");
+  printf("\n");
   imprimir("");
   imprimir("# - TESTE IMPRIMIR - #");
   imprimir("");
